@@ -38,15 +38,15 @@ class AgentLocation extends Component {
     };
 
     onNextButtonPress = () => {
-        if(isEmpty(this.props.stateName) &&
-            isEmpty(this.props.zone) &&
-            isEmpty(this.props.agentBranch) ) {
-            this.props.navigator.push('agentDocuments');
-        }else{
-            showAlert('Enter Data in all fields.');
-        }
+        // if(isEmpty(this.props.stateName) &&
+        //     isEmpty(this.props.zone) &&
+        //     isEmpty(this.props.agentBranch) ) {
+        //     this.props.navigator.push('agentDocuments');
+        // }else{
+        //     showAlert('Enter Data in all fields.');
+        // }
 
-        // this.props.navigator.push('agentDocuments');
+        this.props.navigator.push('agentDocuments');
     };
 
     focusNextField = (nextField) => {

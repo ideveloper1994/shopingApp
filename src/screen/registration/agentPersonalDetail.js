@@ -42,23 +42,23 @@ class AgentFormPersonal extends Component {
     }
 
     onNextButtonPress = () => {
-        if(isEmpty(this.props.firstName) &&
-            isEmpty(this.props.lastName) &&
-            isEmpty(this.props.mobileNo) &&
-            isEmpty(this.props.userName) &&
-            isEmpty(this.props.email) &&
-            isEmpty(this.props.password) ) {
-            if(isValidEmail(this.props.email)){
-                this.props.navigator.push('agentLocation');
-            }else{
-                showAlert('Enter valid Email Address');
-            }
+        // if(isEmpty(this.props.firstName) &&
+        //     isEmpty(this.props.lastName) &&
+        //     isEmpty(this.props.mobileNo) &&
+        //     isEmpty(this.props.userName) &&
+        //     isEmpty(this.props.email) &&
+        //     isEmpty(this.props.password) ) {
+        //     if(isValidEmail(this.props.email)){
+        //         this.props.navigator.push('agentLocation');
+        //     }else{
+        //         showAlert('Enter valid Email Address');
+        //     }
+        //
+        // }else{
+        //     showAlert('Enter Data in all fields.');
+        // }
 
-        }else{
-            showAlert('Enter Data in all fields.');
-        }
-
-        // this.props.navigator.push('agentLocation');
+        this.props.navigator.push('agentLocation');
     };
 
     focusNextField = (nextField) => {

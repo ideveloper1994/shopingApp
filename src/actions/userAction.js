@@ -41,7 +41,6 @@ export const createUser = (email, password) => {
     };
 };
 
-
 export const emailChanged = (text) => {
     return { type: USER_EMAIL_CHANGED, payload: text };
 };
