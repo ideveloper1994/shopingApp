@@ -47,7 +47,7 @@ class Welcome extends Component {
     }
 
     onAddAgentPress = () => {
-        this.props.navigator.push('agentFormPersonal');
+        this.props.navigator.push('agentDetail');
     };
 
 
@@ -62,7 +62,7 @@ class Welcome extends Component {
                 </View>
 
                 <View>
-                    <Button title="Add Agency"
+                    <Button title="Agency Detail"
                             backColor="#FFF"
                             color={Constant.backColor}
                             otherStyle={{marginBottom:40}}

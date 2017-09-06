@@ -42,7 +42,7 @@ class AgentBankDetail extends Component {
     };
 
     onFinishButtonPress = () => {
-        if(isEmpty(this.props.bankName) &&
+        /*if(isEmpty(this.props.bankName) &&
             isEmpty(this.props.branchName) &&
             isEmpty(this.props.acHolderName) &&
             isEmpty(this.props.acNumber) &&
@@ -50,7 +50,8 @@ class AgentBankDetail extends Component {
             alert("all true")
         }else{
             showAlert('Enter Data in all fields.');
-        }
+        }*/
+        this.props.navigator.push('agentDetail');
     };
 
     focusNextField = (nextField) => {

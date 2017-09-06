@@ -8,6 +8,7 @@ import { NavigationProvider,StackNavigation } from '@expo/ex-navigation';
 
 export default class main extends React.Component {
 
+
     render() {
         return (
             <View style={styles.container}>
@@ -23,6 +24,7 @@ export default class main extends React.Component {
                                                  visible: false,
                                              }
                                          }}/>
+
                         <View style={{position:'absolute', top: 20, right: 20, backgroundColor:'transparent'}}>
                             <Text style={{fontSize:17, fontWeight: '600',color:'#F00'}}>3434</Text>
                         </View>

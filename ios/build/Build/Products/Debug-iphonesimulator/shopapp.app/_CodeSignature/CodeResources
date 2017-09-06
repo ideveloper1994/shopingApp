@@ -6,7 +6,7 @@
 	<dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		QVryiuosB0+Oink/85ZldRfZC0w=
+		10COUjn7EPXxgNv4HwUhDnLFTJk=
 		</data>
 		<key>Entypo.ttf</key>
 		<data>
@@ -315,7 +315,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		u0TVnMDt/4UMvXV+3jo+TGLHnHU=
+		PHkCF6hgxlOgy1RVHC6woET5tKE=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -343,19 +343,19 @@
 		</data>
 		<key>PlugIns/shopappTests.xctest.dSYM/Contents/Resources/DWARF/shopappTests</key>
 		<data>
-		/1SCx/x4ugkkNlDGB7GqyQztUDM=
+		PZuD9A8Dj+GOh0kR7jStJaJ6XT8=
 		</data>
 		<key>PlugIns/shopappTests.xctest/Info.plist</key>
 		<data>
-		/JsjU4DhDSgsSwRgpv9pgAZ6b8Y=
+		KuxCwy1ax3fo7Gx9wptF3bSO6AI=
 		</data>
 		<key>PlugIns/shopappTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
-		1oQLpMmh4l6rU3idkQtxCiPLA9E=
+		YqT/E5yEvkNb05hcU12K/AZyodQ=
 		</data>
 		<key>PlugIns/shopappTests.xctest/shopappTests</key>
 		<data>
-		3uWXWi5QQUHdN+73/1XPKXkp/E0=
+		21TwYlsQYqViyzzN11zB2nTy204=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
@@ -372,11 +372,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QVryiuosB0+Oink/85ZldRfZC0w=
+			10COUjn7EPXxgNv4HwUhDnLFTJk=
 			</data>
 			<key>hash2</key>
 			<data>
-			pJyTByeALCYR/IyODNyUYBycN1I3LPKuFFjndcJci7A=
+			zaMjTifQDWMeymjr+NA6ddZTU8VU1TviHlXRBzQ1bBE=
 			</data>
 		</dict>
 		<key>Entypo.ttf</key>
@@ -1218,44 +1218,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/1SCx/x4ugkkNlDGB7GqyQztUDM=
+			PZuD9A8Dj+GOh0kR7jStJaJ6XT8=
 			</data>
 			<key>hash2</key>
 			<data>
-			ANQVDmtizpxKHGt4r/Erw/pfahKw88qNXEjuBCGktyU=
+			af6Tddma03jV10xV7Hz3I5C6J/a6bn9mzQK/6wFSzUY=
 			</data>
 		</dict>
 		<key>PlugIns/shopappTests.xctest/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			/JsjU4DhDSgsSwRgpv9pgAZ6b8Y=
+			KuxCwy1ax3fo7Gx9wptF3bSO6AI=
 			</data>
 			<key>hash2</key>
 			<data>
-			P3l7iGUigkgLjrwm9F76iot1fYDzo/mrBxoCa3C9lzk=
+			9nlgpisfnH6ZTRN3lM9ERA0YMxFKNolgEteCvtt3S8Q=
 			</data>
 		</dict>
 		<key>PlugIns/shopappTests.xctest/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1oQLpMmh4l6rU3idkQtxCiPLA9E=
+			YqT/E5yEvkNb05hcU12K/AZyodQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			EOaZBNzAA3ulxONd/6aBuah5zMKRnKrALttPX2D3DtA=
+			ePUHITQwz1+PVDQ1/BtVOGFLC4c3UETXCg+ObXqjPes=
 			</data>
 		</dict>
 		<key>PlugIns/shopappTests.xctest/shopappTests</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3uWXWi5QQUHdN+73/1XPKXkp/E0=
+			21TwYlsQYqViyzzN11zB2nTy204=
 			</data>
 			<key>hash2</key>
 			<data>
-			TiY0Hcps50G+Zfb0kiuYo8DroOkvA22U4TTc67+mGJk=
+			74gzAiCX46FEOx0pG0KdMYD8QQPhbdSrak+nDZmINX8=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>

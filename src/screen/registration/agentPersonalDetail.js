@@ -10,7 +10,7 @@ import {
     ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
-import NavigationTitle from '../../commonComponent/navBarTitle';
+import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
 import { showAlert } from '../../services/apiCall';
@@ -68,7 +68,8 @@ class AgentFormPersonal extends Component {
     render() {
         return (
             <View style={{flex:1}}>
-                <NavigationTitle title="Personal Detail"/>
+                <NavigationBar title="Personal Detail" onBackButtonPress={this.onBackButtonPress}/>
+
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.outerView}>
                         <Text style={styles.formTextLabel}>First Name</Text>

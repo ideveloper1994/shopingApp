@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/itilak/Documents/Projects/shopapp/node_modules/react-native/ReactCommon/jschelpers/Unicode.cpp \
-  /Users/itilak/Documents/Projects/shopapp/node_modules/react-native/ReactCommon/jschelpers/Unicode.h
+  /Users/itilak/Documents/shoppingApp/node_modules/react-native/ReactCommon/jschelpers/Unicode.cpp \
+  /Users/itilak/Documents/shoppingApp/node_modules/react-native/ReactCommon/jschelpers/Unicode.h
