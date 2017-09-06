@@ -18,7 +18,7 @@ import {
     AGENT_ACTIVATION,
 
     AGENT_ADDRESS_PROOF_TYPE,
-
+    AGENT_BIRTH_DATE,
 
 } from '../actions/types'
 const INITIAL_STATE = {
@@ -28,7 +28,7 @@ const INITIAL_STATE = {
     userName: '',
     email: '',
     password: '',
-
+    birthDate: '',
     stateName: '',
     zone: '',
     agentBranch: '',
@@ -39,7 +39,8 @@ const INITIAL_STATE = {
     acNumber: '',
     IFSECode: '',
     isActive: false,
-    addressProofType: 'Aadhar card'
+    addressProofType: 'Aadhar card',
+
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -143,6 +144,14 @@ export default (state = INITIAL_STATE, action) => {
                 addressProofType: action.payload
             };
         }
+        case AGENT_BIRTH_DATE: {
+            return {
+                ...state,
+                birthDate: action.payload
+            };
+        }
+
+
         default:
             return state;
     }

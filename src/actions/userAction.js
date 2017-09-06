@@ -25,7 +25,8 @@ export const loginUser = (email, password) => {
                 let user = {
                     email:email,
                     password:password,
-                    token:response.data.token
+                    token:response.data.token,
+                    balance: response.data.user.Balance
                 };
                 AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
                 });

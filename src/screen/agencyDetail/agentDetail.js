@@ -19,9 +19,9 @@ import { showAlert } from '../../services/apiCall';
 
 const {width, height} =Dimensions.get('window');
 const data = [
-    {id:1, name:'PartyWear ', lname:'Glasses', zone:'INR 1596', uri: require('../../assets/images/avatar-male.png'), isActive: true},
+    {id:1, name:'PartyWear ', lname:'Glasses', zone:'INR 1596', uri: require('../../assets/images/avatar-male.png'), isActive: false},
     {id:2, name:'Glasses ', lname:'Coat',zone:'INR 895', uri: require('../../assets/images/avatar-male.png'), isActive: false},
-    {id:3, name:'Wool Coat ', lname:'Glasses',zone:'INR 2569', uri: require('../../assets/images/avatar-male.png'), isActive: true},
+    {id:3, name:'Wool Coat ', lname:'Glasses',zone:'INR 2569', uri: require('../../assets/images/avatar-male.png'), isActive: false},
     {id:4, name:'Long Trench ', lname:'Coat',zone:'INR 956', uri: require('../../assets/images/avatar-male.png'), isActive: true},
     {id:5, name:'Glasses ', lname:'Coat',zone:'INR 1862', uri: require('../../assets/images/avatar-male.png'), isActive: true},
     {id:6, name:'Hombug ', lname:'Glasses',zone:'INR 939', uri: require('../../assets/images/avatar-male.png'), isActive: false},
@@ -48,12 +48,22 @@ class AgentDetail extends Component {
     }
 
     onActivateCall = (index, flag) => {
-
-        let arr = this.state.agencyDetail;
-        arr[index].isActive = !flag;
-        this.setState({
-            agencyDetail: arr
-        });
+        if(!flag) {
+            Alert.alert("Warning!!",
+                "\nAre you sure, you want to activate this agency?",
+                [
+                    {text: 'Yes', onPress: () => {
+                        let arr = this.state.agencyDetail;
+                        arr[index].isActive = !flag;
+                        this.setState({
+                            agencyDetail: arr
+                        });
+                    }},
+                    {text: 'No', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: false }
+            );
+        }
     };
 
     renderAgents = () => {
@@ -81,12 +91,12 @@ class AgentDetail extends Component {
                         </View>
                         <TouchableHighlight style={styles.moreView}
                                             onPress={()=> this.onActivateCall(index, item.isActive)} underlayColor={"transparent"}>
-                                <View style={{margin:5}}>
-                                    {(item.isActive) ?
-                                        <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
-                                        :
-                                        <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
-                                    }
+                            <View style={{margin:5}}>
+                                {(item.isActive) ?
+                                    <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
+                                    :
+                                    <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
+                                }
                             </View>
 
                         </TouchableHighlight>

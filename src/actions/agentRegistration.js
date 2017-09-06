@@ -17,7 +17,8 @@ import {
     AGENT_ACCNO_CHANGED,
     AGENT_IFSE_CHANGED,
     AGENT_ADDRESS_PROOF_TYPE,
-    AGENT_ACTIVATION
+    AGENT_ACTIVATION,
+    AGENT_BIRTH_DATE
 
 } from './types'
 import {CallApi} from '../services/apiCall'
@@ -45,6 +46,7 @@ export const registerAgency = () => {
             acNumber: getState().agent.acNumber,
             IFSECode: getState().agent.IFSECode,
             isActive:  getState().agent.isActive,
+            birthdate: ''
         };
 debugger
         // return CallApi(Constant.baseUrl+Constant.signIn,'get',{},{"Accept":"application/json"})
@@ -128,4 +130,8 @@ export const agentActivate = (text) => {
 
 export const agentAddressProofType = (text) => {
     return { type: AGENT_ADDRESS_PROOF_TYPE, payload: text };
+};
+
+export const agentBirthDate = (text) => {
+    return { type: AGENT_BIRTH_DATE, payload: text };
 };
