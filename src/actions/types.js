@@ -1,5 +1,6 @@
 
 export const REGISTERED_USER = 'REGISTERED_USER';
+export const START_LOADING = 'START_LOADING';
 
 //User Login Data Store
 export const APP_SET_USER_DATA = 'APP_SET_USER_DATA';
