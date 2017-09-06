@@ -14,11 +14,15 @@ import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
 import { showAlert } from '../../services/apiCall';
+import _ from 'lodash';
 
 import {
+    getAllStates,
+    getAllZones,
+    getAllBranches,
     stateChanged,
-    zoneChanged,
-    branchChanged
+    branchChanged,
+    zoneChanged
 } from '../../actions/agentRegistration';
 import { isEmpty } from '../../helper/appHelper';
 
@@ -30,16 +34,22 @@ class AgentLocation extends Component {
             stateName: '',
             zone: '',
             agentBranch: '',
-            stateList: ["Gujarat", "Karnataka","Rajasthan", "Kerala", "Delhi"],
-            selectedOptionState: "Gujarat",
-            zoneList: ["Zone 1", "Zone 2","Zone 3", "Zone 4", "Zone 5"],
-            selectedOptionZone: "Zone",
-            branchList: ["branch 1", "branch 2","branch 3", "branch 4", "branch 5"],
-            selectedOptionBranch: "Branch",
+            selectedOptionState: '--Select State--',
+            selectedOptionZone: "--Select Zone--",
+            selectedOptionBranch: "--Select Branch--",
             views: [],
             opened: false,
-            selectedField: 'state'
+            selectedField: 'state',
+            selectedStateId: '',
+            selectedZoneId: '',
+            selectedBranchId: ''
         };
+    }
+
+    componentWillMount(){
+        this.props.getAllStates();
+        this.props.getAllZones();
+        this.props.getAllBranches();
     }
 
     onBackButtonPress = () => {
@@ -55,6 +65,7 @@ class AgentLocation extends Component {
         //     showAlert('Enter Data in all fields.');
         // }
 
+        //console.log('selected value:', this.state.selectedOptionBranch)
         this.props.navigator.push('agentDocuments');
     };
 
@@ -77,16 +88,23 @@ class AgentLocation extends Component {
     onSelectOption = (src) => {
         switch (this.state.selectedField){
             case 'state':
-                this.props.stateChanged(src);
-                this.setState({selectedOptionState: src});
+                let state = _.find(this.props.stateName, {_id: src});
+                debugger;
+
+                this.props.stateChanged(state);
+                this.setState({selectedOptionState: state.name});
                 break;
             case 'zone':
-                this.props.zoneChanged(src);
-                this.setState({selectedOptionZone: src});
+
+                let zone = _.find(this.props.zone, {_id: src});
+                this.props.zoneChanged(zone);
+                this.setState({selectedOptionZone: zone.name});
                 break;
             case 'branch':
-                this.props.branchChanged(src);
-                this.setState({selectedOptionBranch: src});
+
+                let branch = _.find(this.props.agentBranch, {_id: src});
+                this.props.branchChanged(branch);
+                this.setState({selectedOptionBranch: branch.name});
                 break;
         }
 
@@ -98,12 +116,13 @@ class AgentLocation extends Component {
             case 'state':
                 return(
                     <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
-                            selectedValue={this.state.selectedOptionState}
+                            selectedValue={this.props.selectedState._id}
                             onValueChange={this.onSelectOption}>
                         {
-                            this.state.stateList.map(function (src, index) {
-                                return <Picker.Item key={index}
-                                                    label={src.toString()} value={src.toString()}/>
+                            this.props.stateName.map(function (item, index) {
+                                return <Picker.Item key={item._id}
+                                                    label={item.name}
+                                                    value={item._id}/>
                             })
                         }
                     </Picker>
@@ -111,25 +130,28 @@ class AgentLocation extends Component {
             case 'zone':
                 return(
                     <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
-                            selectedValue={this.state.selectedOptionZone}
+                            selectedValue={this.props.selectedZone._id}
                             onValueChange={this.onSelectOption}>
                         {
-                            this.state.zoneList.map(function (src, index) {
-                                return <Picker.Item key={index}
-                                                    label={src.toString()} value={src.toString()}/>
+                            this.props.zone.map(function (src, index) {
+                                return <Picker.Item key={src._id}
+                                                    label={src.name}
+                                                    value={src._id}/>
                             })
                         }
                     </Picker>
                 );
             case 'branch':
                 return(
-                    <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
-                            selectedValue={this.state.selectedOptionBranch}
+                    <Picker style={{marginBottom: 0}}
+                            mode={Picker.MODE_DIALOG}
+                            selectedValue={this.props.selectedBranch._id}
                             onValueChange={this.onSelectOption}>
                         {
-                            this.state.branchList.map(function (src, index) {
-                                return <Picker.Item key={index}
-                                                    label={src.toString()} value={src.toString()}/>
+                            this.props.agentBranch.map(function (src, index) {
+                                return <Picker.Item key={src._id}
+                                                    label={src.name}
+                                                    value={src._id}/>
                             })
                         }
                     </Picker>
@@ -203,8 +225,8 @@ class AgentLocation extends Component {
                                         onValueChange={this.onSelectOption}
                                         style={{height:30}}>
                                     {
-                                        this.state.stateList.map(function (src, index) {
-                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                        this.props.stateName.map(function (src, index) {
+                                            return <Picker.Item label={src.name} value={src._id}/>
                                         })
                                     }
                                 </Picker>
@@ -241,8 +263,8 @@ class AgentLocation extends Component {
                                         onValueChange={this.onSelectOption}
                                         style={{height:30}}>
                                     {
-                                        this.state.zoneList.map(function (src, index) {
-                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                        this.props.zone.map(function (src, index) {
+                                            return <Picker.Item label={src.name} value={src._id}/>
                                         })
                                     }
                                 </Picker>
@@ -279,8 +301,8 @@ class AgentLocation extends Component {
                                         onValueChange={this.onSelectOption}
                                         style={{height:30}}>
                                     {
-                                        this.state.branchList.map(function (src, index) {
-                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                        this.props.agentBranch.map(function (src, index) {
+                                            return <Picker.Item label={src.name} value={src._id}/>
                                         })
                                     }
                                 </Picker>
@@ -345,11 +367,15 @@ const mapStateToProps = state => {
         stateName: state.agent.stateName,
         zone: state.agent.zone,
         agentBranch: state.agent.agentBranch,
+        selectedState: state.agent.selectedState,
+        selectedBranch: state.agent.selectedBranch,
+        selectedZone: state.agent.selectedZone
     };
 };
 
 export default connect(mapStateToProps, {
+    getAllStates, getAllZones, getAllBranches,
     stateChanged,
-    zoneChanged,
-    branchChanged
+    branchChanged,
+    zoneChanged
 })(AgentLocation);

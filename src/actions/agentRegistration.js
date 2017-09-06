@@ -18,7 +18,16 @@ import {
     AGENT_IFSE_CHANGED,
     AGENT_ADDRESS_PROOF_TYPE,
     AGENT_ACTIVATION,
-    AGENT_BIRTH_DATE
+    AGENT_BIRTH_DATE,
+
+    GET_ALL_STATES_FAILED,
+    GET_ALL_STATES_SUCCESS,
+
+    GET_ALL_ZONES_FAILED,
+    GET_ALL_ZONES_SUCCESS,
+
+    GET_ALL_BRANCHES_SUCCESS,
+    GET_ALL_BRANCHES_FAILED
 
 } from './types'
 import {CallApi} from '../services/apiCall'
@@ -67,6 +76,59 @@ debugger
     };
 };
 
+export const getAllStates = () => {
+    return (dispatch, getState) => {
+        return CallApi(Constant.baseUrl + Constant.state, 'get', {}, {})
+            .then((response)=>{
+                dispatch({
+                    type: GET_ALL_STATES_SUCCESS,
+                    payload: response,
+                });
+            })
+            .catch((error)=>{
+                dispatch({
+                    type: GET_ALL_STATES_FAILED,
+                });
+                return Promise.reject(error);
+            })
+    };
+};
+
+export const getAllZones = () => {
+    return (dispatch, getState) => {
+        return CallApi(Constant.baseUrl + Constant.zones, 'get', {}, {})
+            .then((response)=>{
+                dispatch({
+                    type: GET_ALL_ZONES_SUCCESS,
+                    payload: response,
+                });
+            })
+            .catch((error)=>{
+                dispatch({
+                    type: GET_ALL_ZONES_FAILED,
+                });
+                return Promise.reject(error);
+            })
+    };
+};
+
+export const getAllBranches = () => {
+    return (dispatch, getState) => {
+        return CallApi(Constant.baseUrl + Constant.branch, 'get', {}, {})
+            .then((response)=>{
+                dispatch({
+                    type: GET_ALL_BRANCHES_SUCCESS,
+                    payload: response,
+                });
+            })
+            .catch((error)=>{
+                dispatch({
+                    type: GET_ALL_BRANCHES_FAILED,
+                });
+                return Promise.reject(error);
+            })
+    };
+};
 
 export const fnameChanged = (text) => {
     return { type: AGENT_FNAME_CHANGED, payload: text };
