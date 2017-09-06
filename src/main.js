@@ -6,7 +6,7 @@ import navigationContext from './navigationHelper/customNavigationContext';
 import Router from './navigationHelper/router'
 import { NavigationProvider,StackNavigation } from '@expo/ex-navigation';
 import * as Animatable from 'react-native-animatable';
-
+import Navigation from './screen/navigation'
 let isLogin = false;
 
 export default class main extends React.Component {
@@ -23,25 +23,7 @@ export default class main extends React.Component {
         return (
             <View style={styles.container}>
                 <Provider store={store}>
-                    <NavigationProvider router={Router} context={navigationContext}>
-                        <StatusBar
-                            hidden={false}
-                            barStyle="light-content"
-                        />
-                        <StackNavigation initialRoute={Router.getRoute('login')}
-                                         defaultRouteConfig={{
-                                             navigationBar: {
-                                                 visible: false,
-                                             }
-                                         }}/>
-
-                        <Animatable.View  animation="zoomIn" iterationCount={'infinite'}
-                                          alternate={true}
-                                          style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
-                            <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>3434</Text>
-                        </Animatable.View>
-
-                    </NavigationProvider>
+                    <Navigation/>
                 </Provider>
             </View>
         );

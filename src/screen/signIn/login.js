@@ -37,7 +37,7 @@ class Login extends Component {
                     email={this.props.email}
                     password={this.props.password}
                     onSignInPress={ this.onSignInPress }
-                    />
+                />
                 <Spinner visible={this.props.isLoading} />
 
             </View>
