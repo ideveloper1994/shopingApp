@@ -1,2 +1,3 @@
-dependencies: /Users/itilak/Documents/shoppingApp/ios/shopapp/main.m \
-  /Users/itilak/Documents/shoppingApp/ios/shopapp/AppDelegate.h
+dependencies: \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/shopapp/main.m \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/shopapp/AppDelegate.h

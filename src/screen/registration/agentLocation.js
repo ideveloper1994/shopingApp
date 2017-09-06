@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
+    Text, TouchableHighlight,
     Alert,
     AsyncStorage,
-    View,
+    View, Image,
     Keyboard,
-    TextInput,
+    TextInput, Picker,
     ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -30,6 +30,15 @@ class AgentLocation extends Component {
             stateName: '',
             zone: '',
             agentBranch: '',
+            stateList: ["Gujarat", "Karnataka","Rajasthan", "Kerala", "Delhi"],
+            selectedOptionState: "Gujarat",
+            zoneList: ["Zone 1", "Zone 2","Zone 3", "Zone 4", "Zone 5"],
+            selectedOptionZone: "Zone",
+            branchList: ["branch 1", "branch 2","branch 3", "branch 4", "branch 5"],
+            selectedOptionBranch: "Branch",
+            views: [],
+            opened: false,
+            selectedField: 'state'
         };
     }
 
@@ -49,59 +58,231 @@ class AgentLocation extends Component {
         this.props.navigator.push('agentDocuments');
     };
 
-    focusNextField = (nextField) => {
-        this.refs[nextField].focus();
+
+    onPressSelectSource = (selectedType) => {
+        if (this.state.opened) {
+            this.setState({opened: false, selectedField: selectedType});
+            this.setState((state) => ({views: state.views.slice(0, -1)}));
+        }else{
+            this.setState((state) => ({views: [...state.views, {}]}));
+            this.setState({opened: true, selectedField: selectedType});
+        }
+    };
+
+    onPressRemoveView = () => {
+        this.setState({opened: false});
+        this.setState((state) => ({views: state.views.slice(0, -1)}));
+    };
+
+    onSelectOption = (src) => {
+        switch (this.state.selectedField){
+            case 'state':
+                this.setState({selectedOptionState: src});
+                break;
+            case 'zone':
+                this.setState({selectedOptionZone: src});
+                break;
+            case 'branch':
+                this.setState({selectedOptionBranch: src});
+                break;
+        }
+
+    };
+
+
+    renderPicker = () => {
+        switch (this.state.selectedField){
+            case 'state':
+                return(
+                    <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
+                            selectedValue={this.state.selectedOptionState}
+                            onValueChange={this.onSelectOption}>
+                        {
+                            this.state.stateList.map(function (src, index) {
+                                return <Picker.Item key={index}
+                                                    label={src.toString()} value={src.toString()}/>
+                            })
+                        }
+                    </Picker>
+                );
+            case 'zone':
+                return(
+                    <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
+                            selectedValue={this.state.selectedOptionZone}
+                            onValueChange={this.onSelectOption}>
+                        {
+                            this.state.zoneList.map(function (src, index) {
+                                return <Picker.Item key={index}
+                                                    label={src.toString()} value={src.toString()}/>
+                            })
+                        }
+                    </Picker>
+                );
+            case 'branch':
+                return(
+                    <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
+                            selectedValue={this.state.selectedOptionBranch}
+                            onValueChange={this.onSelectOption}>
+                        {
+                            this.state.branchList.map(function (src, index) {
+                                return <Picker.Item key={index}
+                                                    label={src.toString()} value={src.toString()}/>
+                            })
+                        }
+                    </Picker>
+                );
+        }
     };
 
     render() {
+        if(Constant.IOS) {
+            views = this.state.views.map((view, i) =>
+                <View key={i} style={{ flex:1,
+                    flexDirection:'column',
+                    marginBottom:10,
+                    justifyContent: 'flex-end',
+                }}>
+                    <View style={{flexDirection:'column'}}>
+                        <View style={{height: 0.8, backgroundColor:'rgb(230,230,230)'}}>
+                        </View>
+                        <View style={{width:Constant.screenWidth, backgroundColor:'#FFF',
+                            height: 40}}>
+                            <TouchableHighlight style={{
+                                flex: 1,padding: 5,justifyContent:'center', alignItems:'center'
+                            }}
+                                                onPress={this.onPressRemoveView}
+                                                underlayColor='transparent'>
+                                <Text>Done</Text>
+                            </TouchableHighlight>
+
+                        </View>
+                        <View style={{height: 0.8, backgroundColor:'rgb(230,230,230)'}}>
+                        </View>
+                    </View>
+                    <View>
+                        {this.renderPicker()}
+                    </View>
+                </View>
+            )}
+
         return (
             <View style={{flex:1}}>
-                <NavigationBar title="Location Detail"
-                               onBackButtonPress={this.onBackButtonPress}
-                />
+                <NavigationBar title="Location Detail" onBackButtonPress={this.onBackButtonPress}/>
+
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>State</Text>
-                        <TextInput  ref="txtState"
-                                    value={this.props.stateName}
-                                    placeholder={"State"}
-                                    style={ styles.textBox }
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    returnKeyType={'next'}
-                                    onSubmitEditing={() => this.focusNextField('txtZone')}
-                                    onChangeText={(text) => {this.props.stateChanged(text)}}
-                                    underlineColorAndroid={Constant.transparent}
-                        />
+
+                    <View>
+                        {(Constant.IOS)?
+                            <TouchableHighlight style={{flex: 1,borderColor: 'gray',
+                                borderWidth: 0.5,backgroundColor:'white',
+                                height:45, borderRadius: 5,
+                                flexDirection: 'row', width:'90%', alignSelf:'center', marginTop:10, marginBottom: 10}}
+                                                elevation={3}
+                                                onPress={()=>this.onPressSelectSource('state')}
+                                                underlayColor='transparent'>
+                                <View style={{flex: 1, flexDirection: 'row', alignItems:"center"}}>
+                                    <Text style={{flex: 1, paddingLeft:10}}>
+                                        {this.state.selectedOptionState}
+                                    </Text>
+                                    <View style={{height: 30, width: 23, backgroundColor: 'white'}}>
+                                        <Image style = {{height: 10, width: 10, marginLeft:7,marginTop: 7,
+                                            backgroundColor: 'white',tintColor: 'gray'}}
+                                               source={require('../../assets/images/expandArrow.png')}>
+                                        </Image>
+                                    </View>
+                                </View>
+                            </TouchableHighlight>
+                            :
+
+                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
+                                <Picker mode={Picker.MODE_DROPDOWN}
+                                        selectedValue={this.state.selectedOptionState}
+                                        onValueChange={this.onSelectOption}
+                                        style={{height:30}}>
+                                    {
+                                        this.state.stateList.map(function (src, index) {
+                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                        })
+                                    }
+                                </Picker>
+                            </View>
+                        }
                     </View>
 
-                    <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Zone</Text>
-                        <TextInput  ref="txtZone"
-                                    value={this.props.zone}
-                                    placeholder={"Zone"}
-                                    style={ styles.textBox }
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    returnKeyType={'next'}
-                                    onChangeText={(text) => {this.props.zoneChanged(text)}}
-                                    onSubmitEditing={() => this.focusNextField('txtBranch')}
-                                    underlineColorAndroid={Constant.transparent}
-                        />
+                    <View>
+                        {(Constant.IOS)?
+                            <TouchableHighlight style={{flex: 1,borderColor: 'gray',
+                                borderWidth: 0.5,backgroundColor:'white',
+                                height:45, borderRadius: 5,
+                                flexDirection: 'row', width:'90%', alignSelf:'center', marginTop:10, marginBottom: 10}}
+                                                elevation={3}
+                                                onPress={()=>this.onPressSelectSource('zone')}
+                                                underlayColor='transparent'>
+                                <View style={{flex: 1, flexDirection: 'row', alignItems:"center"}}>
+                                    <Text style={{flex: 1, paddingLeft:10}}>
+                                        {this.state.selectedOptionZone}
+                                    </Text>
+                                    <View style={{height: 30, width: 23, backgroundColor: 'white'}}>
+                                        <Image style = {{height: 10, width: 10, marginLeft:7,marginTop: 7,
+                                            backgroundColor: 'white',tintColor: 'gray'}}
+                                               source={require('../../assets/images/expandArrow.png')}>
+                                        </Image>
+                                    </View>
+                                </View>
+                            </TouchableHighlight>
+                            :
+
+                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
+                                <Picker mode={Picker.MODE_DROPDOWN}
+                                        selectedValue={this.state.selectedOptionZone}
+                                        onValueChange={this.onSelectOption}
+                                        style={{height:30}}>
+                                    {
+                                        this.state.zoneList.map(function (src, index) {
+                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                        })
+                                    }
+                                </Picker>
+                            </View>
+                        }
                     </View>
 
-                    <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Branch</Text>
-                        <TextInput  ref="txtBranch"
-                                    value={this.props.agentBranch}
-                                    placeholder={"Branch name"}
-                                    style={ styles.textBox }
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    returnKeyType={'done'}
-                                    onChangeText={(text) => {this.props.branchChanged(text)}}
-                                    underlineColorAndroid={Constant.transparent}
-                        />
+                    <View>
+                        {(Constant.IOS)?
+                            <TouchableHighlight style={{flex: 1,borderColor: 'gray',
+                                borderWidth: 0.5,backgroundColor:'white',
+                                height:45, borderRadius: 5,
+                                flexDirection: 'row', width:'90%', alignSelf:'center', marginTop:10, marginBottom: 10}}
+                                                elevation={3}
+                                                onPress={()=>this.onPressSelectSource('branch')}
+                                                underlayColor='transparent'>
+                                <View style={{flex: 1, flexDirection: 'row', alignItems:"center"}}>
+                                    <Text style={{flex: 1, paddingLeft:10}}>
+                                        {this.state.selectedOptionBranch}
+                                    </Text>
+                                    <View style={{height: 30, width: 23, backgroundColor: 'white'}}>
+                                        <Image style = {{height: 10, width: 10, marginLeft:7,marginTop: 7,
+                                            backgroundColor: 'white',tintColor: 'gray'}}
+                                               source={require('../../assets/images/expandArrow.png')}>
+                                        </Image>
+                                    </View>
+                                </View>
+                            </TouchableHighlight>
+                            :
+
+                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
+                                <Picker mode={Picker.MODE_DROPDOWN}
+                                        selectedValue={this.state.selectedOptionBranch}
+                                        onValueChange={this.onSelectOption}
+                                        style={{height:30}}>
+                                    {
+                                        this.state.branchList.map(function (src, index) {
+                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                        })
+                                    }
+                                </Picker>
+                            </View>
+                        }
                     </View>
 
                     <Button title="Next"
@@ -109,7 +290,21 @@ class AgentLocation extends Component {
                             color="#FFF"
                             otherStyle={{marginBottom:20}}
                             onPress={this.onNextButtonPress}/>
+
                 </ScrollView>
+
+                {(Constant.IOS)?
+                    <View style={{flex: 1,
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        position: 'absolute',
+                        marginTop:(Constant.IOS) ? Constant.screenHeight-230 : Constant.screenHeight-130,
+                        backgroundColor: 'white'}}>
+                        {views}
+                    </View>
+                    :
+                    <View/>
+                }
             </View>
         );
     }

@@ -5,9 +5,19 @@ import store from './store/config';
 import navigationContext from './navigationHelper/customNavigationContext';
 import Router from './navigationHelper/router'
 import { NavigationProvider,StackNavigation } from '@expo/ex-navigation';
+import * as Animatable from 'react-native-animatable';
+
+let isLogin = false;
 
 export default class main extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillMount() {
+
+    }
 
     render() {
         return (
@@ -25,9 +35,12 @@ export default class main extends React.Component {
                                              }
                                          }}/>
 
-                        <View style={{position:'absolute', top: 20, right: 20, backgroundColor:'transparent'}}>
-                            <Text style={{fontSize:17, fontWeight: '600',color:'#F00'}}>3434</Text>
-                        </View>
+                        <Animatable.View  animation="zoomIn" iterationCount={'infinite'}
+                                          alternate={true}
+                                          style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
+                            <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>3434</Text>
+                        </Animatable.View>
+
                     </NavigationProvider>
                 </Provider>
             </View>
@@ -44,3 +57,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+

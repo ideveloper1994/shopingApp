@@ -65,6 +65,11 @@ class AgentFormPersonal extends Component {
         this.refs[nextField].focus();
     };
 
+
+    onBackButtonPress = () => {
+        this.props.navigator.pop();
+    };
+
     render() {
         return (
             <View style={{flex:1}}>

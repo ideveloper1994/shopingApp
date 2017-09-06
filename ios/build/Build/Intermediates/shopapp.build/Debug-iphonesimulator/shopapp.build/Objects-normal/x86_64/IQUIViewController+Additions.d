@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/Categories/IQUIViewController+Additions.m \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/Categories/IQUIViewController+Additions.h
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/Categories/IQUIViewController+Additions.m \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/Categories/IQUIViewController+Additions.h

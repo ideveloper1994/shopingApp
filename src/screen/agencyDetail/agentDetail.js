@@ -19,62 +19,78 @@ import { showAlert } from '../../services/apiCall';
 
 const {width, height} =Dimensions.get('window');
 const data = [
-    {id:1, name:'PartyWear ', lname:'Glasses', zone:'INR 1596', uri: require('../../assets/images/avatar-male.png'),},
-    {id:2, name:'Glasses ', lname:'Coat',zone:'INR 895', uri: require('../../assets/images/avatar-male.png'),},
-    {id:3, name:'Wool Coat ', lname:'Glasses',zone:'INR 2569', uri: require('../../assets/images/avatar-male.png'),},
-    {id:4, name:'Long Trench ', lname:'Coat',zone:'INR 956', uri: require('../../assets/images/avatar-male.png'),},
-    {id:5, name:'Glasses ', lname:'Coat',zone:'INR 1862', uri: require('../../assets/images/avatar-male.png'),},
-    {id:6, name:'Hombug ', lname:'Glasses',zone:'INR 939', uri: require('../../assets/images/avatar-male.png'),},
-    {id:7, name:'Blend Coat ',lname:'Coat', zone:'INR 3955', uri: require('../../assets/images/avatar-male.png'),},
+    {id:1, name:'PartyWear ', lname:'Glasses', zone:'INR 1596', uri: require('../../assets/images/avatar-male.png'), isActive: true},
+    {id:2, name:'Glasses ', lname:'Coat',zone:'INR 895', uri: require('../../assets/images/avatar-male.png'), isActive: false},
+    {id:3, name:'Wool Coat ', lname:'Glasses',zone:'INR 2569', uri: require('../../assets/images/avatar-male.png'), isActive: true},
+    {id:4, name:'Long Trench ', lname:'Coat',zone:'INR 956', uri: require('../../assets/images/avatar-male.png'), isActive: true},
+    {id:5, name:'Glasses ', lname:'Coat',zone:'INR 1862', uri: require('../../assets/images/avatar-male.png'), isActive: true},
+    {id:6, name:'Hombug ', lname:'Glasses',zone:'INR 939', uri: require('../../assets/images/avatar-male.png'), isActive: false},
+    {id:7, name:'Blend Coat ',lname:'Coat', zone:'INR 3955', uri: require('../../assets/images/avatar-male.png'),isActive: true},
 ];
 
 class AgentDetail extends Component {
 
     constructor(props){
         super(props);
+        this.state={
+            agencyDetail:[]
+        };
     }
 
     onBackButtonPress = () => {
         this.props.navigator.pop();
     };
 
+    componentDidMount(){
+        this.setState({
+            agencyDetail: data
+        });
+    }
+
+    onActivateCall = (index, flag) => {
+
+        let arr = this.state.agencyDetail;
+        arr[index].isActive = !flag;
+        this.setState({
+            agencyDetail: arr
+        });
+    };
+
     renderAgents = () => {
-        return data.map(item => {
+        return this.state.agencyDetail.map((item,index) => {
             return(
-                <View style={styles.agentView}>
-                    <View style={styles.imageView}>
-                        <Image onLayout={(event) => {this.setState({y: event.nativeEvent.layout.y})}} source={item.uri} style={styles.images} />
-                    </View>
-                    <View style={styles.textView}>
-                        <View style={{flexDirection:'row'}}>
-                            <Text>{item.name}</Text>
-                            <Text>{item.lname}</Text>
+                <TouchableHighlight onPress={()=>{this.props.navigator.push('agentFullProfile')}}
+                                    underlayColor={"transparent"}
+                >
+                    <View style={styles.agentView}>
+                        <View style={styles.imageView}>
+                            <Image onLayout={(event) => {this.setState({y: event.nativeEvent.layout.y})}}
+                                   source={item.uri} style={styles.images} />
                         </View>
-                        <View>
-                            <Text>{item.zone}</Text>
-                        </View>
-                        <View>
-                            <Text>abc@gmail.com</Text>
-                        </View>
-                    </View>
-                    <View style={styles.moreView}>
-                        <View style={{flex:1,justifyContent:'center',alignSelf:'flex-end', alignItems:'center'}}>
-                            <View style={{margin:5}}>
-                                {item.id % 2 === 0 ?
-                                    <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
-                                    :
-                                    <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
-                                }
-                                    </View>
+                        <View style={styles.textView}>
+                            <View style={{flexDirection:'row'}}>
+                                <Text>{item.name}</Text>
+                                <Text>{item.lname}</Text>
+                            </View>
                             <View>
-                                <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigator.push('agentFullProfile')}}>
-                                    <Text style={{color:'blue',}}>Detail</Text>
-                                </TouchableHighlight>
+                                <Text>{item.zone}</Text>
+                            </View>
+                            <View>
+                                <Text>abc@gmail.com</Text>
                             </View>
                         </View>
+                        <TouchableHighlight style={styles.moreView}
+                                            onPress={()=> this.onActivateCall(index, item.isActive)} underlayColor={"transparent"}>
+                                <View style={{margin:5}}>
+                                    {(item.isActive) ?
+                                        <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
+                                        :
+                                        <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
+                                    }
+                            </View>
 
-                    </View>
-                </View>
+                        </TouchableHighlight>
+                    </View></TouchableHighlight>
             )
         });
     };
@@ -86,6 +102,7 @@ class AgentDetail extends Component {
 
                 <ScrollView showsVerticalScrollIndicator={false} style={{}}>
                     {this.renderAgents()}
+                    <View style={{height:100}}/>
                 </ScrollView>
 
                 <View style={{position:'absolute',
@@ -148,12 +165,13 @@ const styles = StyleSheet.create({
     },
     textView:{
         margin:12,
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        flex:1,
     },
     moreView:{
-        flex:1,
-        alignSelf:'center',
-        marginRight:12
+        marginRight:12,
+        justifyContent:'center',
+        alignItems:'center',
     }
 });
 

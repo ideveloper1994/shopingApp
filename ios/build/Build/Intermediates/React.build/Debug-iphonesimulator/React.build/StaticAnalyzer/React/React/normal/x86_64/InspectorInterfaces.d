@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/itilak/Documents/shoppingApp/node_modules/react-native/ReactCommon/jschelpers/InspectorInterfaces.cpp \
-  /Users/itilak/Documents/shoppingApp/node_modules/react-native/ReactCommon/jschelpers/InspectorInterfaces.h
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/node_modules/react-native/ReactCommon/jschelpers/InspectorInterfaces.cpp \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/node_modules/react-native/ReactCommon/jschelpers/InspectorInterfaces.h
