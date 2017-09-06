@@ -2,10 +2,10 @@ import ApiConstant from './apiConstant'
 import axios from 'axios'
 import {Alert} from 'react-native'
 
-export function CallApi(url,type='get',data={},header=[]) {
+export function CallApi(url,type='get',data={},header={}) {
 
 
-    let reqHeader = Object.assign(header, {"Accept":"application/json"});
+    let reqHeader = Object.assign(header, {"Content-Type":"application/json"});
 
     if(type == 'get'){
         return axios.get(url,{headers: reqHeader})

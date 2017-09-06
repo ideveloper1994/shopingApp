@@ -18,6 +18,10 @@ import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
 
+import {
+    agentAddressProofType
+} from '../../actions/agentRegistration';
+
 let ImagePicker = require('react-native-image-picker');
 
 console.disableYellowBox = true;
@@ -33,7 +37,6 @@ class AgentDocument extends Component {
             addressSrc: '',
             profileSrc: '',
             arrList: ["Aadhar card", "Voting card","Driving licence", "Ration card", "Electricity bill"],
-            selectedOption: "Aadhar card",
             opened: false,
             views: [],
         };
@@ -103,10 +106,6 @@ class AgentDocument extends Component {
         this.setState((state) => ({views: state.views.slice(0, -1)}));
     };
 
-    onSelectOption = (src) => {
-        this.setState({selectedOption: src});
-    };
-
     render() {
         if(Constant.IOS) {
             views = this.state.views.map((view, i) =>
@@ -134,8 +133,8 @@ class AgentDocument extends Component {
                     </View>
                     <View>
                         <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
-                                selectedValue={this.state.selectedOption}
-                                onValueChange={this.onSelectOption}>
+                                selectedValue={this.props.addressProofType}
+                                onValueChange={(src) => this.props.agentAddressProofType(src)}>
                             {
                                 this.state.arrList.map(function (src, index) {
                                     return <Picker.Item key={index}
@@ -195,7 +194,7 @@ class AgentDocument extends Component {
                                                 underlayColor='transparent'>
                                 <View style={{flex: 1, flexDirection: 'row', alignItems:"center"}}>
                                     <Text style={{flex: 1, paddingLeft:10}}>
-                                        {this.state.selectedOption}
+                                        {this.props.addressProofType}
                                     </Text>
                                     <View style={{height: 30, width: 23, backgroundColor: 'white'}}>
                                         <Image style = {{height: 10, width: 10, marginLeft:7,marginTop: 7,
@@ -209,8 +208,8 @@ class AgentDocument extends Component {
 
                             <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
                                 <Picker mode={Picker.MODE_DROPDOWN}
-                                        selectedValue={this.state.selectedOption}
-                                        onValueChange={this.onSelectOption}
+                                        selectedValue={this.props.addressProofType}
+                                        onValueChange={(src) => this.props.agentAddressProofType(src)}>
                                         style={{height:30}}>
                                     {
                                         this.state.arrList.map(function (src, index) {
@@ -313,9 +312,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
+        addressProofType: state.agent.addressProofType,
     };
 };
 
 export default connect(mapStateToProps, {
-
+    agentAddressProofType
 })(AgentDocument);

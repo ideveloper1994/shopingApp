@@ -15,6 +15,10 @@ import {
     AGENT_ACHOLDER_CHANGED,
     AGENT_ACCNO_CHANGED,
     AGENT_IFSE_CHANGED,
+    AGENT_ACTIVATION,
+
+    AGENT_ADDRESS_PROOF_TYPE,
+
 
 } from '../actions/types'
 const INITIAL_STATE = {
@@ -34,6 +38,8 @@ const INITIAL_STATE = {
     acHolderName: '',
     acNumber: '',
     IFSECode: '',
+    isActive: false,
+    addressProofType: 'Aadhar card'
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -123,6 +129,18 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 IFSECode: action.payload
+            };
+        }
+        case AGENT_ACTIVATION: {
+            return {
+                ...state,
+                isActive: action.payload
+            };
+        }
+        case AGENT_ADDRESS_PROOF_TYPE: {
+            return {
+                ...state,
+                addressProofType: action.payload
             };
         }
         default:

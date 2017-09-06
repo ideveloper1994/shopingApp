@@ -77,12 +77,15 @@ class AgentLocation extends Component {
     onSelectOption = (src) => {
         switch (this.state.selectedField){
             case 'state':
+                this.props.stateChanged(src);
                 this.setState({selectedOptionState: src});
                 break;
             case 'zone':
+                this.props.zoneChanged(src);
                 this.setState({selectedOptionZone: src});
                 break;
             case 'branch':
+                this.props.branchChanged(src);
                 this.setState({selectedOptionBranch: src});
                 break;
         }

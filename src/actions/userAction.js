@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
     USER_EMAIL_CHANGED,
     USER_PASS_CHANGED,
+    REGISTERED_USER
 } from './types'
 import { AsyncStorage } from 'react-native';
 import {CallApi} from '../services/apiCall'
@@ -11,7 +12,8 @@ import { NavigationActions } from '@expo/ex-navigation';
 export const loginUser = (email, password) => {
     return (dispatch, getState) => {
 
-        return CallApi(Constant.baseUrl+Constant.signIn,'get',{},{"Accept":"application/json"})
+        return CallApi(Constant.baseUrl+Constant.signIn,'get',{},{})
+
             .then((response)=>{
                 let user = {
                     email:email,
@@ -21,6 +23,16 @@ export const loginUser = (email, password) => {
                 AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
                 });
 
+                dispatch({
+                    type: REGISTERED_USER,
+                    payload: {
+                        "name" :"emiadda",
+                        "email" :"test@emiadda.com",
+                        "role" :"developmentofficer",
+                        "password" :"emiadda",
+                        "Balance" :"50000"
+                    }
+                })
             })
             .catch((error)=>{
                 debugger;
