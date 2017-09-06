@@ -20,7 +20,16 @@ import {
     AGENT_ADDRESS_PROOF_TYPE,
     AGENT_BIRTH_DATE,
 
-} from '../actions/types'
+    GET_ALL_STATES_FAILED,
+    GET_ALL_STATES_SUCCESS,
+
+    GET_ALL_ZONES_SUCCESS,
+    GET_ALL_ZONES_FAILED,
+
+    GET_ALL_BRANCHES_FAILED,
+    GET_ALL_BRANCHES_SUCCESS
+
+} from '../actions/types';
 const INITIAL_STATE = {
     firstName: '',
     lastName: '',
@@ -29,9 +38,10 @@ const INITIAL_STATE = {
     email: '',
     password: '',
     birthDate: '',
-    stateName: '',
-    zone: '',
-    agentBranch: '',
+
+    stateName: [],
+    zone: [],
+    agentBranch: [],
 
     bankName: '',
     branchName: '',
@@ -40,6 +50,10 @@ const INITIAL_STATE = {
     IFSECode: '',
     isActive: false,
     addressProofType: 'Aadhar card',
+
+    selectedState: {},
+    selectedBranch: {},
+    selectedZone: {}
 
 };
 
@@ -87,19 +101,19 @@ export default (state = INITIAL_STATE, action) => {
         case AGENT_STATE_CHANGED: {
             return {
                 ...state,
-                stateName: action.payload,
+                selectedState: action.payload,
             };
         }
         case AGENT_ZONE_CHANGED: {
             return {
                 ...state,
-                zone: action.payload,
+                selectedZone: action.payload,
             };
         }
         case AGENT_BRANCH_CHANGED: {
             return {
                 ...state,
-                agentBranch: action.payload
+                selectedBranch: action.payload
             };
         }
         case AGENT_BANKNAME_CHANGED: {
@@ -150,8 +164,39 @@ export default (state = INITIAL_STATE, action) => {
                 birthDate: action.payload
             };
         }
-
-
+        case GET_ALL_STATES_SUCCESS: {
+            return {
+                ...state,
+                stateName: action.payload
+            };
+        }
+        case GET_ALL_STATES_FAILED: {
+            return {
+                ...state,
+            };
+        }
+        case GET_ALL_ZONES_SUCCESS: {
+            return {
+                ...state,
+                zone: action.payload
+            };
+        }
+        case GET_ALL_ZONES_FAILED: {
+            return {
+                ...state,
+            };
+        }
+        case GET_ALL_BRANCHES_SUCCESS: {
+            return {
+                ...state,
+                agentBranch: action.payload
+            };
+        }
+        case GET_ALL_BRANCHES_FAILED: {
+            return {
+                ...state,
+            };
+        }
         default:
             return state;
     }
