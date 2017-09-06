@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding:17,
         borderRadius: 35,
-        paddingTop: 22,
-        paddingBottom: 22,
+        paddingTop: 20,
+        paddingBottom: 20,
     },
     btnFont:{
         fontSize: 17,
