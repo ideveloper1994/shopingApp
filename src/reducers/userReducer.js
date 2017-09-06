@@ -1,7 +1,7 @@
-import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED, REGISTERED_USER } from '../actions/types'
+import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED, REGISTERED_USER, START_LOADING } from '../actions/types'
 const INITIAL_STATE = {
-    email: "test1@gmail.com",
-    password: "dfgdfg",
+    email: "test@emiadda.com",
+    password: "emiadda",
     token:"",
     isLoading:false,
     userDetail:{},
@@ -9,6 +9,13 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+
+        case START_LOADING: {
+            return {
+                ...state,
+                isLoading: action.payload,
+            };
+        }
 
         case APP_SET_USER_DATA: {
             return {

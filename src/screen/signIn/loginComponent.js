@@ -41,12 +41,12 @@ class LoginComponent extends Component {
         }
         else {
             Keyboard.dismiss();
-            this.props.loginUser(this.props.email, this.props.password);
-            //     .then(()=>{
-            //         //this.props.navigator.replace('rootTabNavigation');
-            //     })
-            //     .catch((err)=>{showAlert(err)});
-            this.props.onSignInPress();
+            this.props.loginUser(this.props.email, this.props.password)
+                .then(()=>{
+                    this.props.onSignInPress();
+                })
+                .catch((err)=>{showAlert("Login fail please try again")});
+
         }
     };
 
