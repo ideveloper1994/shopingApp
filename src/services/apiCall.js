@@ -1,9 +1,8 @@
-import ApiConstant from './apiConstant'
+import ApiConstant from './apiConstant';
 import axios from 'axios'
 import {Alert} from 'react-native'
 
 export function CallApi(url,type='get',data={},header={}) {
-
 
     let reqHeader = Object.assign(header, {"Content-Type":"application/json"});
 
@@ -56,7 +55,7 @@ export function CallApi(url,type='get',data={},header={}) {
 }
 
 export function showAlert(alertText) {
-    Alert.alert("App",
+    Alert.alert("Error",
         alertText,
         [
             {text: 'OK', onPress: () => console.log('OK Pressed')},

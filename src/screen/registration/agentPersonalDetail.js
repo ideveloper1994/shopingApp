@@ -21,8 +21,11 @@ import {
     mobileChanged,
     emailChanged,
     passwordChanged,
-    usernameChanged
+    usernameChanged,
+    agentBirthDate
 } from '../../actions/agentRegistration';
+import DatePicker from '../../helper/datepicker';
+import moment from 'moment';
 
 import { isEmpty, isValidEmail } from '../../helper/appHelper';
 
@@ -30,7 +33,9 @@ class AgentFormPersonal extends Component {
 
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {
+            selectedDate: '',
+        };
     }
 
     onNextButtonPress = () => {
@@ -131,6 +136,32 @@ class AgentFormPersonal extends Component {
                     </View>
 
                     <View style={styles.outerView}>
+                        <Text style={styles.formTextLabel}>Birth Date</Text>
+                        <DatePicker
+                            style={{color: 'gray',
+                                    width: '100%',
+                                    fontWeight: '500',
+                                    paddingBottom: 0,
+                                    height: 45,
+                                    paddingLeft: 10,
+                                    borderWidth: 0.5,
+                                    borderColor: 'gray',
+                                    borderRadius: 5}}
+                            date={this.props.birthDate}
+                            mode='date'
+                            maxDate={moment().format("DD MMM YYYY")}
+                            placeholder='Select Date'
+                            format='DD MMM YYYY'
+                            iconSource={require('../../assets/images/expandArrow.png')}
+                            confirmBtnText='Confirm'
+                            cancelBtnText='Cancel'
+                            onDateChange={(date) => {
+                                this.props.agentBirthDate(date)
+                            }}
+                        />
+                    </View>
+
+                    <View style={styles.outerView}>
                         <Text style={styles.formTextLabel}>User Name</Text>
                         <TextInput  ref="txtUserName"
                                     value={this.props.userName}
@@ -205,6 +236,7 @@ const mapStateToProps = state => {
         userName: state.agent.userName,
         email: state.agent.email,
         password: state.agent.password,
+        birthDate: state.agent.birthDate,
     };
 };
 
@@ -215,4 +247,5 @@ export default connect(mapStateToProps, {
     emailChanged,
     passwordChanged,
     usernameChanged,
+    agentBirthDate
 })(AgentFormPersonal);

@@ -142,18 +142,6 @@ class AgentBankDetail extends Component {
                         />
                     </View>
 
-                    <TouchableHighlight onPress={()=> this.props.agentActivate(!this.props.isActive)}
-                                        underlayColor={"transparent"}>
-
-                        <View style={styles.activeView}>
-                            <MaterialCommunityIcons name={(this.props.isActive) ? 'checkbox-marked' : 'checkbox-blank-outline'}
-                                                    size={35}
-                                                    color={'gray'}/>
-                            <Text style={styles.formTextLabel}>{" Active (activate user if payment is done)"}</Text>
-                        </View>
-                    </TouchableHighlight>
-
-
                     <Button title="Finish"
                             backColor={Constant.backColor}
                             color="#FFF"
