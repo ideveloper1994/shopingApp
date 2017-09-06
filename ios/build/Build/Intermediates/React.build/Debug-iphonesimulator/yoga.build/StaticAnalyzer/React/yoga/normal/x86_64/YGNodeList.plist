@@ -6,7 +6,7 @@
 <string>Apple LLVM version 8.1.0 (clang-802.0.42)</string>
  <key>files</key>
  <array>
-  <string>/Users/itilak/Documents/shoppingApp/node_modules/react-native/ReactCommon/yoga/yoga/YGNodeList.c</string>
+  <string>/Users/itilak/Documents/Projects/ST_ShoppingApp/node_modules/react-native/ReactCommon/yoga/yoga/YGNodeList.c</string>
  </array>
  <key>diagnostics</key>
  <array>

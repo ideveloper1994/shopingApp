@@ -1,4 +1,4 @@
 dependencies: \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/IQTextView/IQTextView.m \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/IQTextView/IQTextView.h \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/Constants/IQKeyboardManagerConstants.h
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/IQTextView/IQTextView.m \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/IQTextView/IQTextView.h \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/Constants/IQKeyboardManagerConstants.h

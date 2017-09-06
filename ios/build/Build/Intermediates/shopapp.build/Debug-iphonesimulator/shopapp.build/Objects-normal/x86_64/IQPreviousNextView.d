@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/IQToolbar/IQPreviousNextView.m \
-  /Users/itilak/Documents/shoppingApp/ios/IQKeyboardManager/IQToolbar/IQPreviousNextView.h
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/IQToolbar/IQPreviousNextView.m \
+  /Users/itilak/Documents/Projects/ST_ShoppingApp/ios/IQKeyboardManager/IQToolbar/IQPreviousNextView.h
