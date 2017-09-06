@@ -7,12 +7,15 @@ import {
     View,
     Keyboard,
     TextInput,
-    ScrollView
+    ScrollView,
+    Image,
+    TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
     bankNameChanged,
@@ -34,6 +37,7 @@ class AgentBankDetail extends Component {
             acHolderName: '',
             acNumber: '',
             IFSECode: '',
+            isActive: false
         };
     }
 
@@ -52,6 +56,12 @@ class AgentBankDetail extends Component {
             showAlert('Enter Data in all fields.');
         }*/
         this.props.navigator.push('agentDetail');
+    };
+
+    onActivateCall = () => {
+        this.setState({
+            isActive: !this.state.isActive
+        });
     };
 
     focusNextField = (nextField) => {
@@ -140,6 +150,18 @@ class AgentBankDetail extends Component {
                         />
                     </View>
 
+                    <TouchableHighlight onPress={()=> this.onActivateCall()}
+                                        underlayColor={"transparent"}>
+
+                    <View style={styles.activeView}>
+                        <MaterialCommunityIcons name={(this.state.isActive) ? 'checkbox-marked' : 'checkbox-blank-outline'}
+                                  size={35}
+                                  color={'gray'}/>
+                        <Text style={styles.formTextLabel}>{" Active (activate user if payment is done)"}</Text>
+                    </View>
+                    </TouchableHighlight>
+
+
                     <Button title="Finish"
                             backColor={Constant.backColor}
                             color="#FFF"
@@ -175,6 +197,13 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'gray',
         borderRadius: 5
+    },
+    activeView:{
+        width: "90%",
+        alignSelf: 'center',
+        paddingTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });
 

@@ -25,7 +25,7 @@ class AppNavigation extends React.Component {
                             hidden={false}
                             barStyle="light-content"
                         />
-                        <StackNavigation initialRoute={Router.getRoute('login')}
+                        <StackNavigation initialRoute={Router.getRoute('agentBankDetail')}
                                          defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
