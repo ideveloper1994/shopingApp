@@ -41,7 +41,7 @@ class LoginComponent extends Component {
         }
         else {
             Keyboard.dismiss();
-            // this.props.loginUser(this.props.email, this.props.password)
+            this.props.loginUser(this.props.email, this.props.password);
             //     .then(()=>{
             //         //this.props.navigator.replace('rootTabNavigation');
             //     })

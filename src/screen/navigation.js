@@ -20,25 +20,27 @@ class AppNavigation extends React.Component {
 
     render() {
         return (
-                    <NavigationProvider router={Router} context={navigationContext}>
-                        <StatusBar
-                            hidden={false}
-                            barStyle="light-content"
-                        />
-                        <StackNavigation initialRoute={Router.getRoute('agentBankDetail')}
-                                         defaultRouteConfig={{
+            <NavigationProvider router={Router} context={navigationContext}>
+                <StatusBar
+                    hidden={false}
+                    barStyle="light-content"
+                />
+                <StackNavigation initialRoute={Router.getRoute('login')}
+                                 defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
                                              }
                                          }}/>
 
-                        <Animatable.View  animation="zoomIn" iterationCount={'infinite'}
-                                          alternate={true}
-                                          style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
-                            <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>{this.props.balance}</Text>
-                        </Animatable.View>
+                <Animatable.View  animation="zoomIn" iterationCount={'infinite'}
+                                  alternate={true}
+                                  style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
+                    <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>
+                        {this.props.balance}
+                    </Text>
+                </Animatable.View>
 
-                    </NavigationProvider>
+            </NavigationProvider>
         );
     }
 
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        balance: (state.user.balance)?state.user.balance:'',
+        balance: (state.user.userDetail.Balance) ? state.user.userDetail.Balance : '',
         password: state.user.password,
         isLoading: state.user.isLoading,
     };

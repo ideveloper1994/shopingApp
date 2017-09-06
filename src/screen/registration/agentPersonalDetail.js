@@ -30,15 +30,7 @@ class AgentFormPersonal extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            firstName: '',
-            lastName: '',
-            mobileNo: '',
-            userName: '',
-            email: '',
-            password: '',
-
-        };
+        this.state = {};
     }
 
     onNextButtonPress = () => {

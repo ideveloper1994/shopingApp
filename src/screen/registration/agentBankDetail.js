@@ -22,7 +22,9 @@ import {
     bankBranchChanged,
     accountNoChanged,
     acHolderNameChanged,
-    IFSEChanged
+    IFSEChanged,
+    agentActivate,
+    registerAgency
 } from '../../actions/agentRegistration';
 import { isEmpty } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
@@ -32,12 +34,6 @@ class AgentBankDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            bankName: '',
-            branchName: '',
-            acHolderName: '',
-            acNumber: '',
-            IFSECode: '',
-            isActive: false
         };
     }
 
@@ -47,21 +43,17 @@ class AgentBankDetail extends Component {
 
     onFinishButtonPress = () => {
         /*if(isEmpty(this.props.bankName) &&
-            isEmpty(this.props.branchName) &&
-            isEmpty(this.props.acHolderName) &&
-            isEmpty(this.props.acNumber) &&
-            isEmpty(this.props.IFSECode) ) {
-            alert("all true")
-        }else{
-            showAlert('Enter Data in all fields.');
-        }*/
-        this.props.navigator.push('agentDetail');
-    };
+         isEmpty(this.props.branchName) &&
+         isEmpty(this.props.acHolderName) &&
+         isEmpty(this.props.acNumber) &&
+         isEmpty(this.props.IFSECode) ) {
+         alert("all true")
+         }else{
+         showAlert('Enter Data in all fields.');
+         }*/
+        this.props.registerAgency();
 
-    onActivateCall = () => {
-        this.setState({
-            isActive: !this.state.isActive
-        });
+        this.props.navigator.push('agentDetail');
     };
 
     focusNextField = (nextField) => {
@@ -150,15 +142,15 @@ class AgentBankDetail extends Component {
                         />
                     </View>
 
-                    <TouchableHighlight onPress={()=> this.onActivateCall()}
+                    <TouchableHighlight onPress={()=> this.props.agentActivate(!this.props.isActive)}
                                         underlayColor={"transparent"}>
 
-                    <View style={styles.activeView}>
-                        <MaterialCommunityIcons name={(this.state.isActive) ? 'checkbox-marked' : 'checkbox-blank-outline'}
-                                  size={35}
-                                  color={'gray'}/>
-                        <Text style={styles.formTextLabel}>{" Active (activate user if payment is done)"}</Text>
-                    </View>
+                        <View style={styles.activeView}>
+                            <MaterialCommunityIcons name={(this.props.isActive) ? 'checkbox-marked' : 'checkbox-blank-outline'}
+                                                    size={35}
+                                                    color={'gray'}/>
+                            <Text style={styles.formTextLabel}>{" Active (activate user if payment is done)"}</Text>
+                        </View>
                     </TouchableHighlight>
 
 
@@ -214,6 +206,7 @@ const mapStateToProps = state => {
         acHolderName: state.agent.acHolderName,
         acNumber: state.agent.acNumber,
         IFSECode: state.agent.IFSECode,
+        isActive:  state.agent.isActive,
     };
 };
 
@@ -222,5 +215,7 @@ export default connect(mapStateToProps, {
     bankBranchChanged,
     accountNoChanged,
     acHolderNameChanged,
-    IFSEChanged
+    IFSEChanged,
+    agentActivate,
+    registerAgency
 })(AgentBankDetail);

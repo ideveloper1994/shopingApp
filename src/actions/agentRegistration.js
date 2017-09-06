@@ -16,11 +16,54 @@ import {
     AGENT_ACHOLDER_CHANGED,
     AGENT_ACCNO_CHANGED,
     AGENT_IFSE_CHANGED,
+    AGENT_ADDRESS_PROOF_TYPE,
+    AGENT_ACTIVATION
 
 } from './types'
 import {CallApi} from '../services/apiCall'
 import Constant from '../services/apiConstant'
 import { NavigationActions } from '@expo/ex-navigation';
+
+export const registerAgency = () => {
+    return (dispatch, getState) => {
+
+        let agency = {
+
+            firstName: getState().agent.firstName,
+            lastName: getState().agent.lastName,
+            mobileNo: getState().agent.mobileNo,
+            userName: getState().agent.userName,
+            email: getState().agent.email,
+            password: getState().agent.password,
+            addressProofType: getState().agent.addressProofType,
+            stateName: getState().agent.stateName,
+            zone: getState().agent.zone,
+            agentBranch: getState().agent.agentBranch,
+            bankName: getState().agent.bankName,
+            branchName: getState().agent.branchName,
+            acHolderName: getState().agent.acHolderName,
+            acNumber: getState().agent.acNumber,
+            IFSECode: getState().agent.IFSECode,
+            isActive:  getState().agent.isActive,
+        };
+debugger
+        // return CallApi(Constant.baseUrl+Constant.signIn,'get',{},{"Accept":"application/json"})
+        //     .then((response)=>{
+        //         let user = {
+        //             email:email,
+        //             password:password,
+        //             token:response.data.token
+        //         };
+        //         AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
+        //         });
+        //
+        //     })
+        //     .catch((error)=>{
+        //         debugger;
+        //         return Promise.reject(error);
+        //     })
+    };
+};
 
 
 export const fnameChanged = (text) => {
@@ -79,3 +122,10 @@ export const IFSEChanged = (text) => {
     return { type: AGENT_IFSE_CHANGED, payload: text };
 };
 
+export const agentActivate = (text) => {
+    return { type: AGENT_ACTIVATION, payload: text };
+};
+
+export const agentAddressProofType = (text) => {
+    return { type: AGENT_ADDRESS_PROOF_TYPE, payload: text };
+};

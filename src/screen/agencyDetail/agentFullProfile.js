@@ -24,9 +24,6 @@ class AgentFullProfile extends Component {
     constructor(props){
         super(props);
         this.state={
-            user: {
-                firstName: ''
-            }
         };
     }
 
@@ -46,7 +43,7 @@ class AgentFullProfile extends Component {
                         </View>
                     </View>
 
-                    <View style={{alignItems:'center',padding:15, backgroundColor:'rgba(224,235,235,.8)', }}>
+                    <View style={styles.proView}>
                         <Text style={[ {color:'black',}]}>John Doe</Text>
                         <Text style={[{color:'black',}]}>doe@sahusoft.com</Text>
                     </View>
@@ -57,10 +54,22 @@ class AgentFullProfile extends Component {
                             <Text style={{fontWeight:'bold', fontSize:15}}>Personal Details</Text>
                         </View>
                         <View style={styles.detailsView}>
-                            <Text style={styles.textDetails}>Full name: John Doe</Text>
-                            <Text style={styles.textDetails}>Email ID: doe@sahusoft.com</Text>
-                            <Text style={styles.textDetails}>Contact: 998 898 56 78</Text>
-                            <Text style={styles.textDetails}>Username: johndoe</Text>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Full name:</Text>
+                                <Text style={styles.textValue}>{this.props.firstName} John Doe</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Email ID:</Text>
+                                <Text style={styles.textValue}>doe@sahusoft.com</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Contact:</Text>
+                                <Text style={styles.textValue}>8989869896</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Username:</Text>
+                                <Text style={styles.textValue}>johndoe</Text>
+                            </View>
                         </View>
                     </View>
 
@@ -69,9 +78,18 @@ class AgentFullProfile extends Component {
                             <Text style={{fontWeight:'bold', fontSize:15}}>Location Details</Text>
                         </View>
                         <View style={styles.detailsView}>
-                            <Text style={styles.textDetails}>State: Alabama</Text>
-                            <Text style={styles.textDetails}>Zone: Zone com</Text>
-                            <Text style={styles.textDetails}>Branch name: Columbus</Text>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>State:</Text>
+                                <Text style={styles.textValue}>Alabama</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Zone:</Text>
+                                <Text style={styles.textValue}>zonename</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Branch name:</Text>
+                                <Text style={styles.textValue}>Columbus</Text>
+                            </View>
                         </View>
                     </View>
 
@@ -80,15 +98,29 @@ class AgentFullProfile extends Component {
                             <Text style={{fontWeight:'bold', fontSize:15}}>Bank Details</Text>
                         </View>
                         <View style={styles.detailsView}>
-                            <Text style={styles.textDetails}>Bank name: Bank of baroda</Text>
-                            <Text style={styles.textDetails}>Branch name: Columbus</Text>
-                            <Text style={styles.textDetails}>Account Holder name: John Doe wang</Text>
-                            <Text style={styles.textDetails}>Account Number: 06789112391588</Text>
-                            <Text style={styles.textDetails}>IFSC Code: BARB0CITYLT</Text>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Bank name:</Text>
+                                <Text style={styles.textValue}>Bank of baroda</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Branch name:</Text>
+                                <Text style={styles.textValue}>Columbus</Text>
+                            </View>
+
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Account Holder name:</Text>
+                                <Text style={styles.textValue}>John Doe</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>Account Number:</Text>
+                                <Text style={styles.textValue}>06789112391588</Text>
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.textHeader}>IFSC Code:</Text>
+                                <Text style={styles.textValue}>BARB0CITYLT</Text>
+                            </View>
                         </View>
                     </View>
-
-
 
                 </ScrollView>
 
@@ -124,6 +156,11 @@ const styles = StyleSheet.create({
     mainView: {
         flex:1,
     },
+    proView: {
+        alignItems:'center',
+        padding:15,
+        backgroundColor:'rgba(224,235,235,.8)',
+     },
     dataView: {
         margin:10,
         marginBottom:0,
@@ -139,11 +176,21 @@ const styles = StyleSheet.create({
     detailsView:{
         padding:5
     },
-    textDetails:{
+    textView:{
+        flexDirection:'row'
+    },
+    textHeader:{
         padding:1,
         fontSize:15,
         color:'#000',
         lineHeight: 22,
+    },
+    textValue:{
+        padding:1,
+        fontSize:14,
+        color:'#000',
+        lineHeight: 22,
+        opacity:0.9
     },
     docImages:{
         width:width/2.75,
@@ -153,6 +200,18 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
+        firstName: state.agent.firstName,
+        lastName: state.agent.lastName,
+        mobileNo: state.agent.mobileNo,
+        userName: state.agent.userName,
+        email: state.agent.email,
+        password: state.agent.password,
+
+        stateName: state.agent.stateName,
+        zone: state.agent.zone,
+        agentBranch: state.agent.agentBranch,
+
+
         bankName: state.agent.bankName,
         branchName: state.agent.branchName,
         acHolderName: state.agent.acHolderName,
