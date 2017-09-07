@@ -1,6 +1,6 @@
 import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED, REGISTERED_USER, START_LOADING } from '../actions/types'
 const INITIAL_STATE = {
-    email: "test@emiadda.com",
+    email: "emiadda@gmail.com",
     password: "emiadda",
     token:"",
     isLoading:false,
