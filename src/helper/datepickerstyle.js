@@ -4,13 +4,13 @@ let style = StyleSheet.create({
     dateTouch: {
         width: 142,
         backgroundColor: 'white',
+        justifyContent:'center',
     },
     dateTouchBody: {
         flexDirection: 'row',
         height: 23,
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     dateIcon: {
         width: 10,
@@ -23,7 +23,8 @@ let style = StyleSheet.create({
         height: 23,
         padding: 5,
         alignItems: 'flex-start',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: -5,
     },
     dateText: {
         fontSize: 15,

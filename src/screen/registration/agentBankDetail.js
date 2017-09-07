@@ -64,8 +64,7 @@ class AgentBankDetail extends Component {
         return (
             <View style={{flex:1}}>
                 <NavigationBar title="Bank Detail"
-                               onBackButtonPress={this.onBackButtonPress}
-                />
+                               onBackButtonPress={this.onBackButtonPress}/>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.outerView}>
                         <Text style={styles.formTextLabel}>
