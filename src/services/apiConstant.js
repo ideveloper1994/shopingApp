@@ -7,6 +7,6 @@ module.exports = {
     state: 'api/states',
     zones: 'api/zones',
     branch: 'api/branchs',
-    agencies: '/api/users/agencies',
+    agencies: 'api/users/agencies',
     updateActive: 'toggleActive',
 };
