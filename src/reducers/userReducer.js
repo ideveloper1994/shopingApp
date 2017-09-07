@@ -18,6 +18,7 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case APP_SET_USER_DATA: {
+            debugger
             return {
                 ...state,
                 email: state.email,

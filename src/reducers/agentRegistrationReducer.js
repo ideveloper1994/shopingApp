@@ -27,10 +27,11 @@ import {
     GET_ALL_ZONES_FAILED,
 
     GET_ALL_BRANCHES_FAILED,
-    GET_ALL_BRANCHES_SUCCESS
-
+    GET_ALL_BRANCHES_SUCCESS,
+    AGENT_IMAGES
 } from '../actions/types';
 const INITIAL_STATE = {
+
     firstName: '',
     lastName: '',
     mobileNo: '',
@@ -53,7 +54,14 @@ const INITIAL_STATE = {
 
     selectedState: {},
     selectedBranch: {},
-    selectedZone: {}
+    selectedZone: {},
+
+    agentImages: {
+        addressImage: null,
+        pancardImage: null,
+        profileImage: null
+    },
+
 
 };
 
@@ -195,6 +203,12 @@ export default (state = INITIAL_STATE, action) => {
         case GET_ALL_BRANCHES_FAILED: {
             return {
                 ...state,
+            };
+        }
+        case AGENT_IMAGES: {
+            return {
+                ...state,
+                agentImages: action.payload
             };
         }
         default:

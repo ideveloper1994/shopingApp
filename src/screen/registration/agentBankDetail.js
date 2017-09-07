@@ -68,7 +68,9 @@ class AgentBankDetail extends Component {
                 />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Bank Name</Text>
+                        <Text style={styles.formTextLabel}>
+                            Bank Name
+                        </Text>
                         <TextInput  ref="txtBank"
                                     value={this.props.bankName}
                                     placeholder={"Bank Name"}

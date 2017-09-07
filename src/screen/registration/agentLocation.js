@@ -42,7 +42,9 @@ class AgentLocation extends Component {
             selectedField: 'state',
             selectedStateId: '',
             selectedZoneId: '',
-            selectedBranchId: ''
+            selectedBranchId: '',
+            zoneList: [],
+            branchList: []
         };
     }
 
@@ -89,25 +91,22 @@ class AgentLocation extends Component {
         switch (this.state.selectedField){
             case 'state':
                 let state = _.find(this.props.stateName, {_id: src});
-                debugger;
-
+                let zoneList =  _.filter(this.props.zone, {stateId: src});
                 this.props.stateChanged(state);
-                this.setState({selectedOptionState: state.name});
+                this.setState({selectedOptionState: state.name, zoneList: zoneList});
                 break;
             case 'zone':
-
                 let zone = _.find(this.props.zone, {_id: src});
                 this.props.zoneChanged(zone);
-                this.setState({selectedOptionZone: zone.name});
+                let branchList =  _.filter(this.props.agentBranch, {zoneId: src});
+                this.setState({selectedOptionZone: zone.name, branchList: branchList});
                 break;
             case 'branch':
-
                 let branch = _.find(this.props.agentBranch, {_id: src});
                 this.props.branchChanged(branch);
                 this.setState({selectedOptionBranch: branch.name});
                 break;
         }
-
     };
 
 
@@ -130,10 +129,10 @@ class AgentLocation extends Component {
             case 'zone':
                 return(
                     <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
-                            selectedValue={this.props.selectedZone._id}
+                            selectedValue={this.props.selectedZone._id || ''}
                             onValueChange={this.onSelectOption}>
                         {
-                            this.props.zone.map(function (src, index) {
+                            this.state.zoneList.map(function (src, index) {
                                 return <Picker.Item key={src._id}
                                                     label={src.name}
                                                     value={src._id}/>
@@ -145,7 +144,7 @@ class AgentLocation extends Component {
                 return(
                     <Picker style={{marginBottom: 0}}
                             mode={Picker.MODE_DIALOG}
-                            selectedValue={this.props.selectedBranch._id}
+                            selectedValue={this.props.selectedBranch._id || ''}
                             onValueChange={this.onSelectOption}>
                         {
                             this.props.agentBranch.map(function (src, index) {
