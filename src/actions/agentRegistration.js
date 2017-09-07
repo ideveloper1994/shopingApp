@@ -27,7 +27,9 @@ import {
     GET_ALL_ZONES_SUCCESS,
 
     GET_ALL_BRANCHES_SUCCESS,
-    GET_ALL_BRANCHES_FAILED
+    GET_ALL_BRANCHES_FAILED,
+
+    AGENT_IMAGES
 
 } from './types'
 import {CallApi} from '../services/apiCall'
@@ -36,7 +38,7 @@ import { NavigationActions } from '@expo/ex-navigation';
 
 export const registerAgency = () => {
     return (dispatch, getState) => {
-
+debugger
         let agency = {
 
             firstName: getState().agent.firstName,
@@ -197,4 +199,8 @@ export const agentAddressProofType = (text) => {
 
 export const agentBirthDate = (text) => {
     return { type: AGENT_BIRTH_DATE, payload: text };
+};
+
+export const agentImages = (text) => {
+    return { type: AGENT_IMAGES, payload: text };
 };

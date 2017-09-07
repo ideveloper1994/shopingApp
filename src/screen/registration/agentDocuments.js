@@ -19,7 +19,8 @@ import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
 
 import {
-    agentAddressProofType
+    agentAddressProofType,
+    agentImages
 } from '../../actions/agentRegistration';
 
 let ImagePicker = require('react-native-image-picker');
@@ -27,7 +28,7 @@ let ImagePicker = require('react-native-image-picker');
 console.disableYellowBox = true;
 class AgentDocument extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             email: '',
@@ -47,11 +48,24 @@ class AgentDocument extends Component {
     };
 
     onNextButtonPress = () => {
+        console.log(this.state);
+        this.props.agentImages({
+            addressImage: this.state.addressSrc,
+            pancardImage: this.state.pancardSrc,
+            profileImage: this.state.profileSrc,
+        });
+
         this.props.navigator.push('agentBankDetail');
     };
 
     onSelectImage = (type) => {
-        ImagePicker.showImagePicker((response) => {
+        let options = {
+            quality: 0.2,
+            noData: true
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            debugger;
             console.log('Response = ', response);
 
             if (response.didCancel) {
@@ -210,7 +224,7 @@ class AgentDocument extends Component {
                                 <Picker mode={Picker.MODE_DROPDOWN}
                                         selectedValue={this.props.addressProofType}
                                         onValueChange={(src) => this.props.agentAddressProofType(src)}>
-                                        style={{height:30}}>
+                                    style={{height:30}}>
                                     {
                                         this.state.arrList.map(function (src, index) {
                                             return <Picker.Item label={src.toString()} value={src.toString()}/>
@@ -313,9 +327,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         addressProofType: state.agent.addressProofType,
+        agentImages: state.agent.agentImages
     };
 };
 
 export default connect(mapStateToProps, {
-    agentAddressProofType
+    agentAddressProofType,
+    agentImages
 })(AgentDocument);

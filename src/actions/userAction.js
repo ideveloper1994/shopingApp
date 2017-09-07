@@ -3,6 +3,7 @@ import {
     USER_EMAIL_CHANGED,
     USER_PASS_CHANGED,
     REGISTERED_USER,
+    APP_SET_USER_DATA,
     START_LOADING
 } from './types'
 import { AsyncStorage } from 'react-native';
@@ -30,10 +31,17 @@ export const loginUser = (email, password) => {
                 };
                 AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
                 });
+
+                dispatch({
+                    type: APP_SET_USER_DATA,
+                    payload: user
+                });
+
                 dispatch({
                     type: START_LOADING,
                     payload: false,
                 });
+
                 return dispatch({
                     type: REGISTERED_USER,
                     payload: response.data.user
