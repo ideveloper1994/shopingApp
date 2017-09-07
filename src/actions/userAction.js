@@ -41,7 +41,6 @@ export const loginUser = (email, password) => {
                     type: START_LOADING,
                     payload: false,
                 });
-
                 return dispatch({
                     type: REGISTERED_USER,
                     payload: response.data.user
@@ -75,4 +74,32 @@ export const emailChanged = (text) => {
 
 export const passChanged = (text) => {
     return { type: USER_PASS_CHANGED, payload: text };
+};
+
+export const emailValidate = (email) => {
+    return (dispatch, getState) => {
+        let token = 'Bearer ' + getState().user.token;
+        return CallApi(Constant.baseUrl+Constant.validateEmail+email,'get',{},{"Authorization": token})
+
+            .then((response)=>{
+                return Promise.resolve(true);
+            })
+            .catch((error)=>{
+                return Promise.reject(false);
+            })
+    };
+};
+
+export const phoneValidate = (phoneNo) => {
+    return (dispatch, getState) => {
+        let token = 'Bearer ' + getState().user.token;
+        return CallApi(Constant.baseUrl+Constant.validatePhoneNo+phoneNo,'get',{},{"Authorization": token})
+
+            .then((response)=>{
+                return Promise.resolve(true);
+            })
+            .catch((error)=>{
+                return Promise.reject(false);
+            })
+    };
 };

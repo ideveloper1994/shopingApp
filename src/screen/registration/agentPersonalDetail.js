@@ -1,20 +1,10 @@
-import React, { Component } from 'react';
-import {
-    StyleSheet,
-    Text,
-    Alert,
-    AsyncStorage,
-    View,
-    Keyboard,
-    TextInput,
-    ScrollView
-} from 'react-native';
-import { connect } from 'react-redux';
-import NavigationBar from '../../commonComponent/navBar';
-import Constant from '../../helper/constant';
-import Button from '../../commonComponent/button';
-import { showAlert } from '../../services/apiCall';
-
+import React, {Component} from "react";
+import {StyleSheet, Text, Alert, AsyncStorage, View, Keyboard, TextInput, ScrollView} from "react-native";
+import {connect} from "react-redux";
+import NavigationBar from "../../commonComponent/navBar";
+import Constant from "../../helper/constant";
+import Button from "../../commonComponent/button";
+import ErrorView from "../../commonComponent/error";
 import {
     fnameChanged,
     lnameChanged,
@@ -23,10 +13,10 @@ import {
     passwordChanged,
     usernameChanged,
     agentBirthDate
-} from '../../actions/agentRegistration';
-import DatePicker from '../../helper/datepicker';
-import moment from 'moment';
-
+} from "../../actions/agentRegistration";
+import {emailValidate, phoneValidate} from "../../actions/userAction";
+import DatePicker from "../../helper/datepicker";
+import moment from "moment";
 import { isEmpty, isValidEmail } from '../../helper/appHelper';
 
 class AgentFormPersonal extends Component {
@@ -35,6 +25,10 @@ class AgentFormPersonal extends Component {
         super(props);
         this.state = {
             selectedDate: '',
+            isValidEmail: true,
+            isValidPhoneNo: true,
+            emailError: '',
+            mobileError: ''
         };
     }
 
@@ -45,17 +39,17 @@ class AgentFormPersonal extends Component {
         //     isEmpty(this.props.userName) &&
         //     isEmpty(this.props.email) &&
         //     isEmpty(this.props.password) ) {
-        //     if(isValidEmail(this.props.email)){
         //         this.props.navigator.push('agentLocation');
-        //     }else{
-        //         showAlert('Enter valid Email Address');
-        //     }
         //
         // }else{
         //     showAlert('Enter Data in all fields.');
         // }
 
-        this.props.navigator.push('agentLocation');
+
+        if(this.state.isValidPhoneNo && this.state.isValidEmail){
+            this.props.navigator.push('agentLocation');
+        }
+
     };
 
     focusNextField = (nextField) => {
@@ -65,6 +59,30 @@ class AgentFormPersonal extends Component {
 
     onBackButtonPress = () => {
         this.props.navigator.pop();
+    };
+
+    onPhoneNoValid = () => {
+        if(isEmpty(this.props.mobileNo)) {
+            this.props.phoneValidate(this.props.mobileNo.trim()).then(res => {
+                this.setState({isValidPhoneNo: true, mobileError: ''});
+            }).catch(err => {
+                this.setState({isValidPhoneNo: false, mobileError: "Mobile number already exists"});
+            });
+        }else{
+            this.setState({isValidPhoneNo: false, mobileError: "Enter valid phone number"});
+        }
+    };
+
+    onEmailValid = () => {
+        if(isValidEmail(this.props.email)){
+            this.props.emailValidate(this.props.email.trim()).then(res => {
+                this.setState({isValidEmail: true, emailError: ''});
+            }).catch(err => {
+                this.setState({isValidEmail: false, emailError: 'Email already exists'});
+            });
+        }else{
+            this.setState({isValidEmail: false, emailError: 'Enter valid Email Address'});
+        }
     };
 
     render() {
@@ -116,7 +134,14 @@ class AgentFormPersonal extends Component {
                                     onChangeText={(text) => {this.props.emailChanged(text)}}
                                     onSubmitEditing={() => this.focusNextField('txtPhone')}
                                     underlineColorAndroid={Constant.transparent}
+                                    onEndEditing={(text) => this.onEmailValid(text)}
                         />
+                        {
+                            (!this.state.isValidEmail)?
+                                <ErrorView errorMessage={this.state.emailError}/>
+                                :null
+                        }
+
                     </View>
 
                     <View style={styles.outerView}>
@@ -132,7 +157,14 @@ class AgentFormPersonal extends Component {
                                     onChangeText={(text) => {this.props.mobileChanged(text)}}
                                     onSubmitEditing={() => this.focusNextField('txtUserName')}
                                     underlineColorAndroid={Constant.transparent}
+                                    onEndEditing={(text) => this.onPhoneNoValid(text)}
                         />
+                        {
+                            (!this.state.isValidPhoneNo)?
+                                <ErrorView errorMessage={this.state.mobileError}/>
+                                :null
+                        }
+
                     </View>
 
                     <View style={styles.outerView}>
@@ -247,5 +279,8 @@ export default connect(mapStateToProps, {
     emailChanged,
     passwordChanged,
     usernameChanged,
-    agentBirthDate
+    agentBirthDate,
+
+    emailValidate,
+    phoneValidate
 })(AgentFormPersonal);

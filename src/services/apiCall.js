@@ -1,5 +1,5 @@
 import ApiConstant from './apiConstant';
-import axios from 'axios'
+import axios from 'axios';
 import {Alert} from 'react-native'
 
 export function CallApi(url,type='get',data={},header={}) {
@@ -22,6 +22,21 @@ export function CallApi(url,type='get',data={},header={}) {
             });
     }else if(type == 'post'){
         return axios.post(url,data,{headers: reqHeader})
+            .then((response) => {
+                return Promise.resolve(response)
+            })
+            .catch((err) => {
+                switch (err.response.data.status_code){
+                    case 401:
+                        return Promise.reject(err.response.data.data);
+                    case 409:
+                        return Promise.reject(err.response.data.data);
+                    default:
+                        return Promise.reject(err);
+                }
+            });
+    }else if(type == 'put'){
+        return axios.put(url,data,{headers: reqHeader})
             .then((response) => {
                 return Promise.resolve(response)
             })
