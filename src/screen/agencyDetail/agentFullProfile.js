@@ -24,6 +24,7 @@ class AgentFullProfile extends Component {
     constructor(props){
         super(props);
         this.state={
+          userDetails: this.props.route.params.userDetails
         };
     }
 
@@ -44,8 +45,8 @@ class AgentFullProfile extends Component {
                     </View>
 
                     <View style={styles.proView}>
-                        <Text style={[ {color:'black',}]}>John Doe</Text>
-                        <Text style={[{color:'black',}]}>doe@sahusoft.com</Text>
+                        <Text style={[ {color:'black',}]}>{this.state.userDetails.firstName+ ' '+this.state.userDetails.lastName}</Text>
+                        <Text style={[{color:'black',}]}>{this.state.userDetails.email}</Text>
                     </View>
 
 
@@ -56,19 +57,15 @@ class AgentFullProfile extends Component {
                         <View style={styles.detailsView}>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Full name:</Text>
-                                <Text style={styles.textValue}>{this.props.firstName} John Doe</Text>
+                                <Text style={styles.textValue}>{this.props.firstName}{this.state.userDetails.firstName+ ' '+this.state.userDetails.lastName}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Email ID:</Text>
-                                <Text style={styles.textValue}>doe@sahusoft.com</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.email}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Contact:</Text>
-                                <Text style={styles.textValue}>8989869896</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Username:</Text>
-                                <Text style={styles.textValue}>johndoe</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.mobileNo}</Text>
                             </View>
                         </View>
                     </View>
@@ -80,15 +77,15 @@ class AgentFullProfile extends Component {
                         <View style={styles.detailsView}>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>State:</Text>
-                                <Text style={styles.textValue}>Alabama</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.stateName}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Zone:</Text>
-                                <Text style={styles.textValue}>zonename</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.zoneName}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Branch name:</Text>
-                                <Text style={styles.textValue}>Columbus</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.branchName}</Text>
                             </View>
                         </View>
                     </View>
@@ -100,24 +97,24 @@ class AgentFullProfile extends Component {
                         <View style={styles.detailsView}>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Bank name:</Text>
-                                <Text style={styles.textValue}>Bank of baroda</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.bankName}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Branch name:</Text>
-                                <Text style={styles.textValue}>Columbus</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.bankBranchName}</Text>
                             </View>
 
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Account Holder name:</Text>
-                                <Text style={styles.textValue}>John Doe</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.accountHolderName}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>Account Number:</Text>
-                                <Text style={styles.textValue}>06789112391588</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.awsAccountNumber}</Text>
                             </View>
                             <View style={styles.textView}>
                                 <Text style={styles.textHeader}>IFSC Code:</Text>
-                                <Text style={styles.textValue}>BARB0CITYLT</Text>
+                                <Text style={styles.textValue}>{this.state.userDetails.IFSCcode}</Text>
                             </View>
                         </View>
                     </View>
