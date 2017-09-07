@@ -96,6 +96,7 @@ export const getAllStates = () => {
 
 export const getAllZones = () => {
     return (dispatch, getState) => {
+        debugger;
         return CallApi(Constant.baseUrl + Constant.zones, 'get', {}, {})
             .then((response)=>{
                 dispatch({
