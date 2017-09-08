@@ -15,5 +15,20 @@
  </View>
  </TouchableHighlight>
 
+ <View style={styles.outerView}>
+ <Text style={styles.formTextLabel}>User Name</Text>
+ <TextInput  ref="txtUserName"
+ value={this.props.userName}
+ placeholder={"UserName"}
+ style={ styles.textBox }
+ autoCapitalize="none"
+ autoCorrect={false}
+ returnKeyType={'next'}
+ onChangeText={(text) => {this.props.usernameChanged(text)}}
+ onSubmitEditing={() => this.focusNextField('txtPassword')}
+ underlineColorAndroid={Constant.transparent}
+ />
+ </View>
+
 
 * */

@@ -36,7 +36,6 @@ class AgentFormPersonal extends Component {
         // if(isEmpty(this.props.firstName) &&
         //     isEmpty(this.props.lastName) &&
         //     isEmpty(this.props.mobileNo) &&
-        //     isEmpty(this.props.userName) &&
         //     isEmpty(this.props.email) &&
         //     isEmpty(this.props.password) ) {
         //         this.props.navigator.push('agentLocation');
@@ -190,21 +189,6 @@ class AgentFormPersonal extends Component {
                             onDateChange={(date) => {
                                 this.props.agentBirthDate(date)
                             }}
-                        />
-                    </View>
-
-                    <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>User Name</Text>
-                        <TextInput  ref="txtUserName"
-                                    value={this.props.userName}
-                                    placeholder={"UserName"}
-                                    style={ styles.textBox }
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    returnKeyType={'next'}
-                                    onChangeText={(text) => {this.props.usernameChanged(text)}}
-                                    onSubmitEditing={() => this.focusNextField('txtPassword')}
-                                    underlineColorAndroid={Constant.transparent}
                         />
                     </View>
 

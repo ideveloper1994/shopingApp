@@ -30,7 +30,8 @@ import {
     GET_ALL_BRANCHES_SUCCESS,
     GET_ALL_AGENCIES,
     AGENT_IMAGES,
-    CHANGE_ACTIVATION
+    CHANGE_ACTIVATION,
+    CLEAR_AGENT
 } from '../actions/types';
 const INITIAL_STATE = {
 
@@ -225,6 +226,12 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 agencies: action.payload
+            };
+        }
+        case CLEAR_AGENT: {
+            return {
+                ...state,
+                agencies: INITIAL_STATE
             };
         }
 

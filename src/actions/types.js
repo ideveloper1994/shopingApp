@@ -43,3 +43,6 @@ export const GET_ALL_AGENCIES = 'GET_ALL_AGENCIES';
 export const AGENT_IMAGES = 'AGENT_IMAGES';
 
 export const CHANGE_ACTIVATION = 'CHANGE_ACTIVATION';
+
+export const CLEAR_AGENT = 'CLEAR_AGENT';
+

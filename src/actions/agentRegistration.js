@@ -32,7 +32,8 @@ import {
     GET_ALL_AGENCIES,
 
     AGENT_IMAGES,
-    CHANGE_ACTIVATION
+    CHANGE_ACTIVATION,
+    CLEAR_AGENT
 
 } from './types'
 import {CallApi} from '../services/apiCall'
@@ -42,26 +43,26 @@ import axios from 'axios';
 
 export const registerAgency = () => {
     return (dispatch, getState) => {
-        debugger
-        let agency = {
-            firstName: getState().agent.firstName,
-            lastName: getState().agent.lastName,
-            mobileNo: getState().agent.mobileNo,
-            userName: getState().agent.userName,
-            email: getState().agent.email,
-            password: getState().agent.password,
-            addressProofType: getState().agent.addressProofType,
-            stateName: getState().agent.stateName,
-            zone: getState().agent.zone,
-            agentBranch: getState().agent.agentBranch,
-            bankName: getState().agent.bankName,
-            branchName: getState().agent.branchName,
-            acHolderName: getState().agent.acHolderName,
-            acNumber: getState().agent.acNumber,
-            IFSECode: getState().agent.IFSECode,
-            isActive:  getState().agent.isActive,
-            birthdate: getState().agent.birthDate
-        };
+
+        // let agency = {
+        //     firstName: getState().agent.firstName,
+        //     lastName: getState().agent.lastName,
+        //     mobileNo: getState().agent.mobileNo,
+        //     userName: getState().agent.userName,
+        //     email: getState().agent.email,
+        //     password: getState().agent.password,
+        //     addressProofType: getState().agent.addressProofType,
+        //     stateName: getState().agent.stateName,
+        //     zone: getState().agent.zone,
+        //     agentBranch: getState().agent.agentBranch,
+        //     bankName: getState().agent.bankName,
+        //     branchName: getState().agent.branchName,
+        //     acHolderName: getState().agent.acHolderName,
+        //     acNumber: getState().agent.acNumber,
+        //     IFSECode: getState().agent.IFSECode,
+        //     isActive:  getState().agent.isActive,
+        //     birthdate: getState().agent.birthDate
+        // };
         debugger;
 
         let token = 'Bearer ' + getState().user.token;
@@ -76,26 +77,32 @@ export const registerAgency = () => {
         formData.append('zoneId',getState().agent.selectedZone._id || 0);
         formData.append('stateId',getState().agent.selectedState._id || 0);
         formData.append('branchId',getState().agent.selectedBranch._id || 0);
+        formData.append('birthDate',getState().agent.birthDate);
 
         let agencyDetail = {
             name: getState().agent.firstName + " " + getState().agent.lastName,
             proofType: getState().agent.addressProofType,
             bankName: getState().agent.bankName,
-            branchName: getState().agent.branchName,
-            acHolderName: getState().agent.acHolderName,
-            acNumber: getState().agent.acNumber,
-            IFSECode: getState().agent.IFSECode,
-            isActive:  getState().agent.isActive,
-            birthdate: getState().agent.isActive,
+            bankBranchName: getState().agent.branchName,
+            accountHolderName: getState().agent.acHolderName,
+            awsAccountNumber: getState().agent.acNumber,
+            IFSCcode: getState().agent.IFSECode,
+            branchName: getState().agent.selectedBranch.name,
+            zoneName: getState().agent.selectedZone.name,
+            stateName: getState().agent.selectedState.name,
+            isActive:  false,
         };
         formData.append('agency',JSON.stringify(agencyDetail));
 
-
         return axios.post(Constant.baseUrl+Constant.registerUser, formData, config)
             .then(res => {
-                debugger
+                // dispatch({
+                //     type: CLEAR_AGENT,
+                //     payload: {},
+                // });
+                return Promise.resolve(res);
             }).catch(err => {
-                debugger
+                return Promise.reject(res);
             });
 
         // return CallApi(Constant.baseUrl+Constant.signIn,'get',{},{"Accept":"application/json"})

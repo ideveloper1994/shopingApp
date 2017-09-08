@@ -9,7 +9,7 @@ import {
     TextInput,
     ScrollView,
     Image,
-    TouchableHighlight
+    TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationBar from '../../commonComponent/navBar';
@@ -51,9 +51,13 @@ class AgentBankDetail extends Component {
          }else{
          showAlert('Enter Data in all fields.');
          }*/
-        this.props.registerAgency();
+        this.props.registerAgency().then(res => {
+            this.props.navigator.push('agentDetail');
+        }).catch(err => {
+            Alert.alert("Error","Fail to register agency, \n please try again.")
+        });
 
-        this.props.navigator.push('agentDetail');
+
     };
 
     focusNextField = (nextField) => {

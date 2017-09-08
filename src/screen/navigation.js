@@ -22,7 +22,6 @@ class AppNavigation extends React.Component {
 
     componentWillMount() {
         AsyncStorage.getItem('user').then((value) => {
-
             if(value!=null) {
                 isLogin='welcome';
             }
