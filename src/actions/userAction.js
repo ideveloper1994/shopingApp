@@ -11,6 +11,10 @@ import { AsyncStorage } from 'react-native';
 import {CallApi} from '../services/apiCall'
 import Constant from '../services/apiConstant'
 import { NavigationActions } from '@expo/ex-navigation';
+import { getAgencies,
+    getAllBranches,
+    getAllStates,
+    getAllZones } from './agentRegistration';
 
 export const loginUser = (email, password) => {
     return (dispatch, getState) => {
@@ -23,7 +27,6 @@ export const loginUser = (email, password) => {
         return CallApi(Constant.baseUrl+Constant.signIn,'post',{ email: email, password: password},{})
 
             .then((response)=>{
-
                 let user = {
                     email:email,
                     password:password,
@@ -43,10 +46,18 @@ export const loginUser = (email, password) => {
                     payload: response.data.user
                 });
 
-                dispatch({
-                    type: START_LOADING,
-                    payload: false,
+                return Promise.all([
+                    dispatch(getAgencies()),
+                ]).then(res => {
+                    dispatch({
+                        type: START_LOADING,
+                        payload: false,
+                    });
+                    return Promise.resolve(true);
+                }).catch(err => {
+                    return Promise.reject(error);
                 });
+
             })
             .catch((error)=>{
                 dispatch({

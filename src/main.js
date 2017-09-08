@@ -18,6 +18,7 @@ export default class main extends React.Component {
             isConnected: true,
         }
     }
+
     componentDidMount() {
         const dispatchConnected = isConnected => this.setState({isConnected});
         NetInfo.isConnected.fetch().then().done(() => {

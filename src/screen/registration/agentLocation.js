@@ -59,15 +59,13 @@ class AgentLocation extends Component {
     };
 
     onNextButtonPress = () => {
-        // if(isEmpty(this.props.stateName) &&
-        //     isEmpty(this.props.zone) &&
-        //     isEmpty(this.props.agentBranch) ) {
-        //     this.props.navigator.push('agentDocuments');
-        // }else{
-        //     showAlert('Enter Data in all fields.');
-        // }
-
-        //console.log('selected value:', this.state.selectedOptionBranch)
+        if(isEmpty(this.props.stateName) &&
+            isEmpty(this.props.zone) &&
+            isEmpty(this.props.agentBranch) ) {
+            this.props.navigator.push('agentDocuments');
+        }else{
+            showAlert('Enter Data in all fields.');
+        }
         this.props.navigator.push('agentDocuments');
     };
 

@@ -5,6 +5,7 @@ import NavigationBar from "../../commonComponent/navBar";
 import Constant from "../../helper/constant";
 import Button from "../../commonComponent/button";
 import ErrorView from "../../commonComponent/error";
+import { showAlert } from '../../services/apiCall';
 import {
     fnameChanged,
     lnameChanged,
@@ -33,22 +34,17 @@ class AgentFormPersonal extends Component {
     }
 
     onNextButtonPress = () => {
-        // if(isEmpty(this.props.firstName) &&
-        //     isEmpty(this.props.lastName) &&
-        //     isEmpty(this.props.mobileNo) &&
-        //     isEmpty(this.props.email) &&
-        //     isEmpty(this.props.password) ) {
-        //         this.props.navigator.push('agentLocation');
-        //
-        // }else{
-        //     showAlert('Enter Data in all fields.');
-        // }
-
-
-        if(this.state.isValidPhoneNo && this.state.isValidEmail){
-            this.props.navigator.push('agentLocation');
+        if(isEmpty(this.props.firstName) &&
+            isEmpty(this.props.lastName) &&
+            isEmpty(this.props.mobileNo) &&
+            isEmpty(this.props.email) &&
+            isEmpty(this.props.password) ) {
+            if(this.state.isValidPhoneNo && this.state.isValidEmail){
+                this.props.navigator.push('agentLocation');
+            }
+        }else{
+            showAlert('Enter Data in all fields.');
         }
-
     };
 
     focusNextField = (nextField) => {

@@ -45,7 +45,10 @@ import axios from 'axios';
 
 export const registerAgency = () => {
     return (dispatch, getState) => {
-
+        dispatch({
+            type: START_LOADING,
+            payload: true,
+        });
         // let agency = {
         //     firstName: getState().agent.firstName,
         //     lastName: getState().agent.lastName,
@@ -65,7 +68,6 @@ export const registerAgency = () => {
         //     isActive:  getState().agent.isActive,
         //     birthdate: getState().agent.birthDate
         // };
-        debugger;
 
         let token = 'Bearer ' + getState().user.token;
         const config = { headers: { "Content-Type": "multipart/form-data", "Authorization": token } };
@@ -81,15 +83,15 @@ export const registerAgency = () => {
         formData.append('branchId',getState().agent.selectedBranch._id || 0);
         formData.append('birthDate',getState().agent.birthDate);
 
-        if(getState().agent.agentImages.addressImage != null){
-            formData.append("image", {uri: getState().agent.agentImages.addressImage.uri,
-                name: getState().agent.agentImages.addressImage.fileName,
-                type: 'multipart/form-data'});
-        }
-
         if(getState().agent.agentImages.pancardImage != null){
             formData.append("image", {uri: getState().agent.agentImages.pancardImage.uri,
                 name: getState().agent.agentImages.pancardImage.fileName,
+                type: 'multipart/form-data'});
+        }
+
+        if(getState().agent.agentImages.addressImage != null){
+            formData.append("image", {uri: getState().agent.agentImages.addressImage.uri,
+                name: getState().agent.agentImages.addressImage.fileName,
                 type: 'multipart/form-data'});
         }
 
@@ -99,12 +101,6 @@ export const registerAgency = () => {
                 name: getState().agent.agentImages.profileImage.fileName,
                 type: 'multipart/form-data'});
         }
-
-        // formData.append("image", images);
-
-
-
-        debugger
 
         let agencyDetail = {
             name: getState().agent.firstName + " " + getState().agent.lastName,
@@ -126,26 +122,25 @@ export const registerAgency = () => {
                 dispatch({
                     type: CLEAR_AGENT,
                 });
-                return Promise.resolve(res);
+                return Promise.all([
+                    dispatch(getAgencies()),
+                ]).then(res => {
+                    dispatch({
+                        type: START_LOADING,
+                        payload: false,
+                    });
+                    return Promise.resolve(true);
+                }).catch(err => {
+                    return Promise.reject(error);
+                });
             }).catch(err => {
+                dispatch({
+                    type: START_LOADING,
+                    payload: false,
+                });
+
                 return Promise.reject(res);
             });
-
-        // return CallApi(Constant.baseUrl+Constant.signIn,'get',{},{"Accept":"application/json"})
-        //     .then((response)=>{
-        //         let user = {
-        //             email:email,
-        //             password:password,
-        //             token:response.data.token
-        //         };
-        //         AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
-        //         });
-        //
-        //     })
-        //     .catch((error)=>{
-        //         debugger;
-        //         return Promise.reject(error);
-        //     })
     };
 };
 
@@ -204,7 +199,9 @@ export const getAllBranches = () => {
 };
 
 export const getAgencies = () => {
+    debugger
     return (dispatch, getState) => {
+        debugger
         let token = 'Bearer '+getState().user.token;
         return CallApi(Constant.baseUrl + Constant.agencies, 'get', {}, {"Authorization": token})
             .then((response)=> {

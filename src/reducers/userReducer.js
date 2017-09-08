@@ -56,9 +56,9 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 userDetail: {},
-              email: "",
-              password: "",
-              token:"",
+              // email: "",
+              // password: "",
+              // token:"",
 
             };
         }

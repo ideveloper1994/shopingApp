@@ -16,6 +16,7 @@ import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Spinner from '../../helper/loader';
 
 import {
     bankNameChanged,
@@ -42,22 +43,19 @@ class AgentBankDetail extends Component {
     };
 
     onFinishButtonPress = () => {
-        /*if(isEmpty(this.props.bankName) &&
-         isEmpty(this.props.branchName) &&
-         isEmpty(this.props.acHolderName) &&
-         isEmpty(this.props.acNumber) &&
-         isEmpty(this.props.IFSECode) ) {
-         alert("all true")
-         }else{
-         showAlert('Enter Data in all fields.');
-         }*/
-        this.props.registerAgency().then(res => {
-            this.props.navigator.push('agentDetail');
-        }).catch(err => {
-            Alert.alert("Error","Fail to register agency, \n please try again.")
-        });
-
-
+        if(isEmpty(this.props.bankName) &&
+            isEmpty(this.props.branchName) &&
+            isEmpty(this.props.acHolderName) &&
+            isEmpty(this.props.acNumber) &&
+            isEmpty(this.props.IFSECode) ) {
+            this.props.registerAgency().then(res => {
+                this.props.navigator.push('agentDetail');
+            }).catch(err => {
+                Alert.alert("Error","Fail to register agency, \n please try again.")
+            });
+        }else{
+            showAlert('Enter Data in all fields.');
+        }
     };
 
     focusNextField = (nextField) => {
@@ -154,6 +152,7 @@ class AgentBankDetail extends Component {
                             otherStyle={{marginBottom:20}}
                             onPress={this.onFinishButtonPress}/>
                 </ScrollView>
+                <Spinner visible={this.props.isLoading} />
             </View>
         );
     }

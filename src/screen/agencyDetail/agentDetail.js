@@ -7,7 +7,8 @@ import {
     View,
     Keyboard,
     TextInput, Dimensions,
-    ScrollView
+    ScrollView,
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationTitle from '../../commonComponent/navBarTitle';
@@ -26,6 +27,48 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const {width, height} =Dimensions.get('window');
 
+class AgentDetailRow extends Component {
+
+    render() {
+        return (
+            <TouchableHighlight onPress={()=>{this.props.onSelectRow(this.props.item)}}
+                                underlayColor={"transparent"}>
+                <View style={styles.agentView}>
+                    <View style={styles.imageView}>
+                        <Image onLayout={(event) => {this.setState({y: event.nativeEvent.layout.y})}}
+                               source={(this.props.item.uri)? {uri: this.props.item.uri}:
+                                   require('../../assets/images/avatar-male.png')} style={styles.images} />
+                    </View>
+                    <View style={styles.textView}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text>{(this.props.item.firstName)? this.props.item.firstName:'N/A'}</Text>
+                            <Text>{' '}</Text>
+                            <Text>{(this.props.item.lastName)? this.props.item.lastName:'N/A'}</Text>
+                        </View>
+                        <View>
+                            <Text>{(this.props.item.zoneName)? this.props.item.zoneName: 'N/A'}</Text>
+                        </View>
+                        <View>
+                            <Text>{(this.props.item.email)? this.props.item.email:'N/A'}</Text>
+                        </View>
+                    </View>
+                    <TouchableHighlight style={styles.moreView}
+                                        onPress={()=> this.props.onActivateCall(this.props.index, this.props.item)} underlayColor={"transparent"}>
+                        <View style={{margin:5}}>
+                            {(this.props.item.isActive) ?
+                                <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
+                                :
+                                <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
+                            }
+                        </View>
+
+                    </TouchableHighlight>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+}
+
 class AgentDetail extends Component {
 
     constructor(props){
@@ -40,7 +83,7 @@ class AgentDetail extends Component {
     };
 
     componentDidMount(){
-        this.props.getAgencies();
+        // this.props.getAgencies();
     }
 
     onActivateCall = (index, agency) => {
@@ -77,43 +120,14 @@ class AgentDetail extends Component {
         }
     };
 
+    onSelectRow = (item) => {
+        this.props.navigator.push('agentFullProfile',{userDetails: item});
+    };
 
     renderAgents = () => {
         return this.props.agencies.map((item,index) => {
             return(
-                <TouchableHighlight onPress={()=>{this.props.navigator.push('agentFullProfile',{userDetails: item})}}
-                                    underlayColor={"transparent"}>
-                    <View style={styles.agentView}>
-                        <View style={styles.imageView}>
-                            <Image onLayout={(event) => {this.setState({y: event.nativeEvent.layout.y})}}
-                                   source={(item.uri)? {uri: item.uri}:
-                                   require('../../assets/images/avatar-male.png')} style={styles.images} />
-                        </View>
-                        <View style={styles.textView}>
-                            <View style={{flexDirection:'row'}}>
-                                <Text>{(item.firstName)? item.firstName:'N/A'}</Text>
-                                <Text>{' '}</Text>
-                                <Text>{(item.lastName)? item.lastName:'N/A'}</Text>
-                            </View>
-                            <View>
-                                <Text>{(item.zoneName)? item.zoneName: 'N/A'}</Text>
-                            </View>
-                            <View>
-                                <Text>{(item.email)?item.email:'N/A'}</Text>
-                            </View>
-                        </View>
-                        <TouchableHighlight style={styles.moreView}
-                                            onPress={()=> this.onActivateCall(index, item)} underlayColor={"transparent"}>
-                            <View style={{margin:5}}>
-                                {(item.isActive) ?
-                                    <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
-                                    :
-                                    <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
-                                }
-                            </View>
-
-                        </TouchableHighlight>
-                    </View></TouchableHighlight>
+               <AgentDetailRow item={item} onSelectRow={this.onSelectRow}/>
             )
         });
     };
@@ -131,12 +145,17 @@ class AgentDetail extends Component {
         return (
             <View style={{flex:1,backgroundColor: '#fff'}}>
                 <NavigationTitle title="Agent Detail"/>
-
-                <ScrollView showsVerticalScrollIndicator={false}
-                            removeClippedSubviews={false}>
-                    {this.renderAgents()}
-                    <View style={{height:100}}/>
-                </ScrollView>
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    removeClippedSubviews={false}
+                    data={this.props.agencies}
+                    renderItem={({item, index}) => <AgentDetailRow item={item}
+                    index={index}
+                     onSelectRow={this.onSelectRow}
+                     onActivateCall={this.onActivateCall}
+                     />
+                    }
+                />
 
                 <View style={{position:'absolute',backgroundColor:'transparent',
                               marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
