@@ -208,7 +208,6 @@ const mapStateToProps = state => {
         zone: state.agent.zone,
         agentBranch: state.agent.agentBranch,
 
-
         bankName: state.agent.bankName,
         branchName: state.agent.branchName,
         acHolderName: state.agent.acHolderName,

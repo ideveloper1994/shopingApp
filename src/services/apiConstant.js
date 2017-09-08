@@ -8,5 +8,9 @@ module.exports = {
     zones: 'api/zones',
     branch: 'api/branchs',
     agencies: 'api/users/agencies',
-    updateActive: 'toggleActive',
+    updateActive: '/toggleActive',
+
+    validateEmail: 'api/users/emailvalidate/',
+    validatePhoneNo: 'api/users/phonenumbervalidate/',
+    registerUser: 'api/users'
 };

@@ -2,13 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar,AsyncStorage } from 'react-native';
 import navigationContext from './../navigationHelper/customNavigationContext';
 import Router from './../navigationHelper/router'
-import { NavigationProvider,StackNavigation } from '@expo/ex-navigation';
+import { NavigationProvider,StackNavigation,NavigationStyles } from '@expo/ex-navigation';
 import * as Animatable from 'react-native-animatable';
 import Spinner from '../helper/loader'
 import { connect } from 'react-redux';
 let isLogin = 'login';
-
-//let isLogin = false;
+import Constant from '../helper/constant';
+import {
+    loginUser,
+} from '../actions/userAction';
 
 class AppNavigation extends React.Component {
 
@@ -16,21 +18,29 @@ class AppNavigation extends React.Component {
         super(props);
         this.state={
             isAppLoading:false,
-            isLoading:true,
         }
     }
 
     componentWillMount() {
         AsyncStorage.getItem('user').then((value) => {
-
             if(value!=null) {
-                isLogin='welcome';
+                let userDetail = JSON.parse(value);
+                this.props.loginUser(userDetail.email.trim(), userDetail.password.trim())
+                    .then(()=>{
+                        isLogin='welcome';
+                        this.setState({isAppLoading:true});
+                    })
+                    .catch((err)=>{
+                        this.setState({isAppLoading:true});
+                    });
+            }else{
+                this.setState({isAppLoading:true});
             }
-            this.setState({isAppLoading:true});
         }).catch((err)=>{
             this.setState({isAppLoading:true});
-        })
+        });
     }
+
 
     render() {
         return (
@@ -38,6 +48,7 @@ class AppNavigation extends React.Component {
                 <StatusBar
                     hidden={false}
                     barStyle="light-content"
+                    backgroundColor={Constant.backColor}
                 />
                 {(this.state.isAppLoading) ?
                     <View style={{flex:1}}>
@@ -45,14 +56,16 @@ class AppNavigation extends React.Component {
                                          defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
-                                             }
+                                             },
+                                             styles: {
+                                                  ...NavigationStyles.SlideHorizontal}
                                          }}/>
 
                         <Animatable.View animation="zoomIn" iterationCount={'infinite'}
                                          alternate={true}
                                          style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
                             <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>
-                                {this.props.balance}
+                                {this.props.balance.toString()}
                             </Text>
                         </Animatable.View>
                     </View> :
@@ -83,5 +96,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-
+    loginUser
 })(AppNavigation);

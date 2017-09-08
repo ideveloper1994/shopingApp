@@ -40,6 +40,9 @@ class AgentDocument extends Component {
             arrList: ["Aadhar card", "Voting card","Driving licence", "Ration card", "Electricity bill"],
             opened: false,
             views: [],
+            addressImage: null,
+            pancardImage: null,
+            profileImage: null,
         };
     }
 
@@ -50,9 +53,9 @@ class AgentDocument extends Component {
     onNextButtonPress = () => {
         console.log(this.state);
         this.props.agentImages({
-            addressImage: this.state.addressSrc,
-            pancardImage: this.state.pancardSrc,
-            profileImage: this.state.profileSrc,
+            addressImage: this.state.addressImage,
+            pancardImage: this.state.pancardImage,
+            profileImage: this.state.profileImage,
         });
 
         this.props.navigator.push('agentBankDetail');
@@ -61,12 +64,10 @@ class AgentDocument extends Component {
     onSelectImage = (type) => {
         let options = {
             quality: 0.2,
-            noData: true
+            noData: true,
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            debugger;
-            console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -82,17 +83,20 @@ class AgentDocument extends Component {
                 switch (type) {
                     case 'panCard' :
                         this.setState({
-                            pancardSrc: source
+                            pancardSrc: source,
+                            pancardImage: response
                         });
                         break;
                     case 'addressProof' :
                         this.setState({
-                            addressSrc: source
+                            addressSrc: source,
+                            addressImage: response
                         });
                         break;
                     case 'profile' :
                         this.setState({
-                            profileSrc: source
+                            profileSrc: source,
+                            profileImage: response
                         });
                         break;
                 }
@@ -223,11 +227,12 @@ class AgentDocument extends Component {
                             <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
                                 <Picker mode={Picker.MODE_DROPDOWN}
                                         selectedValue={this.props.addressProofType}
-                                        onValueChange={(src) => this.props.agentAddressProofType(src)}>
-                                    style={{height:30}}>
+                                        onValueChange={(src) => this.props.agentAddressProofType(src)}
+                                        style={{height:30}}>
                                     {
                                         this.state.arrList.map(function (src, index) {
-                                            return <Picker.Item label={src.toString()} value={src.toString()}/>
+                                            return <Picker.Item label={src.toString()}
+                                                                value={src.toString()}/>
                                         })
                                     }
                                 </Picker>

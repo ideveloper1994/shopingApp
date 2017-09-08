@@ -1,4 +1,7 @@
-import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED, REGISTERED_USER, START_LOADING } from '../actions/types'
+import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED,
+    REGISTERED_USER, START_LOADING,LOGOUT_USER,
+    REDEEM_BALANCE
+} from '../actions/types'
 const INITIAL_STATE = {
     email: "emiadda@gmail.com",
     password: "emiadda",
@@ -18,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case APP_SET_USER_DATA: {
-            debugger
             return {
                 ...state,
                 email: state.email,
@@ -49,6 +51,27 @@ export default (state = INITIAL_STATE, action) => {
 
             };
         }
+
+        case LOGOUT_USER: {
+            return {
+                ...state,
+                userDetail: {},
+              email: "",
+              password: "",
+              token:"",
+
+            };
+        }
+
+        case REDEEM_BALANCE: {
+            let userDetail = state.userDetail;
+            userDetail.Balance = userDetail.Balance - 1000;
+            return {
+                ...state,
+                userDetail: userDetail,
+            };
+        }
+
 
         default:
             return state;

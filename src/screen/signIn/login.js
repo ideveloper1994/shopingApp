@@ -26,7 +26,7 @@ class Login extends Component {
     //Response token on success or error message
 
     onSignInPress = () => {
-        this.props.navigator.push('welcome');
+        this.props.navigator.replace('welcome');
     };
 
     //Render signIn page component
