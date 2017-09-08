@@ -102,7 +102,6 @@ class AgentFormPersonal extends Component {
                                     onChangeText={(text) => {this.props.fnameChanged(text)}}
                                     onSubmitEditing={() => this.focusNextField('txtLname')}
                                     underlineColorAndroid={Constant.transparent}
-                                    placeholderTextColor={"lightGray"}
                         />
                     </View>
 
