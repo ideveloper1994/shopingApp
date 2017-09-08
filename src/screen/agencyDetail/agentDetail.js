@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text, Image,
     Alert, TouchableHighlight,
-    AsyncStorage,
+  AsyncStorage,
     View,
     Keyboard,
     TextInput, Dimensions,
@@ -14,11 +14,15 @@ import NavigationTitle from '../../commonComponent/navBarTitle';
 import {
     getAgencies,
     callAgencyActivation,
-    updateAgencyActivation
+    updateAgencyActivation,
 } from '../../actions/agentRegistration'
+import {
+  logoutUser
+} from '../../actions/userAction'
 import Constant from '../../helper/constant';
 import Spinner from '../../helper/loader';
 import _ from 'lodash';
+import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
 
 const {width, height} =Dimensions.get('window');
 
@@ -124,6 +128,16 @@ class AgentDetail extends Component {
                                style={{ alignSelf:'center', backgroundColor:'white', borderRadius:30}}/>
                     </TouchableHighlight>
                 </View>
+
+                <View style={{position:'absolute', top: 25, left: 25, height:30,width:30}}>
+                    <TouchableHighlight underlayColor="transparent"
+                                        onPress={() => {
+                                            AsyncStorage.clear();
+                                            this.props.logoutUser()
+                                        }}>
+                        <MaterialCommunityIcons name='logout' size={30} color={Constant.lightTheamColor}/>
+                    </TouchableHighlight>
+                </View>
                 <Spinner visible={this.props.isLoading} />
             </View>
         );
@@ -194,5 +208,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
     getAgencies,
     callAgencyActivation,
-    updateAgencyActivation
+    updateAgencyActivation,
+  logoutUser
 })(AgentDetail);

@@ -4,7 +4,8 @@ import {
     USER_PASS_CHANGED,
     REGISTERED_USER,
     APP_SET_USER_DATA,
-    START_LOADING
+    START_LOADING,
+  LOGOUT_USER
 } from './types'
 import { AsyncStorage } from 'react-native';
 import {CallApi} from '../services/apiCall'
@@ -102,4 +103,7 @@ export const phoneValidate = (phoneNo) => {
                 return Promise.reject(false);
             })
     };
+};
+export const logoutUser = () => {
+  return { type: LOGOUT_USER, payload: text };
 };
