@@ -33,7 +33,9 @@ import {
 
     AGENT_IMAGES,
     CHANGE_ACTIVATION,
-    CLEAR_AGENT
+    CLEAR_AGENT,
+    REDEEM_BALANCE,
+    REGISTERED_USER
 
 } from './types'
 import {CallApi} from '../services/apiCall'
@@ -96,10 +98,9 @@ export const registerAgency = () => {
 
         return axios.post(Constant.baseUrl+Constant.registerUser, formData, config)
             .then(res => {
-                // dispatch({
-                //     type: CLEAR_AGENT,
-                //     payload: {},
-                // });
+                dispatch({
+                    type: CLEAR_AGENT,
+                });
                 return Promise.resolve(res);
             }).catch(err => {
                 return Promise.reject(res);
@@ -290,6 +291,10 @@ export const callAgencyActivation = (agencyId, bodyData) => {
         let token = 'Bearer '+getState().user.token;
         return CallApi(Constant.baseUrl + "api/users/" + agencyId + Constant.updateActive, 'put', bodyData, {"Authorization": token})
             .then((response)=> {
+                dispatch({
+                    type: REDEEM_BALANCE,
+                    payload: ''
+                });
                 dispatch({
                     type: START_LOADING,
                     payload: false,

@@ -11,19 +11,19 @@ let isLogin = false;
 
 export default class main extends React.Component {
 
-  constructor(props){
-    super(props);
+    constructor(props){
+        super(props);
 
-    this.state = {
-      isConnected: true,
+        this.state = {
+            isConnected: true,
+        }
     }
-  }
-  componentDidMount() {
-    const dispatchConnected = isConnected => this.setState({isConnected});
-    NetInfo.isConnected.fetch().then().done(() => {
-      NetInfo.isConnected.addEventListener('change', dispatchConnected);
-    });
-  }
+    componentDidMount() {
+        const dispatchConnected = isConnected => this.setState({isConnected});
+        NetInfo.isConnected.fetch().then().done(() => {
+            NetInfo.isConnected.addEventListener('change', dispatchConnected);
+        });
+    }
 
     render() {
         return (
@@ -31,9 +31,9 @@ export default class main extends React.Component {
                 <Provider store={store}>
                     <Navigation/>
                 </Provider>
-              {
-                !(this.state.isConnected) &&
-                <View style={{
+                {
+                    !(this.state.isConnected) &&
+                    <View style={{
                   alignSelf: 'center',
                   position: 'absolute',
                   bottom: 70,
@@ -42,11 +42,13 @@ export default class main extends React.Component {
                   backgroundColor: 'black',
                   opacity: 1,borderRadius:5
                 }}>
-                  <Text style={{margin: 5,fontSize: 13,color: 'white',fontWeight: '500', textAlign: 'center'}}>No Internet connection</Text>
-                </View>
-                ||
-                null
-              }
+                        <Text style={{margin: 5,fontSize: 13,color: 'white',fontWeight: '500', textAlign: 'center'}}>
+                            No Internet connection
+                        </Text>
+                    </View>
+                    ||
+                    null
+                }
             </View>
         );
     }

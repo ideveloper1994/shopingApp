@@ -301,7 +301,8 @@ class AgentLocation extends Component {
                                         style={{height:30}}>
                                     {
                                         this.props.agentBranch.map(function (src, index) {
-                                            return <Picker.Item label={src.name} value={src._id}/>
+                                            return <Picker.Item label={src.name}
+                                                                value={src._id}/>
                                         })
                                     }
                                 </Picker>

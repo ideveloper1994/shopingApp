@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 64,
-        paddingTop: 15,
+        paddingTop: (Constant.IOS) ? 15 : 0,
     },
     titleText:{
         fontSize: 15,

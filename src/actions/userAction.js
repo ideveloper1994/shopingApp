@@ -5,7 +5,7 @@ import {
     REGISTERED_USER,
     APP_SET_USER_DATA,
     START_LOADING,
-  LOGOUT_USER
+    LOGOUT_USER
 } from './types'
 import { AsyncStorage } from 'react-native';
 import {CallApi} from '../services/apiCall'
@@ -39,13 +39,14 @@ export const loginUser = (email, password) => {
                 });
 
                 dispatch({
+                    type: REGISTERED_USER,
+                    payload: response.data.user
+                });
+
+                dispatch({
                     type: START_LOADING,
                     payload: false,
                 });
-                return dispatch({
-                    type: REGISTERED_USER,
-                    payload: response.data.user
-                })
             })
             .catch((error)=>{
                 dispatch({
@@ -104,6 +105,13 @@ export const phoneValidate = (phoneNo) => {
             })
     };
 };
+
 export const logoutUser = () => {
-  return { type: LOGOUT_USER, payload: text };
+    return (dispatch, getState) => {
+        dispatch({
+            type: LOGOUT_USER,
+            payload: '',
+        });
+        return Promise.resolve(true);
+    };
 };

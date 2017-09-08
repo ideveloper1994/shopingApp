@@ -47,3 +47,4 @@ export const CHANGE_ACTIVATION = 'CHANGE_ACTIVATION';
 
 export const CLEAR_AGENT = 'CLEAR_AGENT';
 
+export const REDEEM_BALANCE = 'REDEEM_BALANCE';

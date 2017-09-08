@@ -31,7 +31,9 @@ import {
     GET_ALL_AGENCIES,
     AGENT_IMAGES,
     CHANGE_ACTIVATION,
-    CLEAR_AGENT
+    CLEAR_AGENT,
+    REDEEM_BALANCE
+
 } from '../actions/types';
 const INITIAL_STATE = {
 
@@ -231,7 +233,25 @@ export default (state = INITIAL_STATE, action) => {
         case CLEAR_AGENT: {
             return {
                 ...state,
-                agencies: INITIAL_STATE
+                firstName: '',
+                lastName: '',
+                mobileNo: '',
+                userName: '',
+                email: '',
+                password: '',
+                birthDate: '',
+
+                bankName: '',
+                branchName: '',
+                acHolderName: '',
+                acNumber: '',
+                IFSECode: '',
+                isActive: false,
+                addressProofType: 'Aadhar card',
+
+                selectedState: {},
+                selectedBranch: {},
+                selectedZone: {},
             };
         }
 

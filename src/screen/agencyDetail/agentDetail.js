@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text, Image,
     Alert, TouchableHighlight,
-  AsyncStorage,
+    AsyncStorage,
     View,
     Keyboard,
     TextInput, Dimensions,
@@ -17,12 +17,12 @@ import {
     updateAgencyActivation,
 } from '../../actions/agentRegistration'
 import {
-  logoutUser
+    logoutUser
 } from '../../actions/userAction'
 import Constant from '../../helper/constant';
 import Spinner from '../../helper/loader';
 import _ from 'lodash';
-import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const {width, height} =Dimensions.get('window');
 
@@ -41,9 +41,6 @@ class AgentDetail extends Component {
 
     componentDidMount(){
         this.props.getAgencies();
-        // this.setState({
-        //     agencyDetail: data
-        // });
     }
 
     onActivateCall = (index, agency) => {
@@ -70,6 +67,17 @@ class AgentDetail extends Component {
         }
     };
 
+
+    onAddAgencyCall = () => {
+        if(this.props.balance != 0){
+            this.props.navigator.push('agentFormPersonal');
+        }else{
+            Alert.alert("Error","Not able to register agency," +
+                " \n please check your balance.");
+        }
+    };
+
+
     renderAgents = () => {
         return this.props.agencies.map((item,index) => {
             return(
@@ -78,7 +86,8 @@ class AgentDetail extends Component {
                     <View style={styles.agentView}>
                         <View style={styles.imageView}>
                             <Image onLayout={(event) => {this.setState({y: event.nativeEvent.layout.y})}}
-                                   source={(item.uri)? {uri: item.uri}: require('../../assets/images/avatar-male.png')} style={styles.images} />
+                                   source={(item.uri)? {uri: item.uri}:
+                                   require('../../assets/images/avatar-male.png')} style={styles.images} />
                         </View>
                         <View style={styles.textView}>
                             <View style={{flexDirection:'row'}}>
@@ -109,33 +118,40 @@ class AgentDetail extends Component {
         });
     };
 
+    onLogOut = () =>{
+        AsyncStorage.clear();
+        this.props.logoutUser().then(res => {
+            this.props.navigator.replace('login');
+        }).catch(err=>{
+
+        })
+    };
+
     render() {
         return (
-            <View style={{flex:1,}}>
+            <View style={{flex:1,backgroundColor: '#fff'}}>
                 <NavigationTitle title="Agent Detail"/>
 
-                <ScrollView showsVerticalScrollIndicator={false} style={{}}>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            removeClippedSubviews={false}>
                     {this.renderAgents()}
                     <View style={{height:100}}/>
                 </ScrollView>
 
-                <View style={{position:'absolute',
-            marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
+                <View style={{position:'absolute',backgroundColor:'transparent',
+                              marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
                     <TouchableHighlight underlayColor="transparent"
-                                        onPress={() => {this.props.navigator.push('agentFormPersonal');}}
-                                        style={{width:width*0.2, height:width*0.2,}} >
+                                        onPress={() => this.onAddAgencyCall()}
+                                        style={{width:width*0.2, height:width*0.2,ackgroundColor:'transparent'}} >
                         <Image source={require('../../assets/images/plus.png')}
-                               style={{ alignSelf:'center', backgroundColor:'white', borderRadius:30}}/>
+                               style={{ alignSelf:'center', borderRadius:30}}/>
                     </TouchableHighlight>
                 </View>
 
-                <View style={{position:'absolute', top: 25, left: 25, height:30,width:30}}>
+                <View style={{position:'absolute', top: (Constant.IOS) ? 25 : 15, left: 25, height:30,width:30}}>
                     <TouchableHighlight underlayColor="transparent"
-                                        onPress={() => {
-                                            AsyncStorage.clear();
-                                            this.props.logoutUser()
-                                        }}>
-                        <MaterialCommunityIcons name='logout' size={30} color={Constant.lightTheamColor}/>
+                                        onPress={() => this.onLogOut()}>
+                        <MaterialCommunityIcons name='logout' size={30} color={"#FFF"}/>
                     </TouchableHighlight>
                 </View>
                 <Spinner visible={this.props.isLoading} />
@@ -148,7 +164,8 @@ const styles = StyleSheet.create({
     outerView:{
         width: "90%",
         alignSelf: 'center',
-        paddingTop: 20
+        paddingTop: 20,
+
     },
     formTextLabel:{
         color: 'gray',
@@ -202,6 +219,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         agencies: state.agent.agencies,
+        balance: (state.user.userDetail.Balance) ? state.user.userDetail.Balance : 0,
     };
 };
 
@@ -209,5 +227,5 @@ export default connect(mapStateToProps, {
     getAgencies,
     callAgencyActivation,
     updateAgencyActivation,
-  logoutUser
+    logoutUser
 })(AgentDetail);
