@@ -44,8 +44,9 @@ class AgentFormPersonal extends Component {
         //     showAlert('Enter Data in all fields.');
         // }
 
-
+debugger
         if(this.state.isValidPhoneNo && this.state.isValidEmail){
+
             this.props.navigator.push('agentLocation');
         }
 
@@ -154,7 +155,7 @@ class AgentFormPersonal extends Component {
                                     autoCorrect={false}
                                     returnKeyType={'next'}
                                     onChangeText={(text) => {this.props.mobileChanged(text)}}
-                                    onSubmitEditing={() => this.focusNextField('txtUserName')}
+                                    blurOnSubmit={true}
                                     underlineColorAndroid={Constant.transparent}
                                     onEndEditing={(text) => this.onPhoneNoValid(text)}
                         />

@@ -124,6 +124,7 @@ class AgentLocation extends Component {
                             onValueChange={(src) => this.onSelectOption(src, 'state')}>
                         {
                             this.props.stateName.map(function (item, index) {
+                                debugger
                                 return <Picker.Item key={item._id}
                                                     label={item.name}
                                                     value={item._id}/>
@@ -138,6 +139,7 @@ class AgentLocation extends Component {
                             onValueChange={(src) => this.onSelectOption(src, 'zone')}>
                         {
                             this.state.zoneList.map(function (src, index) {
+                                debugger
                                 return <Picker.Item key={src._id}
                                                     label={src.name}
                                                     value={src._id}/>
@@ -153,6 +155,7 @@ class AgentLocation extends Component {
                             onValueChange={(src) => this.onSelectOption(src, 'branch')}>
                         {
                             this.props.agentBranch.map(function (src, index) {
+                                debugger
                                 return <Picker.Item key={src._id}
                                                     label={src.name}
                                                     value={src._id}/>
@@ -225,10 +228,11 @@ class AgentLocation extends Component {
 
                             <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
                                 <Picker mode={Picker.MODE_DROPDOWN}
-                                        onValueChange={(src) => this.onSelectOption(src, 'state')}>
+                                        onValueChange={(src) => this.onSelectOption(src, 'state')}
                                         style={{height:30}}>
                                     {
                                         this.props.stateName.map(function (src, index) {
+                                            debugger
                                             return <Picker.Item label={src.name} value={src._id}/>
                                         })
                                     }
@@ -262,10 +266,11 @@ class AgentLocation extends Component {
 
                             <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
                                 <Picker mode={Picker.MODE_DROPDOWN}
-                                        onValueChange={(src) => this.onSelectOption(src, 'zone')}>
+                                        onValueChange={(src) => this.onSelectOption(src, 'zone')}
                                         style={{height:30}}>
                                     {
                                         this.props.zone.map(function (src, index) {
+                                            debugger
                                             return <Picker.Item label={src.name} value={src._id}/>
                                         })
                                     }
@@ -299,10 +304,11 @@ class AgentLocation extends Component {
 
                             <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
                                 <Picker mode={Picker.MODE_DROPDOWN}
-                                        onValueChange={(src) => this.onSelectOption(src, 'branch')}>
+                                        onValueChange={(src) => this.onSelectOption(src, 'branch')}
                                         style={{height:30}}>
                                     {
                                         this.props.agentBranch.map(function (src, index) {
+                                            debugger
                                             return <Picker.Item label={src.name}
                                                                 value={src._id}/>
                                         })
