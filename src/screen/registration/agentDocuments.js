@@ -224,7 +224,10 @@ class AgentDocument extends Component {
                             </TouchableHighlight>
                             :
 
-                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
+                            <View style={{backgroundColor: 'white',
+                            borderWidth: 0.5,borderColor:'gray',
+                            width: '90%', alignSelf:'center', margin:5, borderRadius: 5,
+                            height: 45, justifyContent: 'center' }}>
                                 <Picker mode={Picker.MODE_DROPDOWN}
                                         selectedValue={this.props.addressProofType}
                                         onValueChange={(src) => this.props.agentAddressProofType(src)}
