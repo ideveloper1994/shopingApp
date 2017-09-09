@@ -118,7 +118,7 @@ class AgentBankDetail extends Component {
                     <View style={styles.outerView}>
                         <Text style={styles.formTextLabel}>Account Number</Text>
                         <TextInput  ref="txtAccNo"
-                                    keyboardType={'number-pad'}
+                                    keyboardType={'numeric'}
                                     value={this.props.acNumber}
                                     placeholder={"Account No."}
                                     style={ styles.textBox }
@@ -135,7 +135,6 @@ class AgentBankDetail extends Component {
                         <Text style={styles.formTextLabel}>IFSE Code</Text>
                         <TextInput  ref="txtIFSE"
                                     value={this.props.IFSECode}
-                                    keyboardType={'number-pad'}
                                     placeholder={"IFSE code"}
                                     style={ styles.textBox }
                                     autoCapitalize="none"
@@ -200,6 +199,7 @@ const mapStateToProps = state => {
         acNumber: state.agent.acNumber,
         IFSECode: state.agent.IFSECode,
         isActive:  state.agent.isActive,
+        isLoading: state.user.isLoading,
     };
 };
 

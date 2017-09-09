@@ -119,19 +119,19 @@ export const registerAgency = () => {
 
         return axios.post(Constant.baseUrl+Constant.registerUser, formData, config)
             .then(res => {
-                dispatch({
-                    type: CLEAR_AGENT,
-                });
                 return Promise.all([
                     dispatch(getAgencies()),
                 ]).then(res => {
+                    dispatch({
+                        type: CLEAR_AGENT,
+                    });
                     dispatch({
                         type: START_LOADING,
                         payload: false,
                     });
                     return Promise.resolve(true);
                 }).catch(err => {
-                    return Promise.reject(error);
+                    return Promise.reject(err);
                 });
             }).catch(err => {
                 dispatch({
@@ -139,7 +139,7 @@ export const registerAgency = () => {
                     payload: false,
                 });
 
-                return Promise.reject(res);
+                return Promise.reject(err);
             });
     };
 };
@@ -199,9 +199,7 @@ export const getAllBranches = () => {
 };
 
 export const getAgencies = () => {
-    debugger
     return (dispatch, getState) => {
-        debugger
         let token = 'Bearer '+getState().user.token;
         return CallApi(Constant.baseUrl + Constant.agencies, 'get', {}, {"Authorization": token})
             .then((response)=> {

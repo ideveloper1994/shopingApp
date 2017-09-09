@@ -41,7 +41,6 @@ class AppNavigation extends React.Component {
         });
     }
 
-
     render() {
         return (
             <NavigationProvider router={Router} context={navigationContext}>
@@ -65,7 +64,7 @@ class AppNavigation extends React.Component {
                                          alternate={true}
                                          style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
                             <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>
-                                {this.props.balance.toString()}
+                                {this.props.balance}
                             </Text>
                         </Animatable.View>
                     </View> :
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        balance: (state.user.userDetail.Balance) ? state.user.userDetail.Balance : '',
+        balance: (state.user.userDetail.Balance) ? "Rs. " + state.user.userDetail.Balance.toString() : '',
         password: state.user.password,
         isLoading: state.user.isLoading,
     };

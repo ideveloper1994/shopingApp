@@ -28,7 +28,7 @@ import { isEmpty } from '../../helper/appHelper';
 
 class AgentLocation extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             stateName: '',
@@ -49,9 +49,33 @@ class AgentLocation extends Component {
     }
 
     componentWillMount(){
-        this.props.getAllStates();
-        this.props.getAllZones();
-        this.props.getAllBranches();
+        if(Constant.IOS) {
+            this.props.getAllStates();
+            this.props.getAllZones();
+            this.props.getAllBranches();
+        }else {
+            this.props.getAllStates().then(res => {
+                if (!Constant.IOS) {
+                    if (this.props.stateName.length > 0) {
+                        this.props.stateChanged(this.props.stateName[0]);
+                    }
+                }
+                this.props.getAllZones().then(res => {
+                    if (!Constant.IOS) {
+                        this.setSelectedZone(this.props.selectedState._id || 0);
+                    }
+                    this.props.getAllBranches().then(res => {
+                        if (!Constant.IOS) {
+                            this.setSelectedBranch(this.props.selectedZone._id || 0);
+                        }
+                    });
+                });
+            });
+        }
+    }
+
+    componentDidMount() {
+
     }
 
     onBackButtonPress = () => {
@@ -59,16 +83,22 @@ class AgentLocation extends Component {
     };
 
     onNextButtonPress = () => {
-        if(isEmpty(this.props.stateName) &&
-            isEmpty(this.props.zone) &&
-            isEmpty(this.props.agentBranch) ) {
-            this.props.navigator.push('agentDocuments');
+        if(Object.keys(this.props.selectedState).length == 0 ||
+            Object.keys(this.props.selectedBranch).length == 0 ||
+            Object.keys(this.props.selectedZone).length == 0) {
+            showAlert('Please select location detail.');
         }else{
-            showAlert('Enter Data in all fields.');
+            this.props.navigator.push('agentDocuments');
         }
-        this.props.navigator.push('agentDocuments');
+        // if(isEmpty(this.props.stateName) &&
+        //     isEmpty(this.props.zone) &&
+        //     isEmpty(this.props.agentBranch) ) {
+        //     this.props.navigator.push('agentDocuments');
+        // }else{
+        //     showAlert('Enter Data in all fields.');
+        // }
+        // this.props.navigator.push('agentDocuments');
     };
-
 
     onPressSelectSource = (selectedType) => {
         if (this.state.opened) {
@@ -91,19 +121,46 @@ class AgentLocation extends Component {
                 let state = _.find(this.props.stateName, {_id: src});
                 let zoneList =  _.filter(this.props.zone, {stateId: src});
                 this.props.stateChanged(state);
-                this.setState({selectedOptionState: state.name, zoneList: zoneList});
+                this.setState({selectedOptionState: state.name, zoneList: zoneList,
+                    selectedOptionZone: '--Select Zone--',
+                    selectedOptionBranch: '--Select Branch--'});
+                this.setState({branchList: []});
+                if(Constant.IOS){
+                    this.setSelectedBranch({});
+                }else{
+
+                    this.setSelectedZone(src);
+                }
                 break;
             case 'zone':
                 let zone = _.find(this.props.zone, {_id: src});
                 this.props.zoneChanged(zone);
                 let branchList =  _.filter(this.props.agentBranch, {zoneId: src});
-                this.setState({selectedOptionZone: zone.name, branchList: branchList});
+                this.setState({selectedOptionZone: zone.name, branchList: branchList, selectedOptionBranch: '--Select Branch--'});
+                this.setSelectedBranch(src);
                 break;
             case 'branch':
                 let branch = _.find(this.props.agentBranch, {_id: src});
                 this.props.branchChanged(branch);
                 this.setState({selectedOptionBranch: branch.name});
                 break;
+        }
+    };
+
+    setSelectedZone = (stateId) => {
+        let zoneList =  _.filter(this.props.zone, {stateId: stateId});
+        this.setState({zoneList: zoneList});
+        if(zoneList.length > 0){
+            this.props.zoneChanged(zoneList[0]);
+            this.props.branchChanged({});
+        }
+    };
+
+    setSelectedBranch = (zoneId) => {
+        let branchList =  _.filter(this.props.agentBranch, {zoneId: zoneId});
+        this.setState({branchList: branchList});
+        if(branchList.length > 0){
+            this.props.branchChanged(branchList[0]);
         }
     };
 
@@ -144,7 +201,7 @@ class AgentLocation extends Component {
                             selectedValue={this.props.selectedBranch._id || ''}
                             onValueChange={(src)=>this.onSelectOption(src,'branch')}>
                         {
-                            this.props.agentBranch.map(function (src, index) {
+                            this.state.branchList.map(function (src, index) {
                                 return <Picker.Item key={src._id}
                                                     label={src.name}
                                                     value={src._id}/>
@@ -214,19 +271,25 @@ class AgentLocation extends Component {
                                 </View>
                             </TouchableHighlight>
                             :
-
-                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
-                                <Picker mode={Picker.MODE_DROPDOWN}
-                                        selectedValue={this.props.selectedState._id || ''}
-                                        onValueChange={(src)=>this.onSelectOption(src,'state')}
-                                        style={{height:30}}>
-                                    {
-                                        this.props.stateName.map(function (src, index) {
-                                            return <Picker.Item label={src.name} value={src._id}/>
-                                        })
-                                    }
-                                </Picker>
-                            </View>
+                            <View>
+                                <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
+                                    Select State
+                                </Text>
+                                <View style={{backgroundColor: 'white',
+                            borderWidth: 0.5,borderColor:'gray',
+                            width: '90%', alignSelf:'center', margin:5, borderRadius: 5,
+                            height: 45, justifyContent: 'center' }}>
+                                    <Picker mode={Picker.MODE_DROPDOWN}
+                                            selectedValue={this.props.selectedState._id || ''}
+                                            onValueChange={(src)=>this.onSelectOption(src,'state')}
+                                            style={{height:30}}>
+                                        {
+                                            this.props.stateName.map(function (src, index) {
+                                                return <Picker.Item label={src.name} value={src._id}/>
+                                            })
+                                        }
+                                    </Picker>
+                                </View></View>
                         }
                     </View>
 
@@ -253,17 +316,25 @@ class AgentLocation extends Component {
                             </TouchableHighlight>
                             :
 
-                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
-                                <Picker mode={Picker.MODE_DROPDOWN}
-                                        selectedValue={this.props.selectedZone._id || ''}
-                                        onValueChange={(src)=>this.onSelectOption(src,'zone')}
-                                        style={{height:30}}>
-                                    {
-                                        this.props.zone.map(function (src, index) {
-                                            return <Picker.Item label={src.name} value={src._id}/>
-                                        })
-                                    }
-                                </Picker>
+                            <View>
+                                <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
+                                    Select Zone
+                                </Text>
+                                <View style={{backgroundColor: 'white',
+                            borderWidth: 0.5,borderColor:'gray',
+                            width: '90%', alignSelf:'center', margin:5, borderRadius: 5,
+                            height: 45, justifyContent: 'center' }}>
+                                    <Picker mode={Picker.MODE_DROPDOWN}
+                                            selectedValue={this.props.selectedZone._id || ''}
+                                            onValueChange={(src)=>this.onSelectOption(src,'zone')}
+                                            style={{height:30}}>
+                                        {
+                                            this.state.zoneList.map(function (src, index) {
+                                                return <Picker.Item label={src.name} value={src._id}/>
+                                            })
+                                        }
+                                    </Picker>
+                                </View>
                             </View>
                         }
                     </View>
@@ -290,19 +361,26 @@ class AgentLocation extends Component {
                                 </View>
                             </TouchableHighlight>
                             :
+                            <View>
+                                <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
+                                    Select Branch
+                                </Text>
+                                <View style={{backgroundColor: 'white',
+                            borderWidth: 0.5,borderColor:'gray',
+                            width: '90%', alignSelf:'center', margin:5, borderRadius: 5,
+                            height: 45, justifyContent: 'center' }}>
+                                    <Picker mode={Picker.MODE_DROPDOWN}
+                                            selectedValue={this.props.selectedBranch._id || ''}
+                                            onValueChange={(src)=>this.onSelectOption(src,'branch')}
 
-                            <View style={{backgroundColor: 'white',borderWidth: 0.5,borderColor:'gray'}} elevation={3}>
-                                <Picker mode={Picker.MODE_DROPDOWN}
-                                        selectedValue={this.props.selectedBranch._id || ''}
-                                        onValueChange={(src)=>this.onSelectOption(src,'branch')}
-                                        style={{height:30}}>
-                                    {
-                                        this.props.agentBranch.map(function (src, index) {
-                                            return <Picker.Item label={src.name} value={src._id}/>
-                                        })
-                                    }
-                                </Picker>
-                            </View>
+                                            style={{height:30}}>
+                                        {
+                                            this.state.branchList.map(function (src, index) {
+                                                return <Picker.Item label={src.name} value={src._id}/>
+                                            })
+                                        }
+                                    </Picker>
+                                </View></View>
                         }
                     </View>
 

@@ -142,7 +142,7 @@ class AgentFormPersonal extends Component {
                     <View style={styles.outerView}>
                         <Text style={styles.formTextLabel}>Mobile No</Text>
                         <TextInput  ref="txtPhone"
-                                    keyboardType={'number-pad'}
+                                    keyboardType={'numeric'}
                                     value={this.props.mobileNo}
                                     placeholder={"Mobile No."}
                                     style={ styles.textBox }

@@ -17,10 +17,12 @@ import { connect } from 'react-redux';
 import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
+
 import {
     agentAddressProofType,
     agentImages
 } from '../../actions/agentRegistration';
+
 let ImagePicker = require('react-native-image-picker');
 
 console.disableYellowBox = true;
