@@ -88,36 +88,36 @@ class AgentDetail extends Component {
 
     onActivateCall = (index, agency) => {
         if(!agency.isActive) {
-            Alert.alert("Warning!!",
-                "\nAre you sure, you want to activate this agency?",
-                [
-                    {text: 'Yes', onPress: () => {
-                        this.props.callAgencyActivation(agency._id,{isActive: true})
-                            .then(res => {
-                                let arr =  _.cloneDeep(this.props.agencies);
-                                arr[index].isActive = true;
-                                this.props.updateAgencyActivation(arr);
-                            })
-                            .catch(error => {
-                                Alert.alert("Error","Fail to activate agency.")
-                            });
+            if(this.props.balance >= 1000){
+                Alert.alert("Warning!!",
+                    "\nAre you sure, you want to activate this agency?",
+                    [
+                        {text: 'Yes', onPress: () => {
+                            this.props.callAgencyActivation(agency._id,{isActive: true})
+                                .then(res => {
+                                    let arr =  _.cloneDeep(this.props.agencies);
+                                    arr[index].isActive = true;
+                                    this.props.updateAgencyActivation(arr);
+                                })
+                                .catch(error => {
+                                    Alert.alert("Error","Fail to activate agency.");
+                                });
 
-                    }},
-                    {text: 'No', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: false }
-            );
+                        }},
+                        {text: 'No', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                );
+            }else{
+                Alert.alert("Error","Not able to register agency," +
+                    " \n please check your balance.");
+            }
         }
     };
 
 
     onAddAgencyCall = () => {
-        if(this.props.balance >= 1000){
-            this.props.navigator.push('agentFormPersonal');
-        }else{
-            Alert.alert("Error","Not able to register agency," +
-                " \n please check your balance.");
-        }
+        this.props.navigator.push('agentFormPersonal');
     };
 
     onSelectRow = (item) => {
@@ -127,7 +127,7 @@ class AgentDetail extends Component {
     renderAgents = () => {
         return this.props.agencies.map((item,index) => {
             return(
-               <AgentDetailRow item={item} onSelectRow={this.onSelectRow}/>
+                <AgentDetailRow item={item} onSelectRow={this.onSelectRow}/>
             )
         });
     };
@@ -147,10 +147,10 @@ class AgentDetail extends Component {
                 <NavigationTitle title="Agent Detail"/>
                 <View style={{height:10}}/>
                 <FlatList
-                     showsVerticalScrollIndicator={false}
-                     removeClippedSubviews={false}
-                     data={this.props.agencies}
-                     renderItem={({item, index}) => <AgentDetailRow item={item}
+                    showsVerticalScrollIndicator={false}
+                    removeClippedSubviews={false}
+                    data={this.props.agencies}
+                    renderItem={({item, index}) => <AgentDetailRow item={item}
                      index={index}
                      onSelectRow={this.onSelectRow}
                      onActivateCall={this.onActivateCall}

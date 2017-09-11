@@ -98,7 +98,10 @@ class AgentFormPersonal extends Component {
 
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>First Name</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>First Name</Text>
+                        </View>
                         <TextInput  ref="txtFname"
                                     value={this.props.firstName}
                                     placeholder={"First Name"}
@@ -113,7 +116,10 @@ class AgentFormPersonal extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Last Name</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Last Name</Text>
+                        </View>
                         <TextInput  ref="txtLname"
                                     value={this.props.lastName}
                                     placeholder={"Last Name"}
@@ -128,7 +134,11 @@ class AgentFormPersonal extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Email Id</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Email Id</Text>
+                        </View>
+
                         <TextInput  ref="txtEmail"
                                     keyboardType={'email-address'}
                                     value={this.props.email}
@@ -151,7 +161,11 @@ class AgentFormPersonal extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Mobile No</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Mobile No</Text>
+                        </View>
+
                         <TextInput  ref="txtPhone"
                                     keyboardType={'numeric'}
                                     value={this.props.mobileNo}
@@ -174,7 +188,10 @@ class AgentFormPersonal extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Birth Date</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Birth Date</Text>
+                        </View>
                         <DatePicker
                             style={{color: 'gray',
                                     width: '100%',
@@ -200,7 +217,10 @@ class AgentFormPersonal extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Password</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Password</Text>
+                        </View>
                         <TextInput  ref="txtPassword"
                                     value={this.props.password}
                                     placeholder={"Password"}

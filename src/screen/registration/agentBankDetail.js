@@ -35,6 +35,7 @@ class AgentBankDetail extends Component {
         super(props);
         this.state = {
         };
+        debugger
     }
 
     onBackButtonPress = () => {
@@ -78,9 +79,12 @@ class AgentBankDetail extends Component {
                 />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>
-                            Bank Name
-                        </Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>
+                                Bank Name
+                            </Text>
+                        </View>
                         <TextInput  ref="txtBank"
                                     value={this.props.bankName}
                                     placeholder={"Bank Name"}
@@ -94,7 +98,10 @@ class AgentBankDetail extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Branch Name</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Branch Name</Text>
+                        </View>
                         <TextInput  ref="txtBranch"
                                     value={this.props.branchName}
                                     placeholder={"Branch Name"}
@@ -109,7 +116,10 @@ class AgentBankDetail extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Account Holder Name</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Account Holder Name</Text>
+                        </View>
                         <TextInput  ref="txtHolder"
                                     value={this.props.acHolderName}
                                     placeholder={"Account Holder Name"}
@@ -124,7 +134,11 @@ class AgentBankDetail extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>Account Number</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>Account Number</Text>
+                        </View>
+
                         <TextInput  ref="txtAccNo"
                                     keyboardType={'numeric'}
                                     value={this.props.acNumber}
@@ -140,7 +154,10 @@ class AgentBankDetail extends Component {
                     </View>
 
                     <View style={styles.outerView}>
-                        <Text style={styles.formTextLabel}>IFSE Code</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                            <Text style={styles.formTextLabel}>IFSE Code</Text>
+                        </View>
                         <TextInput  ref="txtIFSE"
                                     value={this.props.IFSECode}
                                     placeholder={"IFSE code"}

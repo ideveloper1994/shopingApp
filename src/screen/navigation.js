@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
     },
 });
 
-
 const mapStateToProps = state => {
     return {
-        balance: (state.user.userDetail.Balance) ? "Rs. " + state.user.userDetail.Balance.toString() : '',
+        balance: (state.user.userDetail.Balance) ? "Rs. " + state.user.userDetail.Balance.toString() :
+            (state.user.userDetail.Balance == 0) ? 'Rs. 0' : '',
         password: state.user.password,
         isLoading: state.user.isLoading,
     };

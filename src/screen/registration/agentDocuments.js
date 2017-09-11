@@ -24,6 +24,7 @@ import {
 } from '../../actions/agentRegistration';
 
 let ImagePicker = require('react-native-image-picker');
+import { showAlert } from '../../services/apiCall';
 
 console.disableYellowBox = true;
 class AgentDocument extends Component {
@@ -51,14 +52,19 @@ class AgentDocument extends Component {
     };
 
     onNextButtonPress = () => {
-        console.log(this.state);
-        this.props.agentImages({
-            addressImage: this.state.addressImage,
-            pancardImage: this.state.pancardImage,
-            profileImage: this.state.profileImage,
-        });
+        // console.log(this.state);
 
-        this.props.navigator.push('agentBankDetail');
+        if(this.state.addressImage != null && this.state.pancardImage != null){
+            this.props.agentImages({
+                addressImage: this.state.addressImage,
+                pancardImage: this.state.pancardImage,
+                profileImage: this.state.profileImage,
+            });
+            this.props.navigator.push('agentBankDetail');
+        }else{
+            showAlert('Please upload your documents');
+        }
+
     };
 
     onSelectImage = (type) => {
@@ -102,10 +108,6 @@ class AgentDocument extends Component {
                 }
             }
         });
-    };
-
-    focusNextField = (nextField) => {
-        this.refs[nextField].focus();
     };
 
 

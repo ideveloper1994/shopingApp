@@ -35,7 +35,7 @@ export const loginUser = (email, password) => {
                 };
                 AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
                 });
-
+debugger
                 dispatch({
                     type: APP_SET_USER_DATA,
                     payload: user
@@ -46,17 +46,17 @@ export const loginUser = (email, password) => {
                     payload: response.data.user
                 });
 
-                return Promise.all([
-                    dispatch(getAgencies()),
-                ]).then(res => {
+                // return Promise.all([
+                    dispatch(getAgencies());
+                // ]).then(res => {
                     dispatch({
                         type: START_LOADING,
                         payload: false,
                     });
                     return Promise.resolve(true);
-                }).catch(err => {
-                    return Promise.reject(err);
-                });
+                // }).catch(err => {
+                //     return Promise.reject(err);
+                // });
 
             })
             .catch((error)=>{

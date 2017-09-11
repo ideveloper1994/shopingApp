@@ -273,9 +273,13 @@ class AgentLocation extends Component {
                             </TouchableHighlight>
                             :
                             <View>
-                                <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
-                                    Select State
-                                </Text>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                                    <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
+                                        Select State
+                                    </Text>
+
+                                </View>
                                 <View style={{backgroundColor: 'white',
                             borderWidth: 0.5,borderColor:'gray',
                             width: '90%', alignSelf:'center', margin:5, borderRadius: 5,
@@ -319,9 +323,12 @@ class AgentLocation extends Component {
                             :
 
                             <View>
-                                <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
-                                    Select Zone
-                                </Text>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                                    <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
+                                        Select Zone
+                                    </Text>
+                                </View>
                                 <View style={{backgroundColor: 'white',
                             borderWidth: 0.5,borderColor:'gray',
                             width: '90%', alignSelf:'center', margin:5, borderRadius: 5,
@@ -366,9 +373,12 @@ class AgentLocation extends Component {
                             </TouchableHighlight>
                             :
                             <View>
-                                <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
-                                    Select Branch
-                                </Text>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
+                                    <Text style={{flex: 1, paddingLeft:'5%', marginTop: 15}}>
+                                        Select Branch
+                                    </Text>
+                                </View>
                                 <View style={{backgroundColor: 'white',
                             borderWidth: 0.5,borderColor:'gray',
                             width: '90%', alignSelf:'center', margin:5, borderRadius: 5,

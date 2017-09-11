@@ -3,8 +3,8 @@ import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED,
     REDEEM_BALANCE
 } from '../actions/types';
 const INITIAL_STATE = {
-    email: "kirtimistry@shopkul.com",
-    password: "emiadda",
+    email: "",//"Titanbeast03@gmail.com",//"kirtimistry@shopkul.com",
+    password: "",//12345678",//"emiadda",
     token:"",
     isLoading:false,
     userDetail:{},
