@@ -15,10 +15,10 @@ import {
     usernameChanged,
     agentBirthDate
 } from "../../actions/agentRegistration";
-import {emailValidate, phoneValidate} from "../../actions/userAction";
+import {emailValidate, phoneValidate, } from "../../actions/userAction";
 import DatePicker from "../../helper/datepicker";
 import moment from "moment";
-import { isEmpty, isValidEmail } from '../../helper/appHelper';
+import { isEmpty, isValidEmail, isOnlyAlphabets, isValidMobileNo } from '../../helper/appHelper';
 
 class AgentFormPersonal extends Component {
 
@@ -29,18 +29,25 @@ class AgentFormPersonal extends Component {
             isValidEmail: true,
             isValidPhoneNo: true,
             emailError: '',
-            mobileError: ''
+            mobileError: '',
         };
     }
 
     onNextButtonPress = () => {
+
         if(isEmpty(this.props.firstName) &&
             isEmpty(this.props.lastName) &&
             isEmpty(this.props.mobileNo) &&
             isEmpty(this.props.email) &&
             isEmpty(this.props.password) ) {
             if(this.state.isValidPhoneNo && this.state.isValidEmail){
-                this.props.navigator.push('agentLocation');
+                if(!isOnlyAlphabets(this.props.firstName) || !isOnlyAlphabets(this.props.lastName)) {
+                    showAlert('Enter valid name');
+                }else{
+                    this.props.navigator.push('agentLocation');
+                }
+            }else{
+                showAlert('Enter Data in all fields.');
             }
         }else{
             showAlert('Enter Data in all fields.');
@@ -58,11 +65,15 @@ class AgentFormPersonal extends Component {
 
     onPhoneNoValid = () => {
         if(isEmpty(this.props.mobileNo)) {
-            this.props.phoneValidate(this.props.mobileNo.trim()).then(res => {
-                this.setState({isValidPhoneNo: true, mobileError: ''});
-            }).catch(err => {
-                this.setState({isValidPhoneNo: false, mobileError: "Mobile number already exists"});
-            });
+            if(isValidMobileNo(this.props.mobileNo)){
+                this.props.phoneValidate(this.props.mobileNo.trim()).then(res => {
+                    this.setState({isValidPhoneNo: true, mobileError: ''});
+                }).catch(err => {
+                    this.setState({isValidPhoneNo: false, mobileError: "Mobile number already exists"});
+                });
+            }else{
+                this.setState({isValidPhoneNo: false, mobileError: "Enter valid phone number"});
+            }
         }else{
             this.setState({isValidPhoneNo: false, mobileError: "Enter valid phone number"});
         }
@@ -149,6 +160,7 @@ class AgentFormPersonal extends Component {
                                     autoCapitalize="none"
                                     autoCorrect={false}
                                     returnKeyType={'next'}
+                                    maxLength={10}
                                     onChangeText={(text) => {this.props.mobileChanged(text)}}
                                     underlineColorAndroid={Constant.transparent}
                                     onEndEditing={(text) => this.onPhoneNoValid(text)}

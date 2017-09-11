@@ -112,7 +112,7 @@ class AgentDetail extends Component {
 
 
     onAddAgencyCall = () => {
-        if(this.props.balance != 0){
+        if(this.props.balance >= 1000){
             this.props.navigator.push('agentFormPersonal');
         }else{
             Alert.alert("Error","Not able to register agency," +

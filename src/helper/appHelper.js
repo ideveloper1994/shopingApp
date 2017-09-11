@@ -11,3 +11,13 @@ export function isValidEmail(email) {
 export function isEmpty(text) {
     return (text.toString().trim().length > 0 && text.toString().trim() != "0");
 }
+
+export function isOnlyAlphabets(text) {
+    const format = /^[a-z ,.'-]+$/i;
+    return format.test(text);
+}
+
+export function isValidMobileNo(phoneNo) {
+    const phoneNumberPattern = /^[0-9]{10}$/;
+    return phoneNumberPattern.test(phoneNo);
+}

@@ -2,18 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar, NetInfo } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './store/config';
-import navigationContext from './navigationHelper/customNavigationContext';
-import Router from './navigationHelper/router'
-import { NavigationProvider,StackNavigation } from '@expo/ex-navigation';
-import * as Animatable from 'react-native-animatable';
-import Navigation from './screen/navigation'
-let isLogin = false;
+import Navigation from './screen/navigation';
 
 export default class main extends React.Component {
 
     constructor(props){
         super(props);
-
         this.state = {
             isConnected: true,
         }

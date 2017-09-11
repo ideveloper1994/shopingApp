@@ -15,7 +15,6 @@ import { connect } from 'react-redux';
 import NavigationBar from '../../commonComponent/navBar';
 import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinner from '../../helper/loader';
 
 import {
@@ -27,7 +26,7 @@ import {
     agentActivate,
     registerAgency
 } from '../../actions/agentRegistration';
-import { isEmpty } from '../../helper/appHelper';
+import { isEmpty, isOnlyAlphabets } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
 
 class AgentBankDetail extends Component {
@@ -48,11 +47,20 @@ class AgentBankDetail extends Component {
             isEmpty(this.props.acHolderName) &&
             isEmpty(this.props.acNumber) &&
             isEmpty(this.props.IFSECode) ) {
-            this.props.registerAgency().then(res => {
-                this.props.navigator.push('agentDetail');
-            }).catch(err => {
-                Alert.alert("Error","Fail to register agency, \n please try again.")
-            });
+            if(!isOnlyAlphabets(this.props.bankName)){
+                showAlert('Please check your bank name.');
+            }else{
+                if(!isOnlyAlphabets(this.props.acHolderName)){
+                    showAlert('Please enter valid account holder name.');
+                }else{
+                    this.props.registerAgency().then(res => {
+                        this.props.navigator.push('agentDetail');
+                    }).catch(err => {
+                        Alert.alert("Error","Fail to register agency, \n please try again.")
+                    });
+                }
+            }
+
         }else{
             showAlert('Enter Data in all fields.');
         }

@@ -6,11 +6,11 @@ import { NavigationProvider,StackNavigation,NavigationStyles } from '@expo/ex-na
 import * as Animatable from 'react-native-animatable';
 import Spinner from '../helper/loader'
 import { connect } from 'react-redux';
-let isLogin = 'login';
 import Constant from '../helper/constant';
 import {
     loginUser,
 } from '../actions/userAction';
+let isLogin = 'login';
 
 class AppNavigation extends React.Component {
 
@@ -51,7 +51,7 @@ class AppNavigation extends React.Component {
                 />
                 {(this.state.isAppLoading) ?
                     <View style={{flex:1}}>
-                        <StackNavigation initialRoute={Router.getRoute(isLogin)}
+                        <StackNavigation initialRoute={Router.getRoute('agentDocuments')}
                                          defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
