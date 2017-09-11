@@ -51,7 +51,7 @@ class AppNavigation extends React.Component {
                 />
                 {(this.state.isAppLoading) ?
                     <View style={{flex:1}}>
-                        <StackNavigation initialRoute={Router.getRoute('agentDocuments')}
+                        <StackNavigation initialRoute={Router.getRoute(isLogin)}
                                          defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
