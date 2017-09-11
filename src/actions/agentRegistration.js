@@ -42,6 +42,7 @@ import {CallApi} from '../services/apiCall'
 import Constant from '../services/apiConstant'
 import { NavigationActions } from '@expo/ex-navigation';
 import axios from 'axios';
+import {loginUser} from './userAction'
 
 export const registerAgency = () => {
     return (dispatch, getState) => {
@@ -319,6 +320,9 @@ export const callAgencyActivation = (agencyId, bodyData) => {
                     type: START_LOADING,
                     payload: false,
                 });
+
+                dispatch(loginUser(getState().user.email, getState().user.password));
+
                 return Promise.resolve(response);
             })
             .catch((error)=>{

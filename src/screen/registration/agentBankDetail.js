@@ -140,6 +140,7 @@ class AgentBankDetail extends Component {
                                     autoCapitalize="none"
                                     autoCorrect={false}
                                     returnKeyType={'done'}
+                                    maxLength={11}
                                     underlineColorAndroid={Constant.transparent}
                                     onChangeText={(text) => {this.props.IFSEChanged(text)}}
                         />

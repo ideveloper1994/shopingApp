@@ -145,17 +145,19 @@ class AgentDetail extends Component {
         return (
             <View style={{flex:1,backgroundColor: '#fff'}}>
                 <NavigationTitle title="Agent Detail"/>
+                <View style={{height:10}}/>
                 <FlatList
-                    showsVerticalScrollIndicator={false}
-                    removeClippedSubviews={false}
-                    data={this.props.agencies}
-                    renderItem={({item, index}) => <AgentDetailRow item={item}
-                    index={index}
+                     showsVerticalScrollIndicator={false}
+                     removeClippedSubviews={false}
+                     data={this.props.agencies}
+                     renderItem={({item, index}) => <AgentDetailRow item={item}
+                     index={index}
                      onSelectRow={this.onSelectRow}
                      onActivateCall={this.onActivateCall}
                      />
                     }
                 />
+
 
                 <View style={{position:'absolute',backgroundColor:'transparent',
                               marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
@@ -210,8 +212,10 @@ const styles = StyleSheet.create({
         height: height*0.14,
         backgroundColor:'rgba(224,235,235,.8)',
         alignSelf:'center',
-        margin:10,
-        marginBottom:0,
+        marginLeft:10,
+        marginRight:10,
+        marginBottom:10,
+        marginTop:0,
         flexDirection:'row',
         borderRadius:6
     },

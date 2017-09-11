@@ -231,6 +231,7 @@ class AgentDocument extends Component {
                                 <Picker mode={Picker.MODE_DROPDOWN}
                                         selectedValue={this.props.addressProofType}
                                         onValueChange={(src) => this.props.agentAddressProofType(src)}
+                                        underlineColorAndroid={Constant.transparent}
                                         style={{height:30}}>
                                     {
                                         this.state.arrList.map(function (src, index) {

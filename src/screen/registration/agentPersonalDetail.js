@@ -150,7 +150,6 @@ class AgentFormPersonal extends Component {
                                     autoCorrect={false}
                                     returnKeyType={'next'}
                                     onChangeText={(text) => {this.props.mobileChanged(text)}}
-                                    onSubmitEditing={() => this.focusNextField('txtUserName')}
                                     underlineColorAndroid={Constant.transparent}
                                     onEndEditing={(text) => this.onPhoneNoValid(text)}
                         />

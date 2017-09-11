@@ -118,7 +118,7 @@ class AgentFullProfile extends Component {
                             </View>
                         </View>
                     </View>
-
+                    <View style={{height:15}}/>
                 </ScrollView>
 
             </View>

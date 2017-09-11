@@ -2,7 +2,8 @@
 module.exports = {
     //API Constant
     // baseUrl: 'http://192.168.200.75:3000/',
-    baseUrl: 'http://lanetteam.com:3000/',
+    // baseUrl: 'http://lanetteam.com:3000/',
+    baseUrl: 'http://54.156.16.235:3000/',
     signIn:'auth/local',
     state: 'api/states',
     zones: 'api/zones',

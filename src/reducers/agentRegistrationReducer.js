@@ -248,7 +248,6 @@ export default (state = INITIAL_STATE, action) => {
                 IFSECode: '',
                 isActive: false,
                 addressProofType: 'Aadhar card',
-
                 selectedState: {},
                 selectedBranch: {},
                 selectedZone: {},

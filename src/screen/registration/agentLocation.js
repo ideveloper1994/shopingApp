@@ -182,7 +182,8 @@ class AgentLocation extends Component {
                 );
             case 'zone':
                 return(
-                    <Picker style={{marginBottom: 0}} mode={Picker.MODE_DIALOG}
+                    <Picker style={{marginBottom: 0}}
+                            mode={Picker.MODE_DIALOG}
                             selectedValue={this.props.selectedZone._id || ''}
                             onValueChange={(src)=>this.onSelectOption(src,'zone')}>
                         {
@@ -282,6 +283,7 @@ class AgentLocation extends Component {
                                     <Picker mode={Picker.MODE_DROPDOWN}
                                             selectedValue={this.props.selectedState._id || ''}
                                             onValueChange={(src)=>this.onSelectOption(src,'state')}
+                                            underlineColorAndroid={Constant.transparent}
                                             style={{height:30}}>
                                         {
                                             this.props.stateName.map(function (src, index) {
@@ -327,10 +329,12 @@ class AgentLocation extends Component {
                                     <Picker mode={Picker.MODE_DROPDOWN}
                                             selectedValue={this.props.selectedZone._id || ''}
                                             onValueChange={(src)=>this.onSelectOption(src,'zone')}
+                                            underlineColorAndroid={Constant.transparent}
                                             style={{height:30}}>
                                         {
                                             this.state.zoneList.map(function (src, index) {
-                                                return <Picker.Item label={src.name} value={src._id}/>
+                                                return <Picker.Item label={src.name}
+                                                                    value={src._id}/>
                                             })
                                         }
                                     </Picker>
@@ -372,7 +376,7 @@ class AgentLocation extends Component {
                                     <Picker mode={Picker.MODE_DROPDOWN}
                                             selectedValue={this.props.selectedBranch._id || ''}
                                             onValueChange={(src)=>this.onSelectOption(src,'branch')}
-
+                                            underlineColorAndroid={Constant.transparent}
                                             style={{height:30}}>
                                         {
                                             this.state.branchList.map(function (src, index) {

@@ -1,7 +1,7 @@
 import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED,
     REGISTERED_USER, START_LOADING,LOGOUT_USER,
     REDEEM_BALANCE
-} from '../actions/types'
+} from '../actions/types';
 const INITIAL_STATE = {
     email: "kirtimistry@shopkul.com",
     password: "emiadda",

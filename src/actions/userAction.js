@@ -55,7 +55,7 @@ export const loginUser = (email, password) => {
                     });
                     return Promise.resolve(true);
                 }).catch(err => {
-                    return Promise.reject(error);
+                    return Promise.reject(err);
                 });
 
             })
