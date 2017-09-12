@@ -247,9 +247,15 @@ class AgentDocument extends Component {
                     </View>
 
                     <View style={{flexDirection: 'row', marginTop: 5, justifyContent:'space-around'}}>
-                        <Text style={{fontSize:15}}>
-                            Address Proof
-                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={{fontSize:15,color:'red'}}>
+                                {"* "}
+                            </Text>
+                            <Text style={{fontSize:15}}>
+                                Address Proof
+                            </Text>
+                        </View>
+
                         <TouchableOpacity onPress={()=>this.onSelectImage('addressProof')}>
                             <View style={{height:Constant.screenWidth/5, width:Constant.screenWidth/5,
                          justifyContent: 'center',
