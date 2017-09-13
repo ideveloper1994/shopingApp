@@ -9,7 +9,7 @@ export default class Loader extends Component{
 
     render(){
         return( (this.props.visible) ?
-                <View style={{ position:'absolute', backgroundColor: Constant.backColor,
+                <View style={{ position:'absolute', backgroundColor: (this.props.color)?this.props.color:Constant.backColor,
                     height: Constant.screenHeight, width:Constant.screenWidth,
                     alignItems:'center', justifyContent:'center'}}>
                     <StatusBar

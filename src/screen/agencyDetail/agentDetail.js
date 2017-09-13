@@ -17,13 +17,10 @@ import {
     callAgencyActivation,
     updateAgencyActivation,
 } from '../../actions/agentRegistration'
-import {
-    logoutUser
-} from '../../actions/userAction'
 import Constant from '../../helper/constant';
 import Spinner from '../../helper/loader';
 import _ from 'lodash';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const {width, height} =Dimensions.get('window');
 
@@ -133,12 +130,8 @@ class AgentDetail extends Component {
     };
 
     onLogOut = () =>{
-        AsyncStorage.clear();
-        this.props.logoutUser().then(res => {
-            this.props.navigator.replace('login');
-        }).catch(err=>{
 
-        })
+      this.props.navigator.push('settings');
     };
 
     render() {
@@ -169,10 +162,10 @@ class AgentDetail extends Component {
                     </TouchableHighlight>
                 </View>
 
-                <View style={{position:'absolute', top: (Constant.IOS) ? 25 : 15, left: 25, height:30,width:30}}>
+                <View style={{position:'absolute', top: (Constant.IOS) ? 25 : 15, left: 20, height:30,width:30}}>
                     <TouchableHighlight underlayColor="transparent"
                                         onPress={() => this.onLogOut()}>
-                        <MaterialCommunityIcons name='logout' size={30} color={"#FFF"}/>
+                        <FontAwesome name='user-circle' size={30} color={"#FFF"}/>
                     </TouchableHighlight>
                 </View>
                 <Spinner visible={this.props.isLoading} />
@@ -250,5 +243,4 @@ export default connect(mapStateToProps, {
     getAgencies,
     callAgencyActivation,
     updateAgencyActivation,
-    logoutUser
 })(AgentDetail);

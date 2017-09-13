@@ -116,6 +116,25 @@ export const phoneValidate = (phoneNo) => {
             })
     };
 };
+export const changePassword = (oldPass, newPass) => {
+    return (dispatch, getState) => {
+        debugger
+        let token = 'Bearer ' + getState().user.token;
+        console.log(getState().user.userDetail._id)
+        console.log(Constant.baseUrl+Constant.changePassword+getState().user.userDetail._id)
+        debugger
+        return CallApi(Constant.baseUrl+Constant.changePassword+getState().user.userDetail._id+Constant.password,'put',{oldPassword:oldPass,newPassword:newPass},{"Authorization": token})
+
+            .then((response)=>{
+            debugger
+                return Promise.resolve('Password has changed successfully');
+            })
+            .catch((error)=>{
+            debugger
+                return Promise.reject('something went wrong. Please try again');
+            })
+    };
+};
 
 export const logoutUser = () => {
     return (dispatch, getState) => {

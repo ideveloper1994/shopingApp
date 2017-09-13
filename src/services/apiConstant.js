@@ -13,5 +13,7 @@ module.exports = {
 
     validateEmail: 'api/users/emailvalidate/',
     validatePhoneNo: 'api/users/phonenumbervalidate/',
-    registerUser: 'api/users'
+    registerUser: 'api/users',
+    changePassword: 'api/users/',
+    password: '/password'
 };
