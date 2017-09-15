@@ -94,7 +94,7 @@ class ChangePassword extends Component {
               <Text style={{fontSize:15,color:'red'}}>{"* "}</Text>
               <Text style={styles.formTextLabel}>New Password</Text>
             </View>
-            <TextInput  ref="current"
+            <TextInput  ref="new"
                         value={this.state.newPassword}
                         placeholder={"New Password"}
                         style={ styles.textBox }
@@ -132,6 +132,8 @@ class ChangePassword extends Component {
                         underlineColorAndroid={Constant.transparent}
                         secureTextEntry={true}
             />
+
+
 
           </View>
 

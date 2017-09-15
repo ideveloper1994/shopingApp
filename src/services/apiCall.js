@@ -73,7 +73,7 @@ export function CallApi(url,type='get',data={},header={}) {
 }
 
 export function showAlert(alertText) {
-    Alert.alert("Error",
+    Alert.alert("",
         alertText,
         [
             {text: 'OK', onPress: () => console.log('OK Pressed')},
