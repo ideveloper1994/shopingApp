@@ -24,7 +24,8 @@ import {
     acHolderNameChanged,
     IFSEChanged,
     agentActivate,
-    registerAgency
+    generateOTP,
+  getBalance
 } from '../../actions/agentRegistration';
 import { isEmpty, isOnlyAlphabets } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
@@ -34,9 +35,14 @@ class AgentBankDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
+          isLoading: false
         };
         debugger
     }
+
+  componentDidMount(){
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+  }
 
     onBackButtonPress = () => {
         this.props.navigator.pop();
@@ -54,10 +60,21 @@ class AgentBankDetail extends Component {
                 if(!isOnlyAlphabets(this.props.acHolderName)){
                     showAlert('Please enter valid account holder name.');
                 }else{
-                    this.props.registerAgency().then(res => {
-                        this.props.navigator.push('agentDetail');
-                    }).catch(err => {
-                        Alert.alert("Error","Fail to register agency, \n please try again.")
+                    console.log('request for otp')
+                  this.setState({
+                    isLoading: true
+                  })
+                    this.props.generateOTP().then((res) => {
+                      this.setState({
+                        isLoading: false
+                      })
+                      this.props.navigator.push('OTP')
+                    }).catch((err) => {
+                      showAlert("Fail to send OTP, \n please try again.")
+
+                      this.setState({
+                        isLoading: false
+                      })
                     });
                 }
             }
@@ -177,7 +194,7 @@ class AgentBankDetail extends Component {
                             otherStyle={{marginBottom:20}}
                             onPress={this.onFinishButtonPress}/>
                 </ScrollView>
-                <Spinner visible={this.props.isLoading} />
+                <Spinner visible={this.state.isLoading} />
             </View>
         );
     }
@@ -236,5 +253,6 @@ export default connect(mapStateToProps, {
     acHolderNameChanged,
     IFSEChanged,
     agentActivate,
-    registerAgency
+  generateOTP,
+  getBalance
 })(AgentBankDetail);

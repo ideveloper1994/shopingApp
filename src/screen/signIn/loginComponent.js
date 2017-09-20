@@ -24,6 +24,7 @@ class LoginComponent extends Component {
 
     constructor(props) {
         super(props);
+        debugger
         this.state = {
             email: this.props.email || '',
             password: this.props.password || '',
@@ -45,7 +46,14 @@ class LoginComponent extends Component {
                 .then(()=>{
                     this.props.onSignInPress();
                 })
-                .catch((err)=>{showAlert("Login fail please try again")});
+                .catch((err)=>{
+                debugger
+                  if(err.response && err.response.data.message){
+                    showAlert(err.response.data.message)
+                  }else{
+                    showAlert("Login fail please try again")
+                  }
+            });
 
         }
     };
@@ -114,6 +122,16 @@ class LoginComponent extends Component {
                         backColor="#FFF"
                         color={Constant.backColor}
                         onPress={this.onLoginPress}/>
+                <Text style={{
+                  fontSize:15,
+                  color:'white',
+                  fontWeight: '500',
+                  textAlign: 'center',
+                  marginTop: 30
+                }} onPress={() => this.props.forgotPasswordClicked()}>
+                    Forgot Password?
+                </Text>
+
             </View>
         );
     }

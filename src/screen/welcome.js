@@ -17,6 +17,7 @@ class Welcome extends Component {
 
     constructor(props){
         super(props);
+        debugger
         this.state = {
             isWelcome: false,
             isFullScreen: false,
@@ -56,8 +57,7 @@ class Welcome extends Component {
             <Animated.View style={this.position2.getLayout()}>
                 <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
                     <Text style={[styles.descriptionText, {paddingTop:30}]}>
-                        Let's start by adding new agency
-
+                        Lets Start With Shopkul
                     </Text>
                 </View>
 

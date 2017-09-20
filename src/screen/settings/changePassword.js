@@ -8,6 +8,7 @@ import Spinner from '../../helper/loader';
 import Button from "../../commonComponent/button";
 import { showAlert } from '../../services/apiCall';
 import { changePassword } from '../../actions/userAction'
+import { getBalance } from '../../actions/agentRegistration'
 
 class ChangePassword extends Component {
 
@@ -21,6 +22,9 @@ class ChangePassword extends Component {
       isLoading: false,
       mobileError: '',
     };
+  }
+  componentDidMount(){
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
   }
 
   onChangeButtonPress = () => {
@@ -183,5 +187,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  changePassword
+  changePassword,
+  getBalance
 })(ChangePassword);

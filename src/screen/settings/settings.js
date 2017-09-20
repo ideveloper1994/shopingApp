@@ -6,6 +6,9 @@ import { showAlert } from '../../services/apiCall';
 import {
   logoutUser
 } from '../../actions/userAction'
+import {
+  getBalance
+} from '../../actions/agentRegistration'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const {width, height} = Dimensions.get('window');
@@ -23,6 +26,10 @@ class Settings extends Component {
       email: (this.props.userDetail.email)?this.props.userDetail.email:'N/A',
       mobile: (this.props.userDetail.mobileNo)?this.props.userDetail.mobileNo:'N/A'
     };
+  }
+
+  componentDidMount(){
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
   }
 
   onChangeButtonPress = () => {
@@ -153,5 +160,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  logoutUser
+  logoutUser,
+  getBalance
 })(Settings);

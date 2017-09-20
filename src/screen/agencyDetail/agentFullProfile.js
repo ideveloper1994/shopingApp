@@ -16,6 +16,9 @@ import Constant from '../../helper/constant';
 import Button from '../../commonComponent/button';
 import { isEmpty } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
+import {
+  getBalance
+} from '../../actions/agentRegistration'
 
 const {width, height} =Dimensions.get('window');
 
@@ -28,7 +31,12 @@ class AgentFullProfile extends Component {
         };
     }
 
-    onBackButtonPress = () => {
+  componentDidMount(){
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+  }
+
+
+  onBackButtonPress = () => {
         this.props.navigator.pop();
     };
 
@@ -216,4 +224,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(AgentFullProfile);
+export default connect(mapStateToProps, getBalance)(AgentFullProfile);

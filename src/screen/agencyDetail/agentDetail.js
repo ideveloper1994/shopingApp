@@ -16,6 +16,7 @@ import {
     getAgencies,
     callAgencyActivation,
     updateAgencyActivation,
+  getBalance
 } from '../../actions/agentRegistration'
 import Constant from '../../helper/constant';
 import Spinner from '../../helper/loader';
@@ -50,7 +51,9 @@ class AgentDetailRow extends Component {
                         </View>
                     </View>
                     <TouchableHighlight style={styles.moreView}
-                                        onPress={()=> this.props.onActivateCall(this.props.index, this.props.item)} underlayColor={"transparent"}>
+                                        onPress={()=>
+                                          this.props.onActivateCall(this.props.index, this.props.item)}
+                                        underlayColor={"transparent"}>
                         <View style={{margin:5}}>
                             {(this.props.item.isActive) ?
                                 <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
@@ -80,36 +83,70 @@ class AgentDetail extends Component {
     };
 
     componentDidMount(){
-        // this.props.getAgencies();
+      this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
     }
 
     onActivateCall = (index, agency) => {
-        if(!agency.isActive) {
-            if(this.props.balance >= 1000){
-                Alert.alert("Warning!!",
-                    "\nAre you sure, you want to activate this agency?",
-                    [
-                        {text: 'Yes', onPress: () => {
-                            this.props.callAgencyActivation(agency._id,{isActive: true})
-                                .then(res => {
-                                    let arr =  _.cloneDeep(this.props.agencies);
-                                    arr[index].isActive = true;
-                                    this.props.updateAgencyActivation(arr);
-                                })
-                                .catch(error => {
-                                    Alert.alert("Error","Fail to activate agency.");
-                                });
+        this.props.getBalance().then((responseJSON) => {
+          if(!agency.isActive) {
+            if(this.props.balance >= 1000) {
+                debugger
+              Alert.alert("",
+                "Are you sure, you want to activate this agency?",
+                [
+                  {text: 'Yes', onPress: () => {
+                      debugger
+                    this.props.callAgencyActivation(agency.userId,{isActive: true})
+                      .then(res => {
+                          debugger
+                        let arr =  _.cloneDeep(this.props.agencies);
+                        arr[index].isActive = true;
+                        this.props.updateAgencyActivation(arr);
+                      })
+                      .catch(error => {
+                        debugger
+                      });
 
-                        }},
-                        {text: 'No', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: false }
-                );
+                  }},
+                  {text: 'No', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: false }
+              );
             }else{
-                Alert.alert("Error","Not able to register agency," +
-                    " \n please check your balance.");
+              Alert.alert("Not able to register agency," +
+                " \n please check your balance.");
+
             }
-        }
+            }
+          }).catch((error) => {
+            debugger
+        })
+  /*      this.props.getBalance().then((response) => {
+          if(!agency.isActive) {
+            if(this.props.balance >= 1000){
+                debugger
+              Alert.alert("Are you sure, you want to activate this agency?",
+                [
+                  {text: 'Yes', onPress: () => {
+debugger
+                  }},
+                  {text: 'No', onPress: () => {
+                      debugger
+                    console.log('OK Pressed')
+                  }},
+                ],
+                { cancelable: false }
+              );
+
+
+            }else{
+              Alert.alert("Not able to register agency," +
+                " \n please check your balance.");
+            }
+          }
+        }).catch((err) => {
+debugger
+        })*/
     };
 
 
@@ -152,15 +189,19 @@ class AgentDetail extends Component {
                 />
 
 
-                <View style={{position:'absolute',backgroundColor:'transparent',
-                              marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
-                    <TouchableHighlight underlayColor="transparent"
-                                        onPress={() => this.onAddAgencyCall()}
-                                        style={{width:width*0.2, height:width*0.2,ackgroundColor:'transparent'}} >
-                        <Image source={require('../../assets/images/plus.png')}
-                               style={{ alignSelf:'center', borderRadius:30}}/>
-                    </TouchableHighlight>
-                </View>
+              {
+                (this.props.role === 'agency')?
+                  <View/>:
+                  <View style={{position:'absolute',backgroundColor:'transparent',
+                    marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
+                      <TouchableHighlight underlayColor="transparent"
+                                          onPress={() => this.onAddAgencyCall()}
+                                          style={{width:width*0.2, height:width*0.2,ackgroundColor:'transparent'}} >
+                          <Image source={require('../../assets/images/plus.png')}
+                                 style={{ alignSelf:'center', borderRadius:30}}/>
+                      </TouchableHighlight>
+                  </View>
+              }
 
                 <View style={{position:'absolute', top: (Constant.IOS) ? 25 : 15, left: 20, height:30,width:30}}>
                     <TouchableHighlight underlayColor="transparent"
@@ -236,6 +277,7 @@ const mapStateToProps = state => {
     return {
         agencies: state.agent.agencies,
         balance: (state.user.userDetail.Balance) ? state.user.userDetail.Balance : 0,
+        role: (state.user.userDetail.role) ? state.user.userDetail.role : 0,
     };
 };
 
@@ -243,4 +285,27 @@ export default connect(mapStateToProps, {
     getAgencies,
     callAgencyActivation,
     updateAgencyActivation,
+  getBalance
 })(AgentDetail);
+/*Alert.alert(
+                "Are you sure, you want to activate this agency?",
+                [
+                  {text: 'Yes', onPress: () => {
+                      debugger
+                    this.props.callAgencyActivation(agency._id,{isActive: true})
+                      .then(res => {
+                        let arr =  _.cloneDeep(this.props.agencies);
+                        arr[index].isActive = true;
+                        this.props.updateAgencyActivation(arr);
+                      })
+                      .catch(error => {
+                          debugger
+                      });
+
+                  }},
+                  {text: 'No', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: false }
+              );
+
+*/

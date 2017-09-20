@@ -13,7 +13,8 @@ import {
     emailChanged,
     passwordChanged,
     usernameChanged,
-    agentBirthDate
+    agentBirthDate,
+  getBalance
 } from "../../actions/agentRegistration";
 import {emailValidate, phoneValidate, } from "../../actions/userAction";
 import DatePicker from "../../helper/datepicker";
@@ -32,6 +33,9 @@ class AgentFormPersonal extends Component {
             mobileError: '',
         };
     }
+  componentDidMount(){
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+  }
 
     onNextButtonPress = () => {
 
@@ -293,5 +297,6 @@ export default connect(mapStateToProps, {
     agentBirthDate,
 
     emailValidate,
-    phoneValidate
+    phoneValidate,
+  getBalance
 })(AgentFormPersonal);

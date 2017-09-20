@@ -35,7 +35,7 @@ import {
     CHANGE_ACTIVATION,
     CLEAR_AGENT,
     REDEEM_BALANCE,
-    REGISTERED_USER
+  SET_BALANCE
 
 } from './types'
 import {CallApi} from '../services/apiCall'
@@ -44,7 +44,7 @@ import { NavigationActions } from '@expo/ex-navigation';
 import axios from 'axios';
 import {loginUser} from './userAction'
 
-export const registerAgency = () => {
+export const registerAgency = (otp) => {
     return (dispatch, getState) => {
         dispatch({
             type: START_LOADING,
@@ -83,6 +83,7 @@ export const registerAgency = () => {
         formData.append('stateId',getState().agent.selectedState._id || 0);
         formData.append('branchId',getState().agent.selectedBranch._id || 0);
         formData.append('birthDate',getState().agent.birthDate);
+        formData.append('token',otp);
 
         if(getState().agent.agentImages.pancardImage != null){
             formData.append("image", {uri: getState().agent.agentImages.pancardImage.uri,
@@ -117,7 +118,7 @@ export const registerAgency = () => {
             isActive:  false,
         };
         formData.append('agency',JSON.stringify(agencyDetail));
-
+debugger
         return axios.post(Constant.baseUrl+Constant.registerUser, formData, config)
             .then(res => {
                 return Promise.all([
@@ -145,16 +146,38 @@ export const registerAgency = () => {
     };
 };
 
+export const generateOTP = () => {
+    return (dispatch, getState) => {
+      let token = 'Bearer ' + getState().user.token;
+      debugger
+      let userMobileNumber = getState().agent.mobileNo
+      debugger
+      return CallApi(Constant.baseUrl + Constant.OTP, 'post', {"mobileNo": getState().agent.mobileNo}, {"Authorization": token})
+            .then((response)=>{
+          debugger
+              return Promise.resolve(response)
+            })
+            .catch((error)=>{
+          debugger
+                return Promise.reject(error);
+            })
+    };
+};
+
 export const getAllStates = () => {
     return (dispatch, getState) => {
-        return CallApi(Constant.baseUrl + Constant.state, 'get', {}, {})
+      let token = 'Bearer ' + getState().user.token;
+
+      return CallApi(Constant.baseUrl + Constant.state, 'get', {}, {"Authorization": token})
             .then((response)=>{
+            debugger
                 dispatch({
                     type: GET_ALL_STATES_SUCCESS,
                     payload: response,
                 });
             })
             .catch((error)=>{
+            debugger
                 dispatch({
                     type: GET_ALL_STATES_FAILED,
                 });
@@ -165,7 +188,9 @@ export const getAllStates = () => {
 
 export const getAllZones = () => {
     return (dispatch, getState) => {
-        return CallApi(Constant.baseUrl + Constant.zones, 'get', {}, {})
+      let token = 'Bearer ' + getState().user.token;
+
+      return CallApi(Constant.baseUrl + Constant.zones, 'get', {},{"Authorization": token })
             .then((response)=>{
                 dispatch({
                     type: GET_ALL_ZONES_SUCCESS,
@@ -183,7 +208,9 @@ export const getAllZones = () => {
 
 export const getAllBranches = () => {
     return (dispatch, getState) => {
-        return CallApi(Constant.baseUrl + Constant.branch, 'get', {}, {})
+      let token = 'Bearer ' + getState().user.token;
+
+      return CallApi(Constant.baseUrl + Constant.branch, 'get', {},  {"Authorization": token })
             .then((response)=>{
                 dispatch({
                     type: GET_ALL_BRANCHES_SUCCESS,
@@ -222,6 +249,25 @@ export const getAgencies = () => {
                 });
             })
             .catch((error)=>{
+                return Promise.reject(error);
+            })
+    };
+};
+
+export const getBalance = () => {
+    return (dispatch, getState) => {
+        let token = 'Bearer '+getState().user.token;
+        return CallApi(Constant.baseUrl + Constant.getBalance, 'get', {}, {"Authorization": token})
+            .then((response)=> {
+                debugger
+                dispatch({
+                    type: SET_BALANCE,
+                    payload: response.balance,
+                });
+                return Promise.resolve(response.balance)
+            })
+            .catch((error)=>{
+            debugger
                 return Promise.reject(error);
             })
     };
@@ -312,6 +358,7 @@ export const callAgencyActivation = (agencyId, bodyData) => {
         let token = 'Bearer '+getState().user.token;
         return CallApi(Constant.baseUrl + "api/users/" + agencyId + Constant.updateActive, 'put', bodyData, {"Authorization": token})
             .then((response)=> {
+            debugger
                 dispatch({
                     type: REDEEM_BALANCE,
                     payload: ''
@@ -321,11 +368,13 @@ export const callAgencyActivation = (agencyId, bodyData) => {
                     payload: false,
                 });
 
-                dispatch(loginUser(getState().user.email, getState().user.password));
+
+
 
                 return Promise.resolve(response);
             })
             .catch((error)=>{
+            debugger
                 dispatch({
                     type: START_LOADING,
                     payload: false,

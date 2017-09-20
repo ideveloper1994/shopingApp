@@ -18,7 +18,7 @@ import { getAgencies,
 
 export const loginUser = (email, password) => {
     return (dispatch, getState) => {
-
+debugger
         dispatch({
             type: START_LOADING,
             payload: true,
@@ -113,6 +113,25 @@ export const phoneValidate = (phoneNo) => {
             })
             .catch((error)=>{
                 return Promise.reject(false);
+            })
+    };
+};
+export const sendForgotPassword = (email) => {
+    return (dispatch, getState) => {
+        debugger
+        return CallApi(Constant.baseUrl+Constant.forgotPassword,'post',{email:email},{})
+
+            .then((response)=>{
+            debugger
+              if(response.data.success){
+                return Promise.resolve('Password has changed successfully');
+              }else{
+                return Promise.reject('something went wrong. Please try again');
+              }
+            })
+            .catch((error)=>{
+            debugger
+                return Promise.reject('something went wrong. Please try again');
             })
     };
 };

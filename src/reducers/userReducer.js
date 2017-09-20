@@ -1,7 +1,8 @@
-import { APP_SET_USER_DATA,USER_EMAIL_CHANGED,USER_PASS_CHANGED,
-    REGISTERED_USER, START_LOADING,LOGOUT_USER,
-    REDEEM_BALANCE
-} from '../actions/types';
+import {
+  APP_SET_USER_DATA, USER_EMAIL_CHANGED, USER_PASS_CHANGED,
+  REGISTERED_USER, START_LOADING, LOGOUT_USER,
+  REDEEM_BALANCE, SET_BALANCE
+} from '../actions/types'
 const INITIAL_STATE = {
     email: "",//"Titanbeast03@gmail.com",//"kirtimistry@shopkul.com",
     password: "",//12345678",//"emiadda",
@@ -66,6 +67,15 @@ export default (state = INITIAL_STATE, action) => {
         case REDEEM_BALANCE: {
             let userDetail = state.userDetail;
             userDetail.Balance = userDetail.Balance - 1000;
+            return {
+                ...state,
+                userDetail: userDetail,
+            };
+        }
+
+        case SET_BALANCE: {
+            let userDetail = state.userDetail;
+            userDetail.Balance = action.payload;
             return {
                 ...state,
                 userDetail: userDetail,

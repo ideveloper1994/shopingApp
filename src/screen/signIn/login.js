@@ -28,7 +28,9 @@ class Login extends Component {
     onSignInPress = () => {
         this.props.navigator.replace('welcome');
     };
-
+  forgotPasswordClicked = () =>{
+    this.props.navigator.push('forgotPassword');
+  }
     //Render signIn page component
     render() {
         return (
@@ -37,6 +39,7 @@ class Login extends Component {
                     email={this.props.email}
                     password={this.props.password}
                     onSignInPress={ this.onSignInPress }
+                    forgotPasswordClicked={ this.forgotPasswordClicked }
                 />
                 <Spinner visible={this.props.isLoading} />
 

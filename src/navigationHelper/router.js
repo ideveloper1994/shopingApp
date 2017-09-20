@@ -3,6 +3,7 @@ import {
 } from '@expo/ex-navigation';
 
 import login from '../screen/signIn/login';
+import OTP from '../screen/signIn/otp';
 
 import welcome from '../screen/welcome';
 
@@ -13,10 +14,12 @@ import agentBankDetail from '../screen/registration/agentBankDetail';
 import agentDetail from '../screen/agencyDetail/agentDetail';
 import agentFullProfile from '../screen/agencyDetail/agentFullProfile';
 import changePassword from '../screen/settings/changePassword';
+import forgotPassword from '../screen/signIn/forgotPassword';
 import settings from '../screen/settings/settings';
 
 export default createRouter(() => ({
   login: () => login,
+  OTP: () => OTP,
   welcome: () => welcome,
   agentFormPersonal: () => agentFormPersonal,
   agentLocation: () => agentLocation,
@@ -25,5 +28,6 @@ export default createRouter(() => ({
   agentDetail: () => agentDetail,
   agentFullProfile: () => agentFullProfile,
   changePassword: () => changePassword,
+  forgotPassword: () => forgotPassword,
   settings: () => settings
 }),{ignoreSerializableWarnings: true});

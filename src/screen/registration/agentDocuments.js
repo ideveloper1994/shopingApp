@@ -20,7 +20,8 @@ import Button from '../../commonComponent/button';
 
 import {
     agentAddressProofType,
-    agentImages
+    agentImages,
+  getBalance
 } from '../../actions/agentRegistration';
 
 let ImagePicker = require('react-native-image-picker');
@@ -47,7 +48,12 @@ class AgentDocument extends Component {
         };
     }
 
-    onBackButtonPress = () => {
+  componentDidMount(){
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+  }
+
+
+  onBackButtonPress = () => {
         this.props.navigator.pop();
     };
 
@@ -350,5 +356,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     agentAddressProofType,
-    agentImages
+    agentImages,
+  getBalance
 })(AgentDocument);

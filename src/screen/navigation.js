@@ -22,9 +22,11 @@ class AppNavigation extends React.Component {
     }
 
     componentWillMount() {
+        debugger
         AsyncStorage.getItem('user').then((value) => {
             if(value!=null) {
                 let userDetail = JSON.parse(value);
+                debugger
                 this.props.loginUser(userDetail.email.trim(), userDetail.password.trim())
                     .then(()=>{
                         isLogin='welcome';
@@ -34,9 +36,11 @@ class AppNavigation extends React.Component {
                         this.setState({isAppLoading:true});
                     });
             }else{
+                debugger
                 this.setState({isAppLoading:true});
             }
         }).catch((err)=>{
+            debugger
             this.setState({isAppLoading:true});
         });
     }
@@ -51,7 +55,7 @@ class AppNavigation extends React.Component {
                 />
                 {(this.state.isAppLoading) ?
                     <View style={{flex:1}}>
-                        <StackNavigation initialRoute={Router.getRoute(isLogin)}
+                        <StackNavigation initialRoute={Router.getRoute('login')}
                                          defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
