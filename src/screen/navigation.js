@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar,AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, StatusBar,AsyncStorage,Platform } from 'react-native';
 import navigationContext from './../navigationHelper/customNavigationContext';
 import Router from './../navigationHelper/router'
 import { NavigationProvider,StackNavigation,NavigationStyles } from '@expo/ex-navigation';
@@ -9,7 +9,10 @@ import { connect } from 'react-redux';
 import Constant from '../helper/constant';
 import {
     loginUser,
+    checkUpdate
 } from '../actions/userAction';
+var DeviceInfo = require('react-native-device-info');
+
 let isLogin = 'login';
 
 class AppNavigation extends React.Component {
@@ -22,25 +25,44 @@ class AppNavigation extends React.Component {
     }
 
     componentWillMount() {
-        debugger
         AsyncStorage.getItem('user').then((value) => {
             if(value!=null) {
                 let userDetail = JSON.parse(value);
-                debugger
                 this.props.loginUser(userDetail.email.trim(), userDetail.password.trim())
                     .then(()=>{
-                        isLogin='welcome';
-                        this.setState({isAppLoading:true});
+                       // let version = DeviceInfo.getVersion();
+                       //  let version = "1.1";
+
+                        let os = "";
+                        if(Platform.OS === 'ios'){
+                            os = 'IOS'
+                        } else {
+                            os = 'ANDROID'
+                        }
+                        let uri = DeviceInfo.getVersion() + "/" + os + '/checkForUpdate';
+
+                        this.props.checkUpdate(uri).then(res => {
+                            if(res)
+                                isLogin='welcome';
+                            else
+                                isLogin='welcome';
+                            this.setState({isAppLoading:true});
+                        }).catch(err => {
+                            isLogin='welcome';
+                            this.setState({isAppLoading:true});
+                        });
+
                     })
                     .catch((err)=>{
+                        debugger;
                         this.setState({isAppLoading:true});
                     });
             }else{
-                debugger
+                debugger;
                 this.setState({isAppLoading:true});
             }
         }).catch((err)=>{
-            debugger
+            debugger;
             this.setState({isAppLoading:true});
         });
     }
@@ -54,8 +76,8 @@ class AppNavigation extends React.Component {
                     backgroundColor={Constant.backColor}
                 />
                 {(this.state.isAppLoading) ?
-                    <View style={{flex:1}}>
-                        <StackNavigation initialRoute={Router.getRoute('login')}
+                    <View style={styles.container}>
+                        <StackNavigation initialRoute={Router.getRoute(isLogin)}
                                          defaultRouteConfig={{
                                              navigationBar: {
                                                  visible: false,
@@ -72,9 +94,12 @@ class AppNavigation extends React.Component {
                             </Text>
                         </Animatable.View>
                     </View> :
+                    <View style={styles.container}>
                     <Spinner visible={this.props.isLoading} />
+                    </View>
                 }
             </NavigationProvider>
+
         );
     }
 
@@ -83,9 +108,8 @@ class AppNavigation extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#003e53',
+
     },
 });
 
@@ -99,5 +123,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-    loginUser
+    loginUser,checkUpdate
 })(AppNavigation);

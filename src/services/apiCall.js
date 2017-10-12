@@ -36,14 +36,11 @@ export function CallApi(url,type='get',data={},header={}) {
                 }
             });
     }else if(type == 'put'){
-        debugger
         return axios.put(url,data,{headers: reqHeader})
             .then((response) => {
-            debugger
                 return Promise.resolve(response)
             })
             .catch((err) => {
-            debugger
                 switch (err.response.data.status_code){
                     case 401:
                         return Promise.reject(err.response.data.data);
@@ -60,6 +57,7 @@ export function CallApi(url,type='get',data={},header={}) {
                 return Promise.resolve(response)
             })
             .catch((err) => {
+
                 switch (err.response.data.status_code){
                     case 401:
                         return Promise.reject(err.response.data.data);

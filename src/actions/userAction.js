@@ -14,11 +14,29 @@ import { NavigationActions } from '@expo/ex-navigation';
 import { getAgencies,
     getAllBranches,
     getAllStates,
-    getAllZones } from './agentRegistration';
+    getAllZones,
+} from './agentRegistration';
+
+export const checkUpdate = (uri) => {
+    return (dispatch, getState) => {
+        let token = 'Bearer ' + getState().user.token;
+
+        let url = Constant.baseUrl + Constant.checkforUpdate + uri;
+        return CallApi(url, 'get', {},  {"Authorization": token })
+            .then(res => {
+                debugger;
+                return Promise.resolve(res.allowforcefully);
+            })
+            .catch(err => {
+                debugger;
+                return Promise.reject(err)
+            })
+
+    }
+};
 
 export const loginUser = (email, password) => {
     return (dispatch, getState) => {
-debugger
         dispatch({
             type: START_LOADING,
             payload: true,
@@ -27,6 +45,7 @@ debugger
         return CallApi(Constant.baseUrl+Constant.signIn,'post',{ email: email, password: password},{})
 
             .then((response)=>{
+
                 let user = {
                     email:email,
                     password:password,
@@ -35,7 +54,6 @@ debugger
                 };
                 AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
                 });
-debugger
                 dispatch({
                     type: APP_SET_USER_DATA,
                     payload: user
@@ -116,13 +134,12 @@ export const phoneValidate = (phoneNo) => {
             })
     };
 };
+
 export const sendForgotPassword = (email) => {
     return (dispatch, getState) => {
-        debugger
         return CallApi(Constant.baseUrl+Constant.forgotPassword,'post',{email:email},{})
 
             .then((response)=>{
-            debugger
               if(response.data.success){
                 return Promise.resolve('Password has changed successfully');
               }else{
@@ -130,22 +147,21 @@ export const sendForgotPassword = (email) => {
               }
             })
             .catch((error)=>{
-            debugger
                 return Promise.reject('something went wrong. Please try again');
             })
     };
 };
+
 export const changePassword = (oldPass, newPass) => {
     return (dispatch, getState) => {
-        debugger
         let token = 'Bearer ' + getState().user.token;
         console.log(getState().user.userDetail._id)
         console.log(Constant.baseUrl+Constant.changePassword+getState().user.userDetail._id)
-        debugger
+
         return CallApi(Constant.baseUrl+Constant.changePassword+getState().user.userDetail._id+Constant.password,'put',{oldPassword:oldPass,newPassword:newPass},{"Authorization": token})
 
             .then((response)=>{
-            debugger
+
                 return Promise.resolve('Password has changed successfully');
             })
             .catch((error)=>{

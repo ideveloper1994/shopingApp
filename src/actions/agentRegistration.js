@@ -256,10 +256,11 @@ export const getAgencies = () => {
 
 export const getBalance = () => {
     return (dispatch, getState) => {
-        let token = 'Bearer '+getState().user.token;
+        debugger;
+        let token = 'Bearer '+ getState().user.token;
         return CallApi(Constant.baseUrl + Constant.getBalance, 'get', {}, {"Authorization": token})
             .then((response)=> {
-                debugger
+
                 dispatch({
                     type: SET_BALANCE,
                     payload: response.balance,

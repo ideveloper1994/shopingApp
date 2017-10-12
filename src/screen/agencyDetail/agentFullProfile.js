@@ -25,13 +25,17 @@ const {width, height} =Dimensions.get('window');
 class AgentFullProfile extends Component {
 
     constructor(props){
+        debugger;
         super(props);
         this.state={
           userDetails: this.props.route.params.userDetails
         };
     }
-
+    componentWillMount() {
+        debugger;
+    }
   componentDidMount(){
+      debugger;
     this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
   }
 
@@ -224,4 +228,6 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, getBalance)(AgentFullProfile);
+export default connect(mapStateToProps, {
+    getBalance
+})(AgentFullProfile);

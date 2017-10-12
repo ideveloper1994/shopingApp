@@ -155,6 +155,7 @@ debugger
     };
 
     onSelectRow = (item) => {
+        debugger
         this.props.navigator.push('agentFullProfile',{userDetails: item});
     };
 

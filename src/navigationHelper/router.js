@@ -16,11 +16,13 @@ import agentFullProfile from '../screen/agencyDetail/agentFullProfile';
 import changePassword from '../screen/settings/changePassword';
 import forgotPassword from '../screen/signIn/forgotPassword';
 import settings from '../screen/settings/settings';
+import update from '../screen/updatePage'
 
 export default createRouter(() => ({
   login: () => login,
   OTP: () => OTP,
   welcome: () => welcome,
+  update: () => update,
   agentFormPersonal: () => agentFormPersonal,
   agentLocation: () => agentLocation,
   agentDocuments: () => agentDocuments,

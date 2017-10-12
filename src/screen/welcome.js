@@ -7,21 +7,26 @@ import {
     Image,
     TouchableHighlight,
     Animated,
-    AsyncStorage
+    AsyncStorage,
+    Platform,
+    Alert,
+    Linking
 } from 'react-native';
 import Constant from '../helper/constant';
 import Button from '../commonComponent/button';
 import { connect } from 'react-redux';
+var DeviceInfo = require('react-native-device-info');
+import { checkUpdate } from '../actions/userAction'
 
 class Welcome extends Component {
 
     constructor(props){
         super(props);
-        debugger
         this.state = {
             isWelcome: false,
             isFullScreen: false,
             imageWidth: 29.5,
+            isNeedtoUpdate: false
         };
         this.position = new Animated.ValueXY(0,0);
         this.position2 = new Animated.ValueXY(0,0);
@@ -31,6 +36,7 @@ class Welcome extends Component {
     }
 
     componentWillMount() {
+
     }
 
     componentDidMount() {
@@ -60,7 +66,6 @@ class Welcome extends Component {
                         Lets Start With Shopkul
                     </Text>
                 </View>
-
                 <View>
                     <Button title="Agency Detail"
                             backColor="#FFF"
@@ -103,6 +108,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
+    checkUpdate
 })(Welcome);
 
 const styles = StyleSheet.create({
