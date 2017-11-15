@@ -45,12 +45,16 @@ class ForgotPassword extends Component {
         this.setState({
           isLoading: false
         })
-        showAlert("Fail to request for a new password, \n please try again.")
+        if(err.response && err.response.data.message){
+          showAlert(err.response.data.message)
+        }else{
+          showAlert("Fail to request for a new password, \n please try again.")
+        }
+
         debugger
       })
     }
   };
-
 
   onBackButtonPress = () => {
     this.props.navigator.pop();

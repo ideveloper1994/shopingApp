@@ -21,7 +21,7 @@ import Button from '../../commonComponent/button';
 import {
     agentAddressProofType,
     agentImages,
-  getBalance
+  getBalance,getAgencies
 } from '../../actions/agentRegistration';
 
 let ImagePicker = require('react-native-image-picker');
@@ -49,7 +49,9 @@ class AgentDocument extends Component {
     }
 
   componentDidMount(){
-    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
+    this.props.getAgencies().then(res => {}).catch(err => {})
+
   }
 
 
@@ -357,5 +359,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
     agentAddressProofType,
     agentImages,
-  getBalance
+  getBalance,getAgencies
 })(AgentDocument);

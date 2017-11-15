@@ -41,11 +41,11 @@ export const loginUser = (email, password) => {
             type: START_LOADING,
             payload: true,
         });
-
+      debugger
         return CallApi(Constant.baseUrl+Constant.signIn,'post',{ email: email, password: password},{})
 
             .then((response)=>{
-
+                debugger
                 let user = {
                     email:email,
                     password:password,
@@ -78,6 +78,7 @@ export const loginUser = (email, password) => {
 
             })
             .catch((error)=>{
+                debugger
                 dispatch({
                     type: START_LOADING,
                     payload: false,
@@ -147,7 +148,7 @@ export const sendForgotPassword = (email) => {
               }
             })
             .catch((error)=>{
-                return Promise.reject('something went wrong. Please try again');
+                return Promise.reject(error);
             })
     };
 };
@@ -166,7 +167,7 @@ export const changePassword = (oldPass, newPass) => {
             })
             .catch((error)=>{
             debugger
-                return Promise.reject('something went wrong. Please try again');
+                return Promise.reject(error);
             })
     };
 };

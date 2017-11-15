@@ -121,6 +121,7 @@ export const registerAgency = (otp) => {
 debugger
         return axios.post(Constant.baseUrl+Constant.registerUser, formData, config)
             .then(res => {
+
                 return Promise.all([
                     dispatch(getAgencies()),
                 ]).then(res => {
@@ -232,6 +233,7 @@ export const getAgencies = () => {
         return CallApi(Constant.baseUrl + Constant.agencies, 'get', {}, {"Authorization": token})
             .then((response)=> {
                 let agencyArray = [];
+                debugger;
                 response.map((agency) => {
                     let agencyObj = {
                         profile: agency.profile,

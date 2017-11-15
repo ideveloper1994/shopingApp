@@ -23,7 +23,7 @@ import {
     stateChanged,
     branchChanged,
     zoneChanged,
-  getBalance
+  getBalance,getAgencies
 } from '../../actions/agentRegistration';
 import { isEmpty } from '../../helper/appHelper';
 
@@ -75,7 +75,9 @@ class AgentLocation extends Component {
         }
     }
   componentDidMount(){
-    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
+    this.props.getAgencies().then(res => {}).catch(err => {})
+
   }
 
     onBackButtonPress = () => {
@@ -467,5 +469,5 @@ export default connect(mapStateToProps, {
     stateChanged,
     branchChanged,
     zoneChanged,
-  getBalance
+  getBalance,getAgencies
 })(AgentLocation);

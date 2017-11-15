@@ -25,7 +25,7 @@ import {
     IFSEChanged,
     agentActivate,
     generateOTP,
-  getBalance
+  getBalance,getAgencies
 } from '../../actions/agentRegistration';
 import { isEmpty, isOnlyAlphabets } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
@@ -41,7 +41,9 @@ class AgentBankDetail extends Component {
     }
 
   componentDidMount(){
-    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
+    this.props.getAgencies().then(res => {}).catch(err => {})
+
   }
 
     onBackButtonPress = () => {
@@ -70,7 +72,14 @@ class AgentBankDetail extends Component {
                       })
                       this.props.navigator.push('OTP')
                     }).catch((err) => {
-                      showAlert("Fail to send OTP, \n please try again.")
+                      debugger;
+                      console.log("=-=-=-=-=-=-=-=-=",err)
+                      if(err.response && err.response.data.message){
+                        showAlert(err.response.data.message)
+                      }else{
+                        showAlert("Fail to send OTP, \n please try again.")
+                      }
+
 
                       this.setState({
                         isLoading: false
@@ -254,5 +263,5 @@ export default connect(mapStateToProps, {
     IFSEChanged,
     agentActivate,
   generateOTP,
-  getBalance
+  getBalance,getAgencies
 })(AgentBankDetail);

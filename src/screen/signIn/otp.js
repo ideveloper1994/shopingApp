@@ -46,7 +46,12 @@ class OptValidation extends Component {
         this.setState({
           isLoading: false
         })
-        showAlert("Fail to register agency, \n please try again.")
+        if(err.response && err.response.data.message){
+          showAlert(err.response.data.message)
+        }else{
+          showAlert("Fail to register agency, \n please try again.")
+        }
+
       })
     }
   };
@@ -64,7 +69,12 @@ class OptValidation extends Component {
       showAlert("OTP sent successfully, \n please check.")
 
     }).catch((err) => {
-      showAlert("Fail to send OTP, \n please try again.")
+      if(err.response && err.response.data.error){
+        showAlert(err.response.data.error)
+      }else{
+        showAlert("Fail to send OTP, \n please try again.")
+      }
+
 
       this.setState({
         isLoading: false

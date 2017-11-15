@@ -17,7 +17,7 @@ import Button from '../../commonComponent/button';
 import { isEmpty } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
 import {
-  getBalance
+  getBalance,getAgencies
 } from '../../actions/agentRegistration'
 
 const {width, height} =Dimensions.get('window');
@@ -36,7 +36,8 @@ class AgentFullProfile extends Component {
     }
   componentDidMount(){
       debugger;
-    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
+    this.props.getAgencies().then().catch()
   }
 
 
@@ -229,5 +230,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-    getBalance
+    getBalance,getAgencies
 })(AgentFullProfile);

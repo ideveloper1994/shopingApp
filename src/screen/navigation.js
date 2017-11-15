@@ -40,10 +40,17 @@ class AppNavigation extends React.Component {
                             os = 'ANDROID'
                         }
                         let uri = DeviceInfo.getVersion() + "/" + os + '/checkForUpdate';
-
+                        debugger;
                         this.props.checkUpdate(uri).then(res => {
+                            debugger
                             if(res)
+                            {
+                              if(Platform.OS === 'android') {
+                                isLogin = 'update';
+                              }else {
                                 isLogin='welcome';
+                              }
+                            }
                             else
                                 isLogin='welcome';
                             this.setState({isAppLoading:true});

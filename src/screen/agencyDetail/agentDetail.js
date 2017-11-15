@@ -18,6 +18,7 @@ import {
     updateAgencyActivation,
   getBalance
 } from '../../actions/agentRegistration'
+import { showAlert } from '../../services/apiCall';
 import Constant from '../../helper/constant';
 import Spinner from '../../helper/loader';
 import _ from 'lodash';
@@ -51,8 +52,15 @@ class AgentDetailRow extends Component {
                         </View>
                     </View>
                     <TouchableHighlight style={styles.moreView}
-                                        onPress={()=>
-                                          this.props.onActivateCall(this.props.index, this.props.item)}
+                                        onPress={() => {
+                                            debugger;
+                                            if(this.props.isActive) {
+                                              this.props.onActivateCall(this.props.index, this.props.item)
+                                            }else {
+                                              showAlert("Please contact admin to activate user")
+                                            }
+                                        }
+                                        }
                                         underlayColor={"transparent"}>
                         <View style={{margin:5}}>
                             {(this.props.item.isActive) ?
@@ -84,6 +92,7 @@ class AgentDetail extends Component {
 
     componentDidMount(){
       this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+      this.props.getAgencies().then(res => {}).catch(err => {})
     }
 
     onActivateCall = (index, agency) => {
@@ -103,8 +112,12 @@ class AgentDetail extends Component {
                         arr[index].isActive = true;
                         this.props.updateAgencyActivation(arr);
                       })
-                      .catch(error => {
-                        debugger
+                      .catch(err => {
+                        if(err.response && err.response.data.message){
+                          showAlert(err.response.data.message)
+                        }else{
+                          showAlert("Login fail please try again")
+                        }
                       });
 
                   }},
@@ -151,7 +164,12 @@ debugger
 
 
     onAddAgencyCall = () => {
-        this.props.navigator.push('agentFormPersonal');
+        if(this.props.isActive){
+          this.props.navigator.push('agentFormPersonal');
+        } else {
+            showAlert("Please contact admin to activate user")
+        }
+
     };
 
     onSelectRow = (item) => {
@@ -160,7 +178,9 @@ debugger
     };
 
     renderAgents = () => {
+      debugger;
         return this.props.agencies.map((item,index) => {
+
             return(
                 <AgentDetailRow item={item} onSelectRow={this.onSelectRow}/>
             )
@@ -168,7 +188,6 @@ debugger
     };
 
     onLogOut = () =>{
-
       this.props.navigator.push('settings');
     };
 
@@ -182,17 +201,17 @@ debugger
                     removeClippedSubviews={false}
                     data={this.props.agencies}
                     renderItem={({item, index}) => <AgentDetailRow item={item}
-                     index={index}
-                     onSelectRow={this.onSelectRow}
-                     onActivateCall={this.onActivateCall}
+                                                                   isActive={this.props.isActive}
+                                                                   index={index}
+                                                                   onSelectRow={this.onSelectRow}
+                                                                   onActivateCall={this.onActivateCall}
                      />
                     }
                 />
 
 
               {
-                (this.props.role === 'agency')?
-                  <View/>:
+                (this.props.role === 'do')?
                   <View style={{position:'absolute',backgroundColor:'transparent',
                     marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
                       <TouchableHighlight underlayColor="transparent"
@@ -201,7 +220,8 @@ debugger
                           <Image source={require('../../assets/images/plus.png')}
                                  style={{ alignSelf:'center', borderRadius:30}}/>
                       </TouchableHighlight>
-                  </View>
+                  </View>:<View/>
+
               }
 
                 <View style={{position:'absolute', top: (Constant.IOS) ? 25 : 15, left: 20, height:30,width:30}}>
@@ -279,6 +299,7 @@ const mapStateToProps = state => {
         agencies: state.agent.agencies,
         balance: (state.user.userDetail.Balance) ? state.user.userDetail.Balance : 0,
         role: (state.user.userDetail.role) ? state.user.userDetail.role : 0,
+        isActive:(state.user.userDetail.isActive)?state.user.userDetail.isActive:false
     };
 };
 

@@ -14,7 +14,7 @@ import {
     passwordChanged,
     usernameChanged,
     agentBirthDate,
-  getBalance
+  getBalance,getAgencies
 } from "../../actions/agentRegistration";
 import {emailValidate, phoneValidate, } from "../../actions/userAction";
 import DatePicker from "../../helper/datepicker";
@@ -34,7 +34,9 @@ class AgentFormPersonal extends Component {
         };
     }
   componentDidMount(){
-    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
+    this.props.getAgencies().then(res => {}).catch(err => {})
+
   }
 
     onNextButtonPress = () => {
@@ -295,7 +297,7 @@ export default connect(mapStateToProps, {
     passwordChanged,
     usernameChanged,
     agentBirthDate,
-
+    getAgencies,
     emailValidate,
     phoneValidate,
   getBalance

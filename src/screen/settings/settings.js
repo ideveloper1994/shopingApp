@@ -7,7 +7,7 @@ import {
   logoutUser
 } from '../../actions/userAction'
 import {
-  getBalance
+  getBalance,getAgencies
 } from '../../actions/agentRegistration'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -29,7 +29,8 @@ class Settings extends Component {
   }
 
   componentDidMount(){
-    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
+    this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
+    this.props.getAgencies().then().catch();
   }
 
   onChangeButtonPress = () => {
@@ -62,7 +63,11 @@ class Settings extends Component {
               this.props.logoutUser().then(res => {
                   this.props.navigator.replace('login');
               }).catch(err=>{
-
+                if(err.response && err.response.data.message){
+                  showAlert(err.response.data.message)
+                }else{
+                  showAlert("Fail to send OTP, \n please try again.")
+                }
               })
             }},
             {text: 'No', onPress: () => console.log('OK Pressed')},
@@ -161,5 +166,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   logoutUser,
-  getBalance
+  getBalance,getAgencies
 })(Settings);
