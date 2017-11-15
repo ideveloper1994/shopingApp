@@ -4,7 +4,8 @@ import {
     Alert,
     AsyncStorage,
     View,
-    Keyboard
+    Keyboard,
+    BackHandler
 } from 'react-native';
 import LoginComponent from './loginComponent';
 import Spinner from '../../helper/loader';
@@ -12,6 +13,11 @@ import { connect } from 'react-redux';
 
 class Login extends Component {
 
+    static route = {
+        styles: {
+            gestures: null
+        },
+    };
     constructor(props){
         super(props);
         this.state = {
@@ -24,7 +30,17 @@ class Login extends Component {
     //On Login Press make api call
     //@param - {email, password}
     //Response token on success or error message
+    handleBackPress1 = () => {
+        BackHandler.exitApp();
+        return true
+    };
 
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress1', this.handleBackPress1);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress1', this.handleBackPress1);
+    }
     onSignInPress = () => {
         this.props.navigator.replace('welcome');
     };
