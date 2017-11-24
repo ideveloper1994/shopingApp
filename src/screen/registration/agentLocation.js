@@ -217,7 +217,7 @@ class AgentLocation extends Component {
 
     render() {
         if(Constant.IOS) {
-            views = this.state.views.map((view, i) =>
+       views = this.state.views.map((view, i) =>
                 <View key={i} style={{ flex:1,
                     flexDirection:'column',
                     marginBottom:10,

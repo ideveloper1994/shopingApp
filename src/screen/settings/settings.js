@@ -10,7 +10,9 @@ import {
 } from '../../actions/userAction'
 
 import {
-    getBalance,getAgencies
+    getBalance,getAgencies,
+    getProfile,
+    getParent
 } from '../../actions/agentRegistration'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -27,13 +29,31 @@ class Settings extends Component {
             firstName: (this.props.userDetail.firstName)?this.props.userDetail.firstName:'N/A',
             lastName:(this.props.userDetail.lastName)?this.props.userDetail.lastName:'N/A',
             email: (this.props.userDetail.email)?this.props.userDetail.email:'N/A',
-            mobile: (this.props.userDetail.mobileNo)?this.props.userDetail.mobileNo:'N/A'
+            mobile: (this.props.userDetail.mobileNo)?this.props.userDetail.mobileNo:'N/A',
+            userRole:'',
+            parentRole:'',
         };
     }
 
     componentDidMount(){
         this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()));
         this.props.getAgencies().then().catch();
+
+    }
+    componentWillMount(){
+        this.props.getProfile().then().catch();
+        this.props.getParent().then().catch();
+        AsyncStorage.getItem('user_role').then((value) => {
+            const t=value;
+            debugger
+            console.log('setting--',value)
+            this.setState({userRole:t.substring(1, t.length-1)})
+        })
+        AsyncStorage.getItem('parent_role').then((value) => {
+            const t=value;
+            debugger
+            this.setState({parentRole:t.substring(1, t.length-1)})
+        })
     }
 
     onChangeButtonPress = () => {
@@ -106,6 +126,14 @@ class Settings extends Component {
                     <Text style={styles.fieldText}>Mobile:</Text>
                     <Text style={styles.detailText}>{this.state.mobile}</Text>
                   </View>
+                    <View style={styles.proView}>
+                        <Text style={styles.fieldText}>Designation:</Text>
+                        <Text style={styles.detailText}>{this.state.userRole}</Text>
+                    </View>
+                    <View style={styles.proView}>
+                        <Text style={styles.fieldText}>Parent Designation:</Text>
+                        <Text style={styles.detailText}>{this.state.parentRole}</Text>
+                    </View>
 
                   <TouchableHighlight style={{marginTop:50}} onPress={()=>{this.onChangePasswordPressed()}}
                                       underlayColor={"transparent"}>
@@ -155,7 +183,7 @@ const styles = StyleSheet.create({
     fieldText:{
         color:'black',
         fontWeight:'800',
-        width:60
+        width:100
     },
     detailText:{
         color:'black'
@@ -172,7 +200,8 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
     logoutUser,
     getBalance,getAgencies,
+    getProfile,
     emailChanged,
     passChanged,
-
+    getParent
 })(Settings);

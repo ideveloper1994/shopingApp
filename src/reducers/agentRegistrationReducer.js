@@ -5,7 +5,8 @@ import {
     AGENT_MOBILENO_CHANGED,
     AGENT_PASSWORD_CHANGED,
     AGENT_USERNAME_CHANGED,
-
+    AGENT_GENDER_CHANGED,
+    AGENT_ADDRESS_CHANGED,
     AGENT_STATE_CHANGED,
     AGENT_ZONE_CHANGED,
     AGENT_BRANCH_CHANGED,
@@ -16,6 +17,7 @@ import {
     AGENT_ACCNO_CHANGED,
     AGENT_IFSE_CHANGED,
     AGENT_ACTIVATION,
+    GET_ALL_CUSTOMERS,
 
     AGENT_ADDRESS_PROOF_TYPE,
     AGENT_BIRTH_DATE,
@@ -36,21 +38,20 @@ import {
 
 } from '../actions/types';
 const INITIAL_STATE = {
-
     firstName: '',
     lastName: '',
     mobileNo: '',
     userName: '',
     email: '',
+    gender:'',
+    address:'',
     password: '',
     birthDate: '',
-
     stateName: [],
     zone: [],
     agentBranch: [],
-
     agencies: [],
-
+    customers:[],
     bankName: '',
     branchName: '',
     acHolderName: '',
@@ -58,18 +59,14 @@ const INITIAL_STATE = {
     IFSECode: '',
     isActive: false,
     addressProofType: 'Aadhar card',
-
     selectedState: {},
     selectedBranch: {},
     selectedZone: {},
-
     agentImages: {
         addressImage: null,
         pancardImage: null,
         profileImage: null
     },
-
-
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -93,6 +90,18 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 email: action.payload,
+            };
+        }
+        case AGENT_GENDER_CHANGED: {
+            return {
+                ...state,
+                gender: action.payload,
+            };
+        }
+        case AGENT_ADDRESS_CHANGED: {
+            return {
+                ...state,
+                address: action.payload,
             };
         }
         case AGENT_MOBILENO_CHANGED: {
@@ -216,6 +225,13 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 agencies: action.payload
+            };
+        }
+        case GET_ALL_CUSTOMERS: {
+            debugger
+            return {
+                ...state,
+                customers: action.payload
             };
         }
         case AGENT_IMAGES: {

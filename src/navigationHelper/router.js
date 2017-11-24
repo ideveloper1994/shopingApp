@@ -16,20 +16,26 @@ import agentFullProfile from '../screen/agencyDetail/agentFullProfile';
 import changePassword from '../screen/settings/changePassword';
 import forgotPassword from '../screen/signIn/forgotPassword';
 import settings from '../screen/settings/settings';
-import update from '../screen/updatePage'
+import update from '../screen/updatePage';
+import agentForm from '../screen/customerDetail/customerForm';
+import customerDetail from '../screen/customerDetail/customerDetail';
+import customerPersonalDetail from '../screen/customerDetail/customerFullProfile';
 
 export default createRouter(() => ({
-  login: () => login,
-  OTP: () => OTP,
-  welcome: () => welcome,
-  update: () => update,
-  agentFormPersonal: () => agentFormPersonal,
-  agentLocation: () => agentLocation,
-  agentDocuments: () => agentDocuments,
-  agentBankDetail: () => agentBankDetail,
-  agentDetail: () => agentDetail,
-  agentFullProfile: () => agentFullProfile,
-  changePassword: () => changePassword,
-  forgotPassword: () => forgotPassword,
-  settings: () => settings
+    login: () => login,
+    OTP: () => OTP,
+    welcome: () => welcome,
+    update: () => update,
+    agentFormPersonal: () => agentFormPersonal,
+    agentLocation: () => agentLocation,
+    agentDocuments: () => agentDocuments,
+    agentBankDetail: () => agentBankDetail,
+    agentDetail: () => agentDetail,
+    agentFullProfile: () => agentFullProfile,
+    changePassword: () => changePassword,
+    forgotPassword: () => forgotPassword,
+    settings: () => settings,
+    agentForm:() =>agentForm,
+    customerDetail:() =>customerDetail,
+    customerPersonalDetail: () => customerPersonalDetail,
 }),{ignoreSerializableWarnings: true});

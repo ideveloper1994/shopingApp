@@ -212,7 +212,7 @@ class AgentFormPersonal extends Component {
                             mode='date'
                             maxDate={moment().format("DD MMM YYYY")}
                             placeholder='Select Date'
-                            format='DD MMM YYYY'
+                            format='DD/MM/YYYY'
                             iconSource={require('../../assets/images/expandArrow.png')}
                             confirmBtnText='Confirm'
                             cancelBtnText='Cancel'

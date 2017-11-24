@@ -17,6 +17,10 @@ export function isOnlyAlphabets(text) {
     return format.test(text);
 }
 
+export function isAccLength(text) {
+    return text.toString().trim().length === 11;
+}
+
 export function isValidMobileNo(phoneNo) {
     const phoneNumberPattern = /^[0-9]{10}$/;
     return phoneNumberPattern.test(phoneNo);

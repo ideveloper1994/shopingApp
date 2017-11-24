@@ -27,7 +27,7 @@ import {
     generateOTP,
   getBalance,getAgencies
 } from '../../actions/agentRegistration';
-import { isEmpty, isOnlyAlphabets } from '../../helper/appHelper';
+import { isEmpty, isOnlyAlphabets,isAccLength } from '../../helper/appHelper';
 import { showAlert } from '../../services/apiCall';
 
 class AgentBankDetail extends Component {
@@ -61,7 +61,14 @@ class AgentBankDetail extends Component {
             }else{
                 if(!isOnlyAlphabets(this.props.acHolderName)){
                     showAlert('Please enter valid account holder name.');
-                }else{
+                }
+                else if(!isAccLength(this.props.acNumber)){
+                    showAlert('Please enter valid account number.');
+                }
+                else if(!isAccLength(this.props.IFSECode)){
+                    showAlert('Please enter valid IFSC code');
+                }
+                else{
                     console.log('request for otp')
                   this.setState({
                     isLoading: true

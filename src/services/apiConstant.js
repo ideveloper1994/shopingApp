@@ -5,7 +5,7 @@ module.exports = {
     //baseUrl: 'http://662523da.ngrok.io/',
    // baseUrl: 'http://lanetteam.com:5054/',
     baseUrl: 'http://54.156.16.235:3000/',
-   // baseUrl: 'http://192.168.200.83:5000/',
+  // baseUrl: 'http://192.168.200.49:5000/',
     signIn:'auth/local',
     state: 'api/states',
     zones: 'api/zones',
@@ -18,7 +18,11 @@ module.exports = {
     validateEmail: 'api/users/emailvalidate/',
     validatePhoneNo: 'api/users/phonenumbervalidate/',
     registerUser: 'api/users',
+    createCustomer: 'api/users/createCustomer',
+    allCustomer:'api/users/customers',
     changePassword: 'api/users/',
     forgotPassword: 'api/users/forgotpassword',
-    password: '/password'
+    getParent:'api/users/getUserUplinks',
+    getProfile:'api/users/getProfileDetail',
+    password: '/password',
 };

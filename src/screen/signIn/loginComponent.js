@@ -27,7 +27,7 @@ class LoginComponent extends Component {
         debugger
         this.state = {
             email: this.props.email || '',
-            password: this.props.password || '',
+            password: '',
             isLoading: false
         };
     }

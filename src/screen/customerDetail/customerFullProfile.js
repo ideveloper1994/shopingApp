@@ -83,54 +83,54 @@ class AgentFullProfile extends Component {
                         </View>
                     </View>
 
-                    <View style={styles.dataView}>
-                        <View style={styles.headerView}>
-                            <Text style={{fontWeight:'bold', fontSize:15}}>Location Details</Text>
-                        </View>
-                        <View style={styles.detailsView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>State:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.stateName}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Zone:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.zoneName}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Branch name:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.branchName}</Text>
-                            </View>
-                        </View>
-                    </View>
+                    {/*<View style={styles.dataView}>*/}
+                        {/*<View style={styles.headerView}>*/}
+                            {/*<Text style={{fontWeight:'bold', fontSize:15}}>Location Details</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={styles.detailsView}>*/}
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>State:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.stateName}</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>Zone:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.zoneName}</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>Branch name:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.branchName}</Text>*/}
+                            {/*</View>*/}
+                        {/*</View>*/}
+                    {/*</View>*/}
 
-                    <View style={styles.dataView}>
-                        <View style={styles.headerView}>
-                            <Text style={{fontWeight:'bold', fontSize:15}}>Bank Details</Text>
-                        </View>
-                        <View style={styles.detailsView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Bank name:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.bankName}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Branch name:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.bankBranchName}</Text>
-                            </View>
+                    {/*<View style={styles.dataView}>*/}
+                        {/*<View style={styles.headerView}>*/}
+                            {/*<Text style={{fontWeight:'bold', fontSize:15}}>Bank Details</Text>*/}
+                        {/*</View>*/}
+                         {/*<View style={styles.detailsView}>*/}
+                             {/*<View style={styles.textView}>*/}
+                                 {/*<Text style={styles.textHeader}>Bank name:</Text>*/}
+                                 {/*<Text style={styles.textValue}>{this.state.userDetails.bankName}</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>Branch name:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.bankBranchName}</Text>*/}
+                            {/*</View>*/}
 
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Account Holder name:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.accountHolderName}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>Account Number:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.awsAccountNumber}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.textHeader}>IFSC Code:</Text>
-                                <Text style={styles.textValue}>{this.state.userDetails.IFSCcode}</Text>
-                            </View>
-                        </View>
-                    </View>
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>Account Holder name:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.accountHolderName}</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>Account Number:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.awsAccountNumber}</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.textView}>*/}
+                                {/*<Text style={styles.textHeader}>IFSC Code:</Text>*/}
+                                {/*<Text style={styles.textValue}>{this.state.userDetails.IFSCcode}</Text>*/}
+                            {/*</View>*/}
+                        {/*</View>*/}
+                    {/*</View>*/}
                     <View style={{height:15}}/>
                 </ScrollView>
 
@@ -216,11 +216,9 @@ const mapStateToProps = state => {
         userName: state.agent.userName,
         email: state.agent.email,
         password: state.agent.password,
-
         stateName: state.agent.stateName,
         zone: state.agent.zone,
         agentBranch: state.agent.agentBranch,
-
         bankName: state.agent.bankName,
         branchName: state.agent.branchName,
         acHolderName: state.agent.acHolderName,

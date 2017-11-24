@@ -7,8 +7,8 @@ import Spinner from '../../helper/loader';
 
 import Button from "../../commonComponent/button";
 import { showAlert } from '../../services/apiCall';
-import { changePassword } from '../../actions/userAction'
-import { getBalance,getAgencies } from '../../actions/agentRegistration'
+import { changePassword ,logoutUser} from '../../actions/userAction'
+import { getBalance,getAgencies, } from '../../actions/agentRegistration'
 
 class ChangePassword extends Component {
 
@@ -46,7 +46,22 @@ class ChangePassword extends Component {
         })
 
         showAlert("Password has been changed successfully")
-        this.props.navigator.pop();
+       // this.props.navigator.pop();
+          AsyncStorage.clear();
+
+          this.props.logoutUser().then(res => {
+              this.props.navigator.replace('login');
+          }).catch(err=>{
+              if(err.response && err.response.data.message){
+                  showAlert(err.response.data.message)
+              }else{
+                  showAlert("Fail to send OTP, \n please try asgain.")
+              }
+          })
+        //  AsyncStorage.removeItem('user');
+         // AsyncStorage.removeItem('user_role');
+          //this.props.navigator.push('login');
+
       }).catch((err) => {
         this.setState({
           isLoading: false
@@ -189,5 +204,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   changePassword,
-  getBalance,getAgencies
+  getBalance,getAgencies,logoutUser
+
 })(ChangePassword);

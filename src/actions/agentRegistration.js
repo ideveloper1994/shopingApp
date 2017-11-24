@@ -6,7 +6,8 @@ import {
     AGENT_MOBILENO_CHANGED,
     AGENT_PASSWORD_CHANGED,
     AGENT_USERNAME_CHANGED,
-
+    AGENT_GENDER_CHANGED,
+    AGENT_ADDRESS_CHANGED,
     AGENT_STATE_CHANGED,
     AGENT_ZONE_CHANGED,
     AGENT_BRANCH_CHANGED,
@@ -30,6 +31,7 @@ import {
     GET_ALL_BRANCHES_FAILED,
 
     GET_ALL_AGENCIES,
+    GET_ALL_CUSTOMERS,
 
     AGENT_IMAGES,
     CHANGE_ACTIVATION,
@@ -43,6 +45,50 @@ import Constant from '../services/apiConstant'
 import { NavigationActions } from '@expo/ex-navigation';
 import axios from 'axios';
 import {loginUser} from './userAction'
+import { AsyncStorage } from 'react-native';
+
+export const addCustomer = () => {
+    return (dispatch, getState) => {
+        dispatch({
+            type: START_LOADING,
+            payload: true,
+        });
+        debugger
+        let token = 'Bearer ' + getState().user.token;
+        const config = {headers: {"Content-Type": "multipart/form-data", "Authorization": token}};
+        let agency = {
+            firstName: getState().agent.firstName,
+            lastName: getState().agent.lastName,
+            mobileNo: getState().agent.mobileNo,
+            email: getState().agent.email,
+            password: getState().agent.password,
+            location: getState().agent.address,
+            gender: getState().agent.gender,
+            zoneId: getState().agent.selectedZone._id || 0,
+            stateId: getState().agent.selectedState._id || 0,
+            branchId: getState().agent.selectedBranch._id || 0,
+            branchdetail: getState().user.userDetail.branchId,
+            statedetail: getState().user.userDetail.stateId,
+            zonedetail: getState().user.userDetail.zoneId,
+            userRefId: getState().user.userDetail._id,
+            birthDate: getState().agent.birthDate,
+            customerType: 'primaryCustomer'
+        };
+        console.log('customer details --->', agency);
+        return CallApi(Constant.baseUrl + Constant.createCustomer,'post',agency, {"Authorization": token})
+            .then(res => {
+              debugger
+              console.log('reas-->',res)
+
+            }).catch(err => {
+                debugger
+
+                console.log('reas err-->',err)
+            })
+        //return Promise.reject(error);
+
+    }
+}
 
 export const registerAgency = (otp) => {
     return (dispatch, getState) => {
@@ -69,7 +115,7 @@ export const registerAgency = (otp) => {
         //     isActive:  getState().agent.isActive,
         //     birthdate: getState().agent.birthDate
         // };
-
+debugger
         let token = 'Bearer ' + getState().user.token;
         const config = { headers: { "Content-Type": "multipart/form-data", "Authorization": token } };
         let formData = new FormData();
@@ -83,6 +129,9 @@ export const registerAgency = (otp) => {
         formData.append('stateId',getState().agent.selectedState._id || 0);
         formData.append('branchId',getState().agent.selectedBranch._id || 0);
         formData.append('birthDate',getState().agent.birthDate);
+        formData.append('gender',getState().agent.gender);
+        formData.append('address',getState().agent.address);
+console.log('data--->',formData)
         formData.append('token',otp);
 
         if(getState().agent.agentImages.pancardImage != null){
@@ -171,7 +220,8 @@ export const getAllStates = () => {
 
       return CallApi(Constant.baseUrl + Constant.state, 'get', {}, {"Authorization": token})
             .then((response)=>{
-            debugger
+
+                console.log('states--->',response)
                 dispatch({
                     type: GET_ALL_STATES_SUCCESS,
                     payload: response,
@@ -187,12 +237,85 @@ export const getAllStates = () => {
     };
 };
 
+export const getCustomer = () => {
+    debugger
+
+    return (dispatch, getState) => {
+        let token = 'Bearer ' + getState().user.token;
+
+        return CallApi(Constant.baseUrl + Constant.allCustomer, 'get', {}, {"token": token})
+            .then((response)=>{
+debugger
+                console.log('states--->',response)
+                dispatch({
+                    type: GET_ALL_CUSTOMERS,
+                    payload: response,
+                });
+
+            })
+            .catch((error)=>{
+                debugger
+
+            })
+    };
+};
+
+export const getParent = () => {
+    debugger
+
+    return (dispatch, getState) => {
+        let token = 'Bearer ' + getState().user.token;
+
+        return CallApi(Constant.baseUrl + Constant.getParent, 'get', {}, {"token": token})
+            .then((response)=>{
+                debugger
+                console.log('states--->',response.Parent.Role.name)
+                AsyncStorage.setItem('parent_role',JSON.stringify(response.Parent.Role.name),(res)=>{
+                    debugger
+                    console.log('parent_role--->',res)
+
+                });
+                // dispatch({
+                //     type: GET_ALL_CUSTOMERS,
+                //     payload: response,
+                // });
+
+            })
+            .catch((error)=>{
+                debugger
+
+            })
+    };
+};
+export const getProfile = () => {
+    debugger
+
+    return (dispatch, getState) => {
+        let token = 'Bearer ' + getState().user.token;
+
+        return CallApi(Constant.baseUrl + Constant.getProfile, 'get', {}, {"token": token})
+            .then((response)=>{
+                debugger
+                console.log('states--->',response)
+                AsyncStorage.setItem('user_role',JSON.stringify(response.UserDetail.Role.name),(res)=>{
+                    debugger
+                    console.log('user_role--->',res)
+                });
+            return response
+            })
+            .catch((error)=>{
+                debugger
+                return error
+
+            })
+    };
+};
 export const getAllZones = () => {
     return (dispatch, getState) => {
       let token = 'Bearer ' + getState().user.token;
-
       return CallApi(Constant.baseUrl + Constant.zones, 'get', {},{"Authorization": token })
             .then((response)=>{
+                console.log('zone--->',response)
                 dispatch({
                     type: GET_ALL_ZONES_SUCCESS,
                     payload: response,
@@ -213,6 +336,8 @@ export const getAllBranches = () => {
 
       return CallApi(Constant.baseUrl + Constant.branch, 'get', {},  {"Authorization": token })
             .then((response)=>{
+                console.log('branch--->',response)
+
                 dispatch({
                     type: GET_ALL_BRANCHES_SUCCESS,
                     payload: response,
@@ -228,12 +353,14 @@ export const getAllBranches = () => {
 };
 
 export const getAgencies = () => {
+
     return (dispatch, getState) => {
+        debugger
         let token = 'Bearer '+getState().user.token;
         return CallApi(Constant.baseUrl + Constant.agencies, 'get', {}, {"Authorization": token})
             .then((response)=> {
+                debugger
                 let agencyArray = [];
-                debugger;
                 response.map((agency) => {
                     let agencyObj = {
                         profile: agency.profile,
@@ -245,12 +372,15 @@ export const getAgencies = () => {
                     agencyObj = Object.assign(agencyObj, agency.Agencies[0]);
                     agencyArray.push(agencyObj);
                 });
+                console.log('agency list',agencyArray)
                 dispatch({
                     type: GET_ALL_AGENCIES,
                     payload: agencyArray,
                 });
             })
             .catch((error)=>{
+            debugger
+                console.log('agency list',error)
                 return Promise.reject(error);
             })
     };
@@ -258,11 +388,9 @@ export const getAgencies = () => {
 
 export const getBalance = () => {
     return (dispatch, getState) => {
-        debugger;
         let token = 'Bearer '+ getState().user.token;
         return CallApi(Constant.baseUrl + Constant.getBalance, 'get', {}, {"Authorization": token})
             .then((response)=> {
-
                 dispatch({
                     type: SET_BALANCE,
                     payload: response.balance,
@@ -290,6 +418,14 @@ export const emailChanged = (text) => {
 
 export const mobileChanged = (text) => {
     return { type: AGENT_MOBILENO_CHANGED, payload: text };
+};
+
+export const genderChanged = (text) => {
+    return { type: AGENT_GENDER_CHANGED, payload: text };
+};
+
+export const addressChanged = (text) => {
+    return { type: AGENT_ADDRESS_CHANGED, payload: text };
 };
 
 export const passwordChanged = (text) => {
@@ -370,10 +506,6 @@ export const callAgencyActivation = (agencyId, bodyData) => {
                     type: START_LOADING,
                     payload: false,
                 });
-
-
-
-
                 return Promise.resolve(response);
             })
             .catch((error)=>{

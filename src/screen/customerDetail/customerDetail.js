@@ -17,6 +17,7 @@ import {
     callAgencyActivation,
     updateAgencyActivation,
   getBalance,
+    getCustomer,
     getParent,
     getProfile
 } from '../../actions/agentRegistration'
@@ -40,39 +41,39 @@ class AgentDetailRow extends Component {
                                source={(this.props.item.uri)? {uri: this.props.item.uri}:
                                    require('../../assets/images/avatar-male.png')} style={styles.images} />
                     </View>
-                    <View style={styles.textView}>
+                    <View style={[styles.textView,{flexDirection:'column'}]}>
                         <View style={{flexDirection:'row'}}>
                             <Text>{(this.props.item.firstName)? this.props.item.firstName:'N/A'}</Text>
                             <Text>{' '}</Text>
                             <Text>{(this.props.item.lastName)? this.props.item.lastName:'N/A'}</Text>
                         </View>
-                        <View>
-                            <Text>{(this.props.item.zoneName)? this.props.item.zoneName: 'N/A'}</Text>
-                        </View>
+                        {/*<View>*/}
+                            {/*<Text>{(this.props.item.zoneName)? this.props.item.zoneName: 'N/A'}</Text>*/}
+                        {/*</View>*/}
                         <View>
                             <Text>{(this.props.item.email)? this.props.item.email:'N/A'}</Text>
                         </View>
                     </View>
-                    <TouchableHighlight style={styles.moreView}
-                                        onPress={() => {
-                                            debugger;
-                                            if(this.props.isActive) {
-                                              this.props.onActivateCall(this.props.index, this.props.item)
-                                            }else {
-                                              showAlert("Please contact admin to activate user")
-                                            }
-                                        }
-                                        }
-                                        underlayColor={"transparent"}>
-                        <View style={{margin:5}}>
-                            {(this.props.item.isActive) ?
-                                <Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>
-                                :
-                                <Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>
-                            }
-                        </View>
+                    {/*<TouchableHighlight style={styles.moreView}*/}
+                                        {/*onPress={() => {*/}
+                                            {/*debugger;*/}
+                                            {/*if(this.props.isActive) {*/}
+                                              {/*this.props.onActivateCall(this.props.index, this.props.item)*/}
+                                            {/*}else {*/}
+                                              {/*showAlert("Please contact admin to activate user")*/}
+                                            {/*}*/}
+                                        {/*}*/}
+                                        {/*}*/}
+                                        {/*underlayColor={"transparent"}>*/}
+                        {/*<View style={{margin:5}}>*/}
+                            {/*{(this.props.item.isActive) ?*/}
+                                {/*<Image source={require('../../assets/images/icon-quiz-tick.png')} style={{height: 30, width: 30,}}/>*/}
+                                {/*:*/}
+                                {/*<Image source={require('../../assets/images/icon-quiz-tick-red.png')} style={{height: 30, width: 30,}}/>*/}
+                            {/*}*/}
+                        {/*</View>*/}
 
-                    </TouchableHighlight>
+                    {/*// </TouchableHighlight>*/}
                 </View>
             </TouchableHighlight>
         );
@@ -93,14 +94,13 @@ class AgentDetail extends Component {
     };
 
     componentDidMount(){
+        debugger
       this.props.getBalance().then((responseJSON) => console.log(responseJSON.toString())).catch((err) => console.log(err.toString()))
-      this.props.getAgencies().then(res => {}).catch(err => {});
+      this.props.getCustomer().then(res => {}).catch(err => {})
+        this.props.getParent().then(res => {}).catch(err => {})
+        this.props.getProfile().then(res => {}).catch(err => {})
     }
-componentWillMount(){
-    this.props.getParent().then(res => {}).catch(err => {})
-    this.props.getProfile().then(res => {}).catch(err => {})
 
-}
     onActivateCall = (index, agency) => {
         this.props.getBalance().then((responseJSON) => {
           if(!agency.isActive) {
@@ -171,7 +171,7 @@ debugger
 
     onAddAgencyCall = () => {
         if(this.props.isActive){
-          this.props.navigator.push('agentFormPersonal');
+          this.props.navigator.push('agentForm');
         } else {
             showAlert("Please contact admin to activate user")
         }
@@ -180,12 +180,12 @@ debugger
 
     onSelectRow = (item) => {
         debugger
-        this.props.navigator.push('agentFullProfile',{userDetails: item});
+        this.props.navigator.push('customerPersonalDetail',{userDetails: item});
     };
 
     renderAgents = () => {
       debugger;
-        return this.props.agencies.map((item,index) => {
+        return this.props.customers.map((item,index) => {
 
             return(
                 <AgentDetailRow item={item} onSelectRow={this.onSelectRow}/>
@@ -198,21 +198,16 @@ debugger
     };
 
     render() {
-        AsyncStorage.getItem('user_role').then((value) => {
-            console.log('user role--->',value)
-        })
-        AsyncStorage.getItem('parent_role').then((value) => {
-            console.log('parent role--->',value)
-        })
-
+        debugger
+        console.log('customers-->',this.props.customers)
         return (
             <View style={{flex:1,backgroundColor: '#fff'}}>
-                <NavigationTitle title="Agent Detail"/>
+                <NavigationTitle title="Customer Detail"/>
                 <View style={{height:10}}/>
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     removeClippedSubviews={false}
-                    data={this.props.agencies}
+                    data={this.props.customers}
                     renderItem={({item, index}) => <AgentDetailRow item={item}
                                                                    isActive={this.props.isActive}
                                                                    index={index}
@@ -224,7 +219,7 @@ debugger
 
 
               {
-                (this.props.role === 'do')?
+                (this.props.role === 'do' || this.props.role === 'agn' || this.props.role === 'agency' )?
                   <View style={{position:'absolute',backgroundColor:'transparent',
                     marginTop:height-width*0.2-15, marginLeft: width-width*0.2-15}}>
                       <TouchableHighlight underlayColor="transparent"
@@ -297,7 +292,7 @@ const styles = StyleSheet.create({
     },
     textView:{
         margin:12,
-        justifyContent:'space-between',
+        justifyContent:'center',
         flex:1,
     },
     moreView:{
@@ -310,6 +305,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         agencies: state.agent.agencies,
+        customers:state.agent.customers,
         balance: (state.user.userDetail.Balance) ? state.user.userDetail.Balance : 0,
         role: (state.user.userDetail.role) ? state.user.userDetail.role : 0,
         isActive:(state.user.userDetail.isActive)?state.user.userDetail.isActive:false
@@ -320,8 +316,9 @@ export default connect(mapStateToProps, {
     getAgencies,
     callAgencyActivation,
     updateAgencyActivation,
-    getParent,
   getBalance,
+    getCustomer,
+    getParent,
     getProfile
 })(AgentDetail);
 /*Alert.alert(

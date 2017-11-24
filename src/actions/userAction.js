@@ -24,11 +24,10 @@ export const checkUpdate = (uri) => {
         let url = Constant.baseUrl + Constant.checkforUpdate + uri;
         return CallApi(url, 'get', {},  {"Authorization": token })
             .then(res => {
-                debugger;
+
                 return Promise.resolve(res.allowforcefully);
             })
             .catch(err => {
-                debugger;
                 return Promise.reject(err)
             })
 
@@ -41,29 +40,28 @@ export const loginUser = (email, password) => {
             type: START_LOADING,
             payload: true,
         });
-      debugger
-        return CallApi(Constant.baseUrl+Constant.signIn,'post',{ email: email, password: password},{})
 
+        return CallApi(Constant.baseUrl+Constant.signIn,'post',{ email: email, password: password},{})
             .then((response)=>{
-                debugger
                 let user = {
                     email:email,
                     password:password,
                     token:response.data.token,
                     balance: response.data.user.Balance
                 };
+                console.log('user----->',response.data.user)
                 AsyncStorage.setItem('user',JSON.stringify(user),(res)=>{
+                });
+                AsyncStorage.setItem('userch_role',JSON.stringify(response.data.user.role),(res)=>{
                 });
                 dispatch({
                     type: APP_SET_USER_DATA,
                     payload: user
                 });
-
                 dispatch({
                     type: REGISTERED_USER,
                     payload: response.data.user
                 });
-
                 // return Promise.all([
                     dispatch(getAgencies());
                 // ]).then(res => {
@@ -75,7 +73,6 @@ export const loginUser = (email, password) => {
                 // }).catch(err => {
                 //     return Promise.reject(err);
                 // });
-
             })
             .catch((error)=>{
                 debugger

@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar,AsyncStorage,Platform } from 'react-native';
+import {StyleSheet, Text, View, StatusBar, AsyncStorage, Platform} from 'react-native';
 import navigationContext from './../navigationHelper/customNavigationContext';
 import Router from './../navigationHelper/router'
-import { NavigationProvider,StackNavigation,NavigationStyles } from '@expo/ex-navigation';
+import {NavigationProvider, StackNavigation, NavigationStyles} from '@expo/ex-navigation';
 import * as Animatable from 'react-native-animatable';
 import Spinner from '../helper/loader'
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Constant from '../helper/constant';
 import {
     loginUser,
@@ -19,58 +19,54 @@ class AppNavigation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state={
-            isAppLoading:false,
+        this.state = {
+            isAppLoading: false,
         }
     }
 
     componentWillMount() {
+      //  AsyncStorage.removeItem('user');
         AsyncStorage.getItem('user').then((value) => {
-            if(value!=null) {
+            if (value != null) {
                 let userDetail = JSON.parse(value);
                 this.props.loginUser(userDetail.email.trim(), userDetail.password.trim())
-                    .then(()=>{
-                       // let version = DeviceInfo.getVersion();
-                       //  let version = "1.1";
-
+                    .then(() => {
+                        // let version = DeviceInfo.getVersion();
+                        //  let version = "1.1";
                         let os = "";
-                        if(Platform.OS === 'ios'){
+                        if (Platform.OS === 'ios') {
                             os = 'IOS'
                         } else {
                             os = 'ANDROID'
                         }
                         let uri = DeviceInfo.getVersion() + "/" + os + '/checkForUpdate';
-                        debugger;
                         this.props.checkUpdate(uri).then(res => {
-                            debugger
-                            if(res)
-                            {
-                              if(Platform.OS === 'android') {
-                                isLogin = 'update';
-                              }else {
-                                isLogin='welcome';
-                              }
+                            if (res) {
+                                if (Platform.OS === 'android') {
+                                    isLogin = 'update';
+                                } else {
+                                    isLogin = 'welcome';
+                                }
                             }
                             else
-                                isLogin='welcome';
-                            this.setState({isAppLoading:true});
+                                isLogin = 'welcome';
+                            this.setState({isAppLoading: true});
                         }).catch(err => {
-                            isLogin='welcome';
-                            this.setState({isAppLoading:true});
+                            isLogin = 'welcome';
+                            this.setState({isAppLoading: true});
                         });
-
                     })
-                    .catch((err)=>{
+                    .catch((err) => {
                         debugger;
-                        this.setState({isAppLoading:true});
+                        this.setState({isAppLoading: true});
                     });
-            }else{
+            } else {
                 debugger;
-                this.setState({isAppLoading:true});
+                this.setState({isAppLoading: true});
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             debugger;
-            this.setState({isAppLoading:true});
+            this.setState({isAppLoading: true});
         });
     }
 
@@ -92,17 +88,17 @@ class AppNavigation extends React.Component {
                                              styles: {
                                                   ...NavigationStyles.SlideHorizontal}
                                          }}/>
+                         <Animatable.View animation="zoomIn" iterationCount={'infinite'}
+                                               alternate={true}
+                                               style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
+                                <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>
+                                    {this.props.balance}
+                                </Text>
+                            </Animatable.View>
 
-                        <Animatable.View animation="zoomIn" iterationCount={'infinite'}
-                                         alternate={true}
-                                         style={{position:'absolute', top: 25, right: 20, backgroundColor:'transparent'}}>
-                            <Text style={{fontSize:17, fontWeight: '600',color:'#FFF'}}>
-                                {this.props.balance}
-                            </Text>
-                        </Animatable.View>
                     </View> :
                     <View style={styles.container}>
-                    <Spinner visible={this.props.isLoading} />
+                        <Spinner visible={this.props.isLoading}/>
                     </View>
                 }
             </NavigationProvider>
@@ -130,5 +126,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-    loginUser,checkUpdate
+    loginUser, checkUpdate
 })(AppNavigation);

@@ -42,7 +42,10 @@ class Login extends Component {
         BackHandler.removeEventListener('hardwareBackPress1', this.handleBackPress1);
     }
     onSignInPress = () => {
-        this.props.navigator.replace('welcome');
+
+
+                this.props.navigator.replace('welcome');
+
     };
   forgotPasswordClicked = () =>{
     this.props.navigator.push('forgotPassword');
