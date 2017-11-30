@@ -10,7 +10,7 @@ import {
     AsyncStorage,
     Platform,
     Alert,
-    Linking,
+    Linking,ScrollView,
     Dimensions
 } from 'react-native';
 import Constant from '../helper/constant';
@@ -113,23 +113,19 @@ class Welcome extends Component {
         if(this.state.profile.UserDetail){
             return(
                 <Animated.View style={this.position2.getLayout()}>
-
-                    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                    <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+                    <View style={{flex:1,justifyContent:'center',alignItems:'center',paddingTop:10}}>
                         <Image source={require('../assets/images/image-welcome.png')}
                                style={{ width: (Constant.screenWidth*this.state.imageWidth)/100 }}
                                resizeMode='contain'
                                ref="welcome"/>
                     </View>
                     <View style={styles.listItem}>
-                        <View style={{alignItems:'center', margin:30}}>
+                        <View style={{alignItems:'center', margin:10}}>
                             <Image source={require('../assets/images/avatar-male.png')}
                                    style={{width:width/3.5, height:width/3.5, borderRadius:width/7 }} />
                         </View>
                     </View>
-
-
-
-
                     <View style={{justifyContent:'center'}}>
                         <View style={styles.proView}>
                             <Text style={styles.fieldText}>{"Name:  "}</Text>
@@ -139,6 +135,7 @@ class Welcome extends Component {
                             <Text style={styles.fieldText}>{"Email:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.email}</Text>
                         </View>
+
                         <View style={styles.proView}>
                             <Text style={styles.fieldText}>{"Mobile:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.mobileNo}</Text>
@@ -156,9 +153,10 @@ class Welcome extends Component {
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.Role.name}</Text>
                         </View>
                     </View>
+                    </ScrollView>
                     {
                         (this.state.btnVisible) &&
-                        <View style={{flex:1,justifyContent:'flex-end',marginBottom:40}}>
+                        <View style={{justifyContent:'flex-end',backgroundColor:Constant.backColor,paddingBottom:10,position:'absolute',bottom:0,left:0,right:0}}>
                             <Button title={this.state.btntitle}
                                     backColor="#FFF"
                                     color={Constant.backColor}

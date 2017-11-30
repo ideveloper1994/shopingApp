@@ -27,17 +27,17 @@ export default class Button extends Component {
 
 const styles = StyleSheet.create({
     btnLogin:{
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 20,
         alignSelf: 'center',
         width: Constant.screenWidth - 60,
         alignItems: 'center',
         justifyContent: 'center',
         padding:17,
         borderRadius: 35,
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     btnFont:{
         fontSize: 17,
