@@ -130,29 +130,29 @@ class Welcome extends Component {
 
 
 
-                    <View style={{justifyContent:'center',alignItems:'center',}}>
+                    <View style={{justifyContent:'center'}}>
                         <View style={styles.proView}>
-                            <Text style={styles.fieldText}>Name:</Text>
+                            <Text style={styles.fieldText}>{"Name:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.firstName + ' ' + this.state.profile.UserDetail.lastName}</Text>
                         </View>
                         <View style={styles.proView}>
-                            <Text style={styles.fieldText}>Email:</Text>
+                            <Text style={styles.fieldText}>{"Email:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.email}</Text>
                         </View>
                         <View style={styles.proView}>
-                            <Text style={styles.fieldText}>Mobile:</Text>
+                            <Text style={styles.fieldText}>{"Mobile:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.mobileNo}</Text>
                         </View>
                         <View style={styles.proView}>
-                            <Text style={styles.fieldText}>Date of Joining:</Text>
+                            <Text style={styles.fieldText}>{"Date of Joining:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.createdAt}</Text>
                         </View>
                         <View style={styles.proView}>
-                            <Text style={styles.fieldText}>Date of Birth:</Text>
+                            <Text style={styles.fieldText}>{"Date of Birth:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.birthDate}</Text>
                         </View>
                         <View style={styles.proView}>
-                            <Text style={styles.fieldText}>Designation:</Text>
+                            <Text style={styles.fieldText}>{"Designation:  "}</Text>
                             <Text style={styles.detailText}>{this.state.profile.UserDetail.Role.name}</Text>
                         </View>
                     </View>
@@ -249,15 +249,16 @@ const styles = StyleSheet.create({
     },
     proView: {
         flexDirection: 'row',
-        alignItems:'center',
-        padding:10,
+       // alignItems:'center',
+        paddingLeft:30,
+        paddingBottom:20
         // borderBottomColor:'lightgray',
         // borderBottomWidth: 0.7
     },
     fieldText:{
         color:'#FFF',
         fontWeight:'800',
-        width:100
+       // width:100
     },
     detailText:{
         color:'#FFF'

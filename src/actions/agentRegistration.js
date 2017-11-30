@@ -275,6 +275,10 @@ export const getParent = () => {
                     console.log('parent_role--->',res)
 
                 });
+                let name = response.Parent.firstName + " " + response.Parent.lastName
+              AsyncStorage.setItem('parent_name',name.toString(),(res)=>{
+
+              });
                 // dispatch({
                 //     type: GET_ALL_CUSTOMERS,
                 //     payload: response,
